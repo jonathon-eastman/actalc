@@ -4,7 +4,7 @@
 
   <groupId>com.antm.fdsm.caas</groupId>
   <artifactId>actadm</artifactId>
-  <version>0.0.2</version>
+  <version>0.0.3</version>
   <packaging>jar</packaging>
 
   <name>actadm</name>
@@ -32,4 +32,10 @@
     	<version>0.3.0</version>
     </dependency>
   </dependencies>
+  <parent>
+  	<groupId>com.antm</groupId>
+  	<artifactId>fdsm</artifactId>
+  	<version>0.0.2</version>
+  	<relativePath>../</relativePath>
+  </parent>
 </project>
