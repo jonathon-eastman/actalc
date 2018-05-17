@@ -17,12 +17,12 @@ public class CurrentYearService {
 		hypusr.execute("actadm_base_table_truncate.sql");
 		hypusr.update("actadm_base_table_insert.sql", new JsonArray().add(4).add(2018));
 		hypusr.update("actadm_base_update_project.sql");
-		hypusr.queryBlocking("actadm_base_query_monetary.sql", "actadm/data_mt_ap4_2018.txt");
-		hypusr.queryBlocking("actadm_base_query_stat.sql", "actadm/data_st_ap4_2018.txt");
-		hypusr.queryBlocking("actadm_base_balance_adm.sql", "actadm/balance_adm.json");
-		hypusr.queryBlocking("actadm_base_balance_fte.sql", "actadm/balance_fte.json");
-		hypusr.queryBlocking("actadm_base_balance_hct.sql", "actadm/balance_hct.json");
-		hypusr.queryBlocking("actadm_base_balance_hrs.sql", "actadm/balance_hrs.json");
+		hypusr.queryBlocking("actadm_base_query_monetary.sql", "actadm/data/act/data_mt_ap4_2018.txt");
+		hypusr.queryBlocking("actadm_base_query_stat.sql", "actadm/data/act/data_st_ap4_2018.txt");
+		hypusr.queryBlocking("actadm_base_balance_adm.sql", "actadm/balances/balance_adm.json");
+		hypusr.queryBlocking("actadm_base_balance_fte.sql", "actadm/balances/balance_fte.json");
+		hypusr.queryBlocking("actadm_base_balance_hct.sql", "actadm/balances/balance_hct.json");
+		hypusr.queryBlocking("actadm_base_balance_hrs.sql", "actadm/balances/balance_hrs.json");
 	}
 
 }
