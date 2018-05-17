@@ -1,4 +1,4 @@
-SELECT CC, CO, PJT, TP, ACC, REPLACE(DTA, -99999999999999999999, 'Data') FROM (SELECT 'Cost Center' as "CC", 'Company' as "CO", 'Project' as "PJT", 'TimePeriods' as "TP", 'Accounts' as "ACC", -99999999999999999999 as "DTA" FROM DUAL
+SELECT CC, CO, PJT, TP, ACC, REPLACE(DTA, -99999999999999999999, 'Data') FROM (SELECT 'Cost Center' as "CC", 'Company' as "CO", 'Project' as "PJT", 'Time Periods' as "TP", 'Accounts' as "ACC", -99999999999999999999 as "DTA" FROM DUAL
 UNION ALL
 SELECT deptid as "CC", business_unit as "CO", project_id as "PJT", (CASE accounting_period
   WHEN 1 THEN 'Jan'
