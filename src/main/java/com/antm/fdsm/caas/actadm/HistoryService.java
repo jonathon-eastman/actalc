@@ -1,15 +1,12 @@
 package com.antm.fdsm.caas.actadm;
 
-import java.io.File;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import com.antm.fdsm.orcl.oac.AnalyticCloudPlatform;
-import com.antm.fdsm.orcl.oac.CloudFile;
 import com.antm.fdsm.orcl.oac.EssbaseCube;
 import com.antm.fdsm.orcl.oac.EssbaseServer;
-import com.antm.fdsm.orcl.oac.LoadRule;
+
 
 public class HistoryService {
 
@@ -25,11 +22,10 @@ public class HistoryService {
 		EssbaseServer server = AnalyticCloudPlatform.getEssbaseServer("fdsm-dev-oac01.anthem.com");
 		try {
 			EssbaseCube loadAsoActadm = server.getApplication("LOAD-ASO-ACTADM").getCube("LOAD-ASO-ACTADM");
-			//loadAsoActadm.clear();
+			loadAsoActadm.clear();
 			Files.newDirectoryStream(Paths.get(HOME_DIRECTORY + PROJECT_DIRECTORY + "/data/act/"), path -> path.toFile().isFile())
 				.forEach(f -> {
 					if (f.toString().endsWith(".txt")) {
-						System.out.println("*** -- " + f.toString());
 						loadAsoActadm.load( (loadFile, ruleFile) -> {
 							loadFile.localPath(f.toString());
 							ruleFile.aiSourceFile(f.toString());
