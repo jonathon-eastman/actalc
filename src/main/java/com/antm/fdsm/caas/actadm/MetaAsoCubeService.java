@@ -1,5 +1,5 @@
 package com.antm.fdsm.caas.actadm;
 
-public class BaseService {
+public class MetaAsoCubeService {
 
 }

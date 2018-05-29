@@ -7,23 +7,18 @@ import com.antm.fdsm.orcl.oac.AnalyticCloudPlatform;
 import com.antm.fdsm.orcl.oac.EssbaseCube;
 import com.antm.fdsm.orcl.oac.EssbaseServer;
 
+public class RptgAsoCubeService {
 
-public class HistoryService {
-
-	public static final String PROJECT_DIRECTORY = "actadm";
-	public static final String HISTORY_DIRECTORY = "history";
-	public static final String HOME_DIRECTORY = AnalyticCloudPlatform.getFileHome();
-	public static void main(String [] args) {
-		HistoryService.run();
-	}
-
-	public static void run() {
+	public void updateTime() {
 		
+	}
+	
+	public void loadHistory() {
 		EssbaseServer server = AnalyticCloudPlatform.getEssbaseServer("fdsm-dev-oac01.anthem.com");
 		try {
-			EssbaseCube loadAsoActadm = server.getApplication("LOAD-ASO-ACTADM").getCube("LOAD-ASO-ACTADM");
+			EssbaseCube loadAsoActadm = server.getApplication(ServiceDefs.RPTG_NAME_BASE).getCube(ServiceDefs.RPTG_NAME_BASE);
 			loadAsoActadm.clear();
-			Files.newDirectoryStream(Paths.get(HOME_DIRECTORY + PROJECT_DIRECTORY + "/data/act/"), path -> path.toFile().isFile())
+			Files.newDirectoryStream(Paths.get(ServiceDefs.HOME_DIRECTORY + ServiceDefs.PROJECT_DIRECTORY + "/" + ServiceDefs.HISTORY_DIRECTORY), path -> path.toFile().isFile())
 				.forEach(f -> {
 					if (f.toString().endsWith(".txt")) {
 						loadAsoActadm.load( (loadFile, ruleFile) -> {
@@ -37,6 +32,16 @@ public class HistoryService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 	}
-
+	
+	public void loadCurrentPeriodIncremental() {
+		
+	}
+	
+	public void loadCurrentPeriodWithPartialClear() {
+		
+	}
+	
+	
 }

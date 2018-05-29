@@ -1,5 +1,5 @@
 package com.antm.fdsm.caas.actadm;
 
-public class UpdateTimeService {
+public class CalcAsoCubeService {
 
 }
