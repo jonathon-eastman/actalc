@@ -23,7 +23,7 @@ public class RelationalDatabaseService {
 	public void extractCurrentMonthIncremental() {
 		DatabaseService hypusr = new DatabaseService(Database.HYPUSR);
 		hypusr.execute(ServiceDefs.PROJECT_DIRECTORY + "_base_table_truncate.sql");
-		hypusr.update(ServiceDefs.PROJECT_DIRECTORY + "_base_table_insert.sql", new JsonArray().add(ServiceDefs.CURRENT_PERIOD).add(ServiceDefs.YEAR));
+		hypusr.update(ServiceDefs.PROJECT_DIRECTORY + "_base_table_insert.sql", new JsonArray().add(ServiceDefs.CURRENT_PERIOD).add(ServiceDefs.CURRENT_YEAR));
 		hypusr.update(ServiceDefs.PROJECT_DIRECTORY + "_base_update_project.sql");
 		hypusr.queryBlocking(ServiceDefs.PROJECT_DIRECTORY + "_base_query_monetary.sql", ServiceDefs.PROJECT_DIRECTORY + "/gldata/act/data_mt_ap4_2018.txt");
 		hypusr.queryBlocking(ServiceDefs.PROJECT_DIRECTORY + "_base_query_stat.sql", ServiceDefs.PROJECT_DIRECTORY + "/gldata/act/data_st_ap4_2018.txt");
