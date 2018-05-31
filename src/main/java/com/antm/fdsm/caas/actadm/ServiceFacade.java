@@ -10,8 +10,8 @@ public class ServiceFacade {
 		
 	}
 	
-	public void incremental() {
-		
+	public static void incremental() {
+		RelationalDatabaseService.extractPSGLCurrentMonthBase();
 	}
 	
 	public void transitionPlan() {

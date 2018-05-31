@@ -7,7 +7,7 @@ import io.vertx.core.json.JsonArray;
 
 public class RelationalDatabaseService {
 	
-	public void extractCurrentMonthBase() {
+	public static void extractPSGLCurrentMonthBase() {
 		DatabaseService hypusr = new DatabaseService(Database.HYPUSR);
 		hypusr.execute(ServiceDefs.PROJECT_DIRECTORY + "_base_table_truncate.sql");
 		hypusr.update(ServiceDefs.PROJECT_DIRECTORY + "_base_table_insert.sql", new JsonArray().add(4).add(2018));
