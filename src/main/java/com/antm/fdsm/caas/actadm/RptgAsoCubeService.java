@@ -10,15 +10,15 @@ import com.antm.fdsm.orcl.oac.EssbaseServer;
 public class RptgAsoCubeService {
 	
 	private EssbaseServer server = AnalyticCloudPlatform.getEssbaseServer("fdsm-dev-oac01.anthem.com");
-	private EssbaseCube rptgAsoACTADM = server.getApplication(ServiceDefs.RPTG_NAME_ASO_01).getCube(ServiceDefs.RPTG_NAME_ASO_01);
+	private EssbaseCube rptgAso01 = server.getApplication(ServiceDefs.RPTG_NAME_ASO_01).getCube(ServiceDefs.RPTG_NAME_ASO_01);
 	
 	
 	public void clearAllData() {
-		rptgAsoACTADM.clear();
+		rptgAso01.clear();
 	}
 	
 	public void loadHistory() {	
-		rptgAsoACTADM.loadFilesInDirectory(ServiceDefs.DIRECTORY_HOME + ServiceDefs.DIRECTORY_PROJECT + "/" + ServiceDefs.DIRECTORY_DATA + "/" + ServiceDefs.DIRECTORY_HISTORY);
+		rptgAso01.loadFilesInDirectory(ServiceDefs.DIRECTORY_HOME + ServiceDefs.DIRECTORY_PROJECT + "/" + ServiceDefs.DIRECTORY_DATA + "/" + ServiceDefs.DIRECTORY_HISTORY);
 	}
 	
 	public void loadCurrentPeriodIncremental() {
@@ -26,7 +26,7 @@ public class RptgAsoCubeService {
 			Files.newDirectoryStream(Paths.get(ServiceDefs.DIRECTORY_HOME + ServiceDefs.DIRECTORY_PROJECT + "/" + ServiceDefs.DIRECTORY_HISTORY), path -> path.toFile().isFile())
 				.forEach(f -> {
 					if (f.toString().endsWith(".txt")) {
-						rptgAsoACTADM.load( (loadFile, ruleFile) -> {
+						rptgAso01.load( (loadFile, ruleFile) -> {
 							loadFile.localPath(f.toString());
 							ruleFile.aiSourceFile(f.toString());
 						});
@@ -40,7 +40,7 @@ public class RptgAsoCubeService {
 	}
 	
 	public void loadCurrentPeriodBase() {
-		rptgAsoACTADM.loadFilesInDirectory(ServiceDefs.DIRECTORY_HOME + ServiceDefs.DIRECTORY_PROJECT + "/" + ServiceDefs.DIRECTORY_DATA + "/" + ServiceDefs.DIRECTORY_BASE);
+		rptgAso01.loadFilesInDirectory(ServiceDefs.DIRECTORY_HOME + ServiceDefs.DIRECTORY_PROJECT + "/" + ServiceDefs.DIRECTORY_DATA + "/" + ServiceDefs.DIRECTORY_BASE);
 	}
 	
 	public void loadCurrentPeriodWithPartialClear() {
