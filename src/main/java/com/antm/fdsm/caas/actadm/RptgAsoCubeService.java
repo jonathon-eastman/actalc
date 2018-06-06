@@ -8,20 +8,25 @@ import com.antm.fdsm.orcl.oac.EssbaseCube;
 import com.antm.fdsm.orcl.oac.EssbaseServer;
 
 public class RptgAsoCubeService {
-
-	public void updateTime() {
-		
+	
+	private EssbaseServer server = AnalyticCloudPlatform.getEssbaseServer("fdsm-dev-oac01.anthem.com");
+	private EssbaseCube rptgAsoACTADM = server.getApplication(ServiceDefs.RPTG_NAME_ASO_01).getCube(ServiceDefs.RPTG_NAME_ASO_01);
+	
+	
+	public void clearAllData() {
+		rptgAsoACTADM.clear();
 	}
 	
-	public void loadHistory() {
-		EssbaseServer server = AnalyticCloudPlatform.getEssbaseServer("fdsm-dev-oac01.anthem.com");
+	public void loadHistory() {	
+		rptgAsoACTADM.loadFilesInDirectory(ServiceDefs.DIRECTORY_HOME + ServiceDefs.DIRECTORY_PROJECT + "/" + ServiceDefs.DIRECTORY_DATA + "/" + ServiceDefs.DIRECTORY_HISTORY);
+	}
+	
+	public void loadCurrentPeriodIncremental() {
 		try {
-			EssbaseCube loadAsoActadm = server.getApplication(ServiceDefs.RPTG_NAME_BASE).getCube(ServiceDefs.RPTG_NAME_BASE);
-			loadAsoActadm.clear();
-			Files.newDirectoryStream(Paths.get(ServiceDefs.HOME_DIRECTORY + ServiceDefs.PROJECT_DIRECTORY + "/" + ServiceDefs.HISTORY_DIRECTORY), path -> path.toFile().isFile())
+			Files.newDirectoryStream(Paths.get(ServiceDefs.DIRECTORY_HOME + ServiceDefs.DIRECTORY_PROJECT + "/" + ServiceDefs.DIRECTORY_HISTORY), path -> path.toFile().isFile())
 				.forEach(f -> {
 					if (f.toString().endsWith(".txt")) {
-						loadAsoActadm.load( (loadFile, ruleFile) -> {
+						rptgAsoACTADM.load( (loadFile, ruleFile) -> {
 							loadFile.localPath(f.toString());
 							ruleFile.aiSourceFile(f.toString());
 						});
@@ -32,14 +37,17 @@ public class RptgAsoCubeService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 	}
 	
-	public void loadCurrentPeriodIncremental() {
-		
+	public void loadCurrentPeriodBase() {
+		rptgAsoACTADM.loadFilesInDirectory(ServiceDefs.DIRECTORY_HOME + ServiceDefs.DIRECTORY_PROJECT + "/" + ServiceDefs.DIRECTORY_DATA + "/" + ServiceDefs.DIRECTORY_BASE);
 	}
 	
 	public void loadCurrentPeriodWithPartialClear() {
+		
+	}
+	
+	public void updateTime() {
 		
 	}
 	
