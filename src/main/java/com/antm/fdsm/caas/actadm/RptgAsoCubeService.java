@@ -9,7 +9,7 @@ import com.antm.fdsm.orcl.oac.EssbaseServer;
 
 public class RptgAsoCubeService {
 	
-	private EssbaseServer server = AnalyticCloudPlatform.getEssbaseServer("22.167.13.4");
+	private EssbaseServer server = AnalyticCloudPlatform.getEssbaseServer("fdsm-dev-oac01.anthem.com");
 	private EssbaseCube rptgAso01 = server.getApplication(ServiceDefs.RPTG_NAME_ASO_01).getCube(ServiceDefs.RPTG_NAME_ASO_01);
 	
 	
