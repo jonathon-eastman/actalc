@@ -12,6 +12,8 @@ public class ServiceFacade {
 	
 	public static void incremental() {
 		RelationalDatabaseService.extractPSGLCurrentMonthBase();
+		RptgAsoCubeService rptg = new RptgAsoCubeService();
+		rptg.clearAllData().loadCurrentPeriodBase().loadHistory();
 	}
 	
 	public void transitionPlan() {

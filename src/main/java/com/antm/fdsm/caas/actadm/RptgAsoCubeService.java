@@ -13,12 +13,14 @@ public class RptgAsoCubeService {
 	private EssbaseCube rptgAso01 = server.getApplication(ServiceDefs.RPTG_NAME_ASO_01).getCube(ServiceDefs.RPTG_NAME_ASO_01);
 	
 	
-	public void clearAllData() {
+	public RptgAsoCubeService clearAllData() {
 		rptgAso01.clear();
+		return this;
 	}
 	
-	public void loadHistory() {	
+	public RptgAsoCubeService loadHistory() {	
 		rptgAso01.loadFilesInDirectory(ServiceDefs.DIRECTORY_HOME + ServiceDefs.DIRECTORY_PROJECT + "/" + ServiceDefs.DIRECTORY_DATA + "/" + ServiceDefs.DIRECTORY_HISTORY);
+		return this;
 	}
 	
 	public void loadCurrentPeriodIncremental() {
@@ -39,8 +41,9 @@ public class RptgAsoCubeService {
 		}
 	}
 	
-	public void loadCurrentPeriodBase() {
+	public RptgAsoCubeService loadCurrentPeriodBase() {
 		rptgAso01.loadFilesInDirectory(ServiceDefs.DIRECTORY_HOME + ServiceDefs.DIRECTORY_PROJECT + "/" + ServiceDefs.DIRECTORY_DATA + "/" + ServiceDefs.DIRECTORY_BASE);
+		return this;
 	}
 	
 	public void loadCurrentPeriodWithPartialClear() {
