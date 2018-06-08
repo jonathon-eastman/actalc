@@ -6,7 +6,7 @@ public class ServiceFacade {
 		
 	}
 	
-	public void base() {
+	public static void base() {
 		MetaAsoCubeService metaAso = new MetaAsoCubeService();
 		RptgAsoCubeService rptg = metaAso.prepareReportinCube();
 		//RelationalDatabaseService.extractPSGLCurrentMonthBase();
