@@ -50,6 +50,18 @@ public class RptgAsoCubeService {
 		
 	}
 	
+	public RptgAsoCubeService moveToProduction1() {
+		rptgAso01.rename(ServiceDefs.RPTG_NAME_PRIMARY).getCube(ServiceDefs.RPTG_NAME_ASO_01).rename(ServiceDefs.RPTG_NAME_PRIMARY);
+		RptgAsoCubeService cube = new RptgAsoCubeService();
+		return cube;
+	}
+	
+	public RptgAsoCubeService moveToProduction2() {
+		rptgAso01.rename(ServiceDefs.RPTG_NAME_SECONDARY).getCube(ServiceDefs.RPTG_NAME_ASO_01).rename(ServiceDefs.RPTG_NAME_SECONDARY);
+		RptgAsoCubeService cube = new RptgAsoCubeService();
+		return cube;
+	}
+	
 	public void updateTime() {
 		
 	}
