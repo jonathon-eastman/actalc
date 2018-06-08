@@ -26,6 +26,10 @@ public class ServiceDefs {
 	public static final String DIRECTORY_BASE = "base";
 	public static final String DIRECTORY_INCR = "incr";
 	
+	public static final String OAC_SERVER_PRD = "fdsm-prd-act.anthem.com";
+	public static final String OAC_SERVER_DEV = "fdsm-dev-oac01.anthem.com";
+	public static final String OAC_SERVER_TST = "fdsm-tst-oac01.anthem.com";
+	
 	public static final int CURRENT_PERIOD  = 4;
 	public static final int CURRENT_YEAR  = 2018;
 	
