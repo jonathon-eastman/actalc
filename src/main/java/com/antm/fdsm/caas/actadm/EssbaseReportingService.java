@@ -1,8 +1,5 @@
 package com.antm.fdsm.caas.actadm;
 
-import java.nio.file.Files;
-import java.nio.file.Paths;
-
 import com.antm.fdsm.orcl.oac.AnalyticCloudPlatform;
 import com.antm.fdsm.orcl.oac.EssbaseApplication;
 import com.antm.fdsm.orcl.oac.EssbaseCube;
@@ -24,26 +21,8 @@ public class EssbaseReportingService {
 		return this;
 	}
 	
-	public void loadCurrentPeriodIncremental() {
-		try {
-			Files.newDirectoryStream(Paths.get(ServiceDefs.DIRECTORY_HOME + ServiceDefs.DIRECTORY_PROJECT + "/" + ServiceDefs.DIRECTORY_HISTORY), path -> path.toFile().isFile())
-				.forEach(f -> {
-					if (f.toString().endsWith(".txt")) {
-						rptgAso01Cube.load( (loadFile, ruleFile) -> {
-							loadFile.localPath(f.toString());
-							ruleFile.aiSourceFile(f.toString());
-						});
-					}
-				}
-			);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
-	public EssbaseReportingService loadCurrentPeriodBase() {
-		rptgAso01Cube.loadFilesInDirectory(ServiceDefs.DIRECTORY_HOME + ServiceDefs.DIRECTORY_PROJECT + "/" + ServiceDefs.DIRECTORY_DATA + "/" + ServiceDefs.DIRECTORY_BASE);
+	public EssbaseReportingService loadCurrentPeriod(final String exportType) {
+		rptgAso01Cube.loadFilesInDirectory(ServiceDefs.DIRECTORY_HOME + ServiceDefs.DIRECTORY_PROJECT + "/" + ServiceDefs.DIRECTORY_DATA + "/" + ServiceDefs.DIRECTORY_CURRENTPERIOD);
 		return this;
 	}
 	

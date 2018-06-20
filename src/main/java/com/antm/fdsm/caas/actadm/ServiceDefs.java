@@ -23,8 +23,8 @@ public class ServiceDefs {
 	public static final String DIRECTORY_HISTORY = "history";
 	public static final String DIRECTORY_HOME = AnalyticCloudPlatform.getFileHome();
 	public static final String DIRECTORY_DATA = "data";
-	public static final String DIRECTORY_BASE = "base";
-	public static final String DIRECTORY_INCR = "incr";
+	public static final String DIRECTORY_CURRENTPERIOD = "cp";
+	public static final String DIRECTORY_RELATIONAL = "relational";
 	
 	public static final String OAC_SERVER_PRD = "fdsm-prd-act.anthem.com";
 	public static final String OAC_SERVER_DEV = "fdsm-dev-oac01.anthem.com";
@@ -32,6 +32,9 @@ public class ServiceDefs {
 	
 	public static final int CURRENT_PERIOD  = 4;
 	public static final int CURRENT_YEAR  = 2018;
+	
+	public static final String EXPORT_TYPE_BASE = "base";
+	public static final String EXPORT_TYPE_INCREMENTAL = "incremental";
 	
 	
 }

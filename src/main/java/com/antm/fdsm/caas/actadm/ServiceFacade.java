@@ -10,12 +10,14 @@ public class ServiceFacade {
 		EssbaseMetadataService metaService = new EssbaseMetadataService();
 		EssbaseReportingService rptgService = metaService.createReportingCube();
 		RelationalDatabaseService.extractPSGLCurrentMonth();
-		rptgService.clearAllData().loadCurrentPeriodBase().loadHistory();
+		rptgService.clearAllData().loadCurrentPeriod("incremental").loadHistory();
 	}
 	
 	public static void incremental() throws Exception {
+		RelationalDatabaseService.extractPSGLCurrentMonth();
 		EssbaseCalculationService calcService = new EssbaseCalculationService();
-		calcService.exportCube("incremental");
+		calcService.loadCurrentPeriod();
+		calcService.exportCube(ServiceDefs.EXPORT_TYPE_INCREMENTAL);
 	}
 	
 	public void transitionPlan() {
