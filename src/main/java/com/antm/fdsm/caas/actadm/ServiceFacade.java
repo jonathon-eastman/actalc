@@ -9,7 +9,7 @@ public class ServiceFacade {
 	public static void base() {
 		EssbaseMetadataService metaService = new EssbaseMetadataService();
 		EssbaseReportingService rptgService = metaService.createReportingCube();
-		RelationalDatabaseService.extractPSGLCurrentMonthBase();
+		RelationalDatabaseService.extractPSGLCurrentMonth();
 		rptgService.clearAllData().loadCurrentPeriodBase().loadHistory();
 	}
 	
