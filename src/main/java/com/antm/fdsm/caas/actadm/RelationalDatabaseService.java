@@ -1,7 +1,5 @@
 package com.antm.fdsm.caas.actadm;
 
-import java.util.function.Consumer;
-
 import com.antm.fdsm.orcl.odc.DatabaseService;
 import com.antm.fdsm.orcl.odc.DatabaseServiceList.Database;
 
