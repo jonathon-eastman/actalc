@@ -1,1 +1,1 @@
-TRUNCATE TABLE actadm_base
+TRUNCATE TABLE cloud_actadm

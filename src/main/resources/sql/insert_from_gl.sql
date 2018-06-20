@@ -1,4 +1,4 @@
-INSERT INTO ACTADM_BASE (deptid, business_unit, project_id, accounting_period, account, monetary_amount, statistic_amount) (
+INSERT INTO cloud_actadm (deptid, business_unit, project_id, accounting_period, account, monetary_amount, statistic_amount) (
   SELECT cc, co, pj, ap, acc, SUM(monetary_amount) AS "MONETARY_AMOUNT", SUM(statistic_amount) AS "STATISTIC_AMOUNT" FROM (
       SELECT sysadm.ps_jrnl_ln.deptid AS "CC", sysadm.ps_jrnl_header.business_unit AS "CO", sysadm.ps_jrnl_ln.project_id as "PJ", sysadm.ps_jrnl_header.accounting_period as "AP", sysadm.ps_jrnl_ln.account AS "ACC", sysadm.ps_jrnl_ln.monetary_amount, sysadm.ps_jrnl_ln.statistic_amount
       FROM sysadm.ps_jrnl_ln@PS_TABLE_LINK INNER JOIN sysadm.ps_jrnl_header@PS_TABLE_LINK ON (sysadm.ps_jrnl_ln.journal_id = sysadm.ps_jrnl_header.journal_id)
