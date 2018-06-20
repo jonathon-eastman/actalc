@@ -7,16 +7,16 @@ public class ServiceFacade {
 	}
 	
 	public static void base() {
-		MetaAsoCubeService metaAso = new MetaAsoCubeService();
-		RptgAsoCubeService rptg = metaAso.prepareReportingCube();
+		EssbaseMetadataService metaService = new EssbaseMetadataService();
+		EssbaseReportingService rptgService = metaService.createReportingCube();
 		RelationalDatabaseService.extractPSGLCurrentMonthBase();
-		rptg.clearAllData().loadCurrentPeriodBase().loadHistory();
+		rptgService.clearAllData().loadCurrentPeriodBase().loadHistory();
 	}
 	
 	public static void incremental() {
 		RelationalDatabaseService.extractPSGLCurrentMonthBase();
-		RptgAsoCubeService rptg = new RptgAsoCubeService();
-		rptg.clearAllData().loadCurrentPeriodBase().loadHistory();
+		EssbaseReportingService rptgService = new EssbaseReportingService();
+		rptgService.clearAllData().loadCurrentPeriodBase().loadHistory();
 	}
 	
 	public void transitionPlan() {
