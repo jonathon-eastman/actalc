@@ -13,10 +13,9 @@ public class ServiceFacade {
 		rptgService.clearAllData().loadCurrentPeriodBase().loadHistory();
 	}
 	
-	public static void incremental() {
-		RelationalDatabaseService.extractPSGLCurrentMonthBase();
-		EssbaseReportingService rptgService = new EssbaseReportingService();
-		rptgService.clearAllData().loadCurrentPeriodBase().loadHistory();
+	public static void incremental() throws Exception {
+		EssbaseCalculationService calcService = new EssbaseCalculationService();
+		calcService.exportCube("incremental");
 	}
 	
 	public void transitionPlan() {
