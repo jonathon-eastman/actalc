@@ -1,11 +1,15 @@
 package com.antm.fdsm.caas.actadm;
 
-public class Start {
+import com.antm.fdsm.orcl.utils.Singleton;
 
+public class Start {
+	
+	private final static Singleton config = Singleton.INSTANCE.getInstance();
+	
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		
 		try {
-			ServiceFacade.incremental();
+			ServiceFacade.base(config);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

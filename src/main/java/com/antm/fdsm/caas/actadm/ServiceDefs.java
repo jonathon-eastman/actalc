@@ -1,7 +1,5 @@
 package com.antm.fdsm.caas.actadm;
 
-import com.antm.fdsm.orcl.oac.AnalyticCloudPlatform;
-
 public class ServiceDefs {
 	
 	public final static String CUBE_NAME = "ACTADM";
@@ -21,7 +19,6 @@ public class ServiceDefs {
 	
 	public static final String DIRECTORY_PROJECT = CUBE_NAME.toLowerCase();
 	public static final String DIRECTORY_HISTORY = "history";
-	public static final String DIRECTORY_HOME = AnalyticCloudPlatform.getFileHome();
 	public static final String DIRECTORY_DATA = "data";
 	public static final String DIRECTORY_CURRENTPERIOD = "cp";
 	public static final String DIRECTORY_RELATIONAL = "relational";
