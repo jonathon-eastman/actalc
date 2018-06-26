@@ -10,29 +10,29 @@ public class EssbaseReportingService {
 	
 	private Singleton service;
 	private EssbaseServer server;
-	private EssbaseApplication rptgAso01App;
-	private EssbaseCube rptgAso01Cube;
+	private EssbaseApplication rptgApp;
+	private EssbaseCube rptgCube;
 	
 	public EssbaseReportingService(Singleton oacServiceSingleton) {
 		service = oacServiceSingleton;
 		server = new EssbaseServer(service);
-		rptgAso01App = server.getApplication(service, ServiceDefs.RPTG_NAME_ASO_01);
-		rptgAso01Cube = rptgAso01App.getCube(ServiceDefs.RPTG_NAME_ASO_01);
+		rptgApp = server.getApplication(service, ServiceDefs.RPTG_NAME);
+		rptgCube = rptgApp.getCube(ServiceDefs.RPTG_NAME);
 	}
 	public EssbaseReportingService clearAllData() {
-		rptgAso01Cube.clear();
+		rptgCube.clear();
 		return this;
 	}
 	
 	public EssbaseReportingService loadHistory() {
-		rptgAso01Cube.loadFilesInCloudDirectory(service.getHome() + "/" + ServiceDefs.DIRECTORY_PROJECT + "/" + ServiceDefs.DIRECTORY_DATA + "/" + ServiceDefs.DIRECTORY_HISTORY);
+		rptgCube.loadFilesInCloudDirectory(service.getHome() + "/" + ServiceDefs.DIRECTORY_PROJECT + "/" + ServiceDefs.DIRECTORY_DATA + "/" + ServiceDefs.DIRECTORY_HISTORY);
 		return this;
 	}
 	
 	public EssbaseReportingService loadCurrentPeriod() {
-		rptgAso01Cube.loadFilesInDirectory(service.getHome()  + "/" + ServiceDefs.DIRECTORY_PROJECT + "/" + ServiceDefs.DIRECTORY_DATA + "/" + ServiceDefs.DIRECTORY_CURRENTPERIOD + "/" + ServiceDefs.DIRECTORY_RELATIONAL);
+		rptgCube.loadFilesInDirectory(service.getHome()  + "/" + ServiceDefs.DIRECTORY_PROJECT + "/" + ServiceDefs.DIRECTORY_DATA + "/" + ServiceDefs.DIRECTORY_CURRENTPERIOD + "/" + ServiceDefs.DIRECTORY_RELATIONAL);
 		//CREATE FUNCTION TO DOWNLOAD FROM CLOUD HISTORY FILES.
-		//rptgAso01Cube.loadFilesInCloudDirectory(config.getHome() + "/" +ServiceDefs.DIRECTORY_PROJECT + "/" + ServiceDefs.DIRECTORY_DATA + "/" + ServiceDefs.DIRECTORY_CURRENTPERIOD + "/" + ServiceDefs.DIRECTORY_HISTORY);
+		//rptgCube.loadFilesInCloudDirectory(config.getHome() + "/" +ServiceDefs.DIRECTORY_PROJECT + "/" + ServiceDefs.DIRECTORY_DATA + "/" + ServiceDefs.DIRECTORY_CURRENTPERIOD + "/" + ServiceDefs.DIRECTORY_HISTORY);
 		return this;
 	}
 	
@@ -41,12 +41,12 @@ public class EssbaseReportingService {
 	}
 	
 	public EssbaseReportingService moveToProduction1() {
-		rptgAso01App.rename(ServiceDefs.RPTG_NAME_PRIMARY).getCube(ServiceDefs.RPTG_NAME_ASO_01).rename(ServiceDefs.RPTG_NAME_PRIMARY);
+		rptgApp.rename(ServiceDefs.CUBE_NAME).getCube(ServiceDefs.RPTG_NAME).rename(ServiceDefs.CUBE_NAME);
 		return this;
 	}
 	
 	public EssbaseReportingService moveToProduction2() {
-		rptgAso01App.rename(ServiceDefs.RPTG_NAME_SECONDARY).getCube(ServiceDefs.RPTG_NAME_ASO_01).rename(ServiceDefs.RPTG_NAME_SECONDARY);
+		rptgApp.rename(ServiceDefs.CUBE_NAME + "2").getCube(ServiceDefs.RPTG_NAME).rename(ServiceDefs.CUBE_NAME +"2");
 		return this;
 	}
 	

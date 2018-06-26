@@ -9,25 +9,25 @@ public class EssbaseCalculationService {
 	
 	private Singleton service;
 	private EssbaseServer server;
-	private EssbaseCube calcBso01Cube;
+	private EssbaseCube calcCube;
 	
 	public EssbaseCalculationService(Singleton oacServiceSingleton) {
 		service = oacServiceSingleton;
 		server = new EssbaseServer(service);
-		calcBso01Cube = server.getApplication(service, ServiceDefs.CALC_NAME_BSO_01).getCube(ServiceDefs.CALC_NAME_BSO_01);
+		calcCube = server.getApplication(service, ServiceDefs.CALC_NAME).getCube(ServiceDefs.CALC_NAME);
 	}
 	
 	public EssbaseCalculationService clearAllData() {
-		calcBso01Cube.clear();
+		calcCube.clear();
 		return this;
 	}
 	public AnalyticExportFile exportCube( final String exportType) throws Exception {
-		return calcBso01Cube.export(f -> f.fileName(ServiceDefs.RPTG_NAME_PRIMARY + "_" + exportType + ".txt"));
+		return calcCube.export(f -> f.fileName(ServiceDefs.CUBE_NAME + "_" + exportType + ".txt"));
 	}
 	
 	public EssbaseCalculationService loadCurrentPeriod() {
-		calcBso01Cube.loadFilesInDirectory(service.getHome() + "/" + ServiceDefs.DIRECTORY_PROJECT + "/" + ServiceDefs.DIRECTORY_DATA + "/" + ServiceDefs.DIRECTORY_CURRENTPERIOD + "/" + ServiceDefs.DIRECTORY_RELATIONAL);
-		calcBso01Cube.loadFilesInCloudDirectory(service.getHome() + "/" + ServiceDefs.DIRECTORY_PROJECT + "/" + ServiceDefs.DIRECTORY_DATA + "/" + ServiceDefs.DIRECTORY_CURRENTPERIOD + "/" + ServiceDefs.DIRECTORY_HISTORY);
+		calcCube.loadFilesInDirectory(service.getHome() + "/" + ServiceDefs.DIRECTORY_PROJECT + "/" + ServiceDefs.DIRECTORY_DATA + "/" + ServiceDefs.DIRECTORY_CURRENTPERIOD + "/" + ServiceDefs.DIRECTORY_RELATIONAL);
+		calcCube.loadFilesInCloudDirectory(service.getHome() + "/" + ServiceDefs.DIRECTORY_PROJECT + "/" + ServiceDefs.DIRECTORY_DATA + "/" + ServiceDefs.DIRECTORY_CURRENTPERIOD + "/" + ServiceDefs.DIRECTORY_HISTORY);
 		return this;
 	}
 }

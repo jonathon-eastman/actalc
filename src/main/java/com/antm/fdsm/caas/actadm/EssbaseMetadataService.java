@@ -9,31 +9,31 @@ public class EssbaseMetadataService {
 
 	private Singleton service;
 	private EssbaseServer server;
-	private EssbaseCube metaBso01Cube;
-	private EssbaseCube metaAso01Cube;
+	private EssbaseCube metaBsoCube;
+	private EssbaseCube metaAsoCube;
 
 	public EssbaseMetadataService(Singleton oacServiceSingleton) {
 		service = oacServiceSingleton;
 		server = new EssbaseServer(service);
-		metaBso01Cube = server.getApplication(service, ServiceDefs.META_NAME_BSO_01).getCube(ServiceDefs.META_NAME_BSO_01);
-		metaAso01Cube = server.getApplication(service, ServiceDefs.META_NAME_ASO_01).getCube(ServiceDefs.META_NAME_ASO_01);
+		metaBsoCube = server.getApplication(service, ServiceDefs.META_NAME_BSO).getCube(ServiceDefs.META_NAME_BSO);
+		metaAsoCube = server.getApplication(service, ServiceDefs.META_NAME_ASO).getCube(ServiceDefs.META_NAME_ASO);
 	}
 
 	public EssbaseMetadataService createCalculatingCube() {
-		EssbaseApplication calcBsoApp = server.getApplication(service, ServiceDefs.CALC_NAME_BSO_01);
+		EssbaseApplication calcBsoApp = server.getApplication(service, ServiceDefs.CALC_NAME);
 		if (calcBsoApp.exists()) {
 			calcBsoApp.delete();
 		}
-		metaBso01Cube.copyToNewApplication(ServiceDefs.CALC_NAME_BSO_01).getCube(ServiceDefs.META_NAME_BSO_01).rename(ServiceDefs.CALC_NAME_BSO_01);
+		metaBsoCube.copyToNewApplication(ServiceDefs.CALC_NAME).getCube(ServiceDefs.META_NAME_BSO).rename(ServiceDefs.CALC_NAME);
 		return this;
 	}
 
 	public EssbaseReportingService createReportingCube() {
-		EssbaseApplication rptgAsoApp = server.getApplication(service, ServiceDefs.RPTG_NAME_ASO_01);
-		if (rptgAsoApp.exists()) {
-			rptgAsoApp.delete();
+		EssbaseApplication rptgApp = server.getApplication(service, ServiceDefs.RPTG_NAME);
+		if (rptgApp.exists()) {
+			rptgApp.delete();
 		}
-		metaAso01Cube.copyToNewApplication(ServiceDefs.RPTG_NAME_ASO_01).getCube(ServiceDefs.META_NAME_ASO_01).rename(ServiceDefs.RPTG_NAME_ASO_01);
+		metaAsoCube.copyToNewApplication(ServiceDefs.RPTG_NAME).getCube(ServiceDefs.META_NAME_ASO).rename(ServiceDefs.RPTG_NAME);
 		EssbaseReportingService rptgService = new EssbaseReportingService(service);
 		return rptgService;
 	}
