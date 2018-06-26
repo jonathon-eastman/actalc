@@ -7,12 +7,14 @@ import com.antm.fdsm.orcl.utils.Singleton;
 
 public class EssbaseCalculationService {
 	
-	private Singleton config;
-	private EssbaseServer server = new EssbaseServer(config, "fdsm-dev-oac01.anthem.com");
-	private EssbaseCube calcBso01Cube = server.getApplication(config, ServiceDefs.CALC_NAME_BSO_01).getCube(ServiceDefs.CALC_NAME_BSO_01);
+	private Singleton service;
+	private EssbaseServer server;
+	private EssbaseCube calcBso01Cube;
 	
-	public EssbaseCalculationService(Singleton s) {
-		config = s;
+	public EssbaseCalculationService(Singleton oacServiceSingleton) {
+		service = oacServiceSingleton;
+		server = new EssbaseServer(service);
+		calcBso01Cube = server.getApplication(service, ServiceDefs.CALC_NAME_BSO_01).getCube(ServiceDefs.CALC_NAME_BSO_01);
 	}
 	
 	public EssbaseCalculationService clearAllData() {
@@ -24,8 +26,8 @@ public class EssbaseCalculationService {
 	}
 	
 	public EssbaseCalculationService loadCurrentPeriod() {
-		calcBso01Cube.loadFilesInDirectory(config.getHome() + ServiceDefs.DIRECTORY_PROJECT + "/" + ServiceDefs.DIRECTORY_DATA + "/" + ServiceDefs.DIRECTORY_CURRENTPERIOD + "/" + ServiceDefs.DIRECTORY_RELATIONAL);
-		calcBso01Cube.loadFilesInCloudDirectory(config.getHome() + ServiceDefs.DIRECTORY_PROJECT + "/" + ServiceDefs.DIRECTORY_DATA + "/" + ServiceDefs.DIRECTORY_CURRENTPERIOD + "/" + ServiceDefs.DIRECTORY_HISTORY);
+		calcBso01Cube.loadFilesInDirectory(service.getHome() + "/" + ServiceDefs.DIRECTORY_PROJECT + "/" + ServiceDefs.DIRECTORY_DATA + "/" + ServiceDefs.DIRECTORY_CURRENTPERIOD + "/" + ServiceDefs.DIRECTORY_RELATIONAL);
+		calcBso01Cube.loadFilesInCloudDirectory(service.getHome() + "/" + ServiceDefs.DIRECTORY_PROJECT + "/" + ServiceDefs.DIRECTORY_DATA + "/" + ServiceDefs.DIRECTORY_CURRENTPERIOD + "/" + ServiceDefs.DIRECTORY_HISTORY);
 		return this;
 	}
 }

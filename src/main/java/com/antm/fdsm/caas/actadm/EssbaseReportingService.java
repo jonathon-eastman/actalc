@@ -8,15 +8,15 @@ import com.antm.fdsm.orcl.utils.Singleton;
 
 public class EssbaseReportingService {
 	
-	private Singleton config;
+	private Singleton service;
 	private EssbaseServer server;
 	private EssbaseApplication rptgAso01App;
 	private EssbaseCube rptgAso01Cube;
 	
-	public EssbaseReportingService(Singleton s) {
-		Singleton config = s;
-		server = new EssbaseServer(config, "22.167.13.4");
-		rptgAso01App = server.getApplication(config, ServiceDefs.RPTG_NAME_ASO_01);
+	public EssbaseReportingService(Singleton oacServiceSingleton) {
+		service = oacServiceSingleton;
+		server = new EssbaseServer(service);
+		rptgAso01App = server.getApplication(service, ServiceDefs.RPTG_NAME_ASO_01);
 		rptgAso01Cube = rptgAso01App.getCube(ServiceDefs.RPTG_NAME_ASO_01);
 	}
 	public EssbaseReportingService clearAllData() {
@@ -24,14 +24,15 @@ public class EssbaseReportingService {
 		return this;
 	}
 	
-	public EssbaseReportingService loadHistory() {	
-		rptgAso01Cube.loadFilesInCloudDirectory(config.getHome() + ServiceDefs.DIRECTORY_PROJECT + "/" + ServiceDefs.DIRECTORY_DATA + "/" + ServiceDefs.DIRECTORY_HISTORY);
+	public EssbaseReportingService loadHistory() {
+		rptgAso01Cube.loadFilesInCloudDirectory(service.getHome() + "/" + ServiceDefs.DIRECTORY_PROJECT + "/" + ServiceDefs.DIRECTORY_DATA + "/" + ServiceDefs.DIRECTORY_HISTORY);
 		return this;
 	}
 	
 	public EssbaseReportingService loadCurrentPeriod() {
-		rptgAso01Cube.loadFilesInDirectory(config.getHome() + ServiceDefs.DIRECTORY_PROJECT + "/" + ServiceDefs.DIRECTORY_DATA + "/" + ServiceDefs.DIRECTORY_CURRENTPERIOD + "/" + ServiceDefs.DIRECTORY_RELATIONAL);
-		rptgAso01Cube.loadFilesInCloudDirectory(config.getHome() + ServiceDefs.DIRECTORY_PROJECT + "/" + ServiceDefs.DIRECTORY_DATA + "/" + ServiceDefs.DIRECTORY_CURRENTPERIOD + "/" + ServiceDefs.DIRECTORY_HISTORY);
+		rptgAso01Cube.loadFilesInDirectory(service.getHome()  + "/" + ServiceDefs.DIRECTORY_PROJECT + "/" + ServiceDefs.DIRECTORY_DATA + "/" + ServiceDefs.DIRECTORY_CURRENTPERIOD + "/" + ServiceDefs.DIRECTORY_RELATIONAL);
+		//CREATE FUNCTION TO DOWNLOAD FROM CLOUD HISTORY FILES.
+		//rptgAso01Cube.loadFilesInCloudDirectory(config.getHome() + "/" +ServiceDefs.DIRECTORY_PROJECT + "/" + ServiceDefs.DIRECTORY_DATA + "/" + ServiceDefs.DIRECTORY_CURRENTPERIOD + "/" + ServiceDefs.DIRECTORY_HISTORY);
 		return this;
 	}
 	

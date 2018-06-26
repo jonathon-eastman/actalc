@@ -4,12 +4,12 @@ import com.antm.fdsm.orcl.utils.Singleton;
 
 public class Start {
 	
-	private final static Singleton config = Singleton.INSTANCE.getInstance();
+	private final static Singleton oacActService = Singleton.OACDEV;
 	
 	public static void main(String[] args) {
 		
 		try {
-			ServiceFacade.base(config);
+			ServiceFacade.incremental(oacActService);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
