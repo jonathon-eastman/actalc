@@ -15,25 +15,25 @@ public class EssbaseMetadataService {
 	public EssbaseMetadataService(Singleton oacServiceSingleton) {
 		service = oacServiceSingleton;
 		server = new EssbaseServer(service);
-		metaBsoCube = server.getApplication(service, ServiceDefs.META_NAME_BSO).getCube(ServiceDefs.META_NAME_BSO);
-		metaAsoCube = server.getApplication(service, ServiceDefs.META_NAME_ASO).getCube(ServiceDefs.META_NAME_ASO);
+		metaBsoCube = server.getApplication(service, Def.META_NAME_BSO).getCube(Def.META_NAME_BSO);
+		metaAsoCube = server.getApplication(service, Def.META_NAME_ASO).getCube(Def.META_NAME_ASO);
 	}
 
 	public EssbaseMetadataService createCalculatingCube() {
-		EssbaseApplication calcBsoApp = server.getApplication(service, ServiceDefs.CALC_NAME);
+		EssbaseApplication calcBsoApp = server.getApplication(service, Def.CALC_NAME);
 		if (calcBsoApp.exists()) {
 			calcBsoApp.delete();
 		}
-		metaBsoCube.copyToNewApplication(ServiceDefs.CALC_NAME).getCube(ServiceDefs.META_NAME_BSO).rename(ServiceDefs.CALC_NAME);
+		metaBsoCube.copyToNewApplication(Def.CALC_NAME).getCube(Def.META_NAME_BSO).rename(Def.CALC_NAME);
 		return this;
 	}
 
 	public EssbaseReportingService createReportingCube() {
-		EssbaseApplication rptgApp = server.getApplication(service, ServiceDefs.RPTG_NAME);
+		EssbaseApplication rptgApp = server.getApplication(service, Def.RPTG_NAME);
 		if (rptgApp.exists()) {
 			rptgApp.delete();
 		}
-		metaAsoCube.copyToNewApplication(ServiceDefs.RPTG_NAME).getCube(ServiceDefs.META_NAME_ASO).rename(ServiceDefs.RPTG_NAME);
+		metaAsoCube.copyToNewApplication(Def.RPTG_NAME).getCube(Def.META_NAME_ASO).rename(Def.RPTG_NAME);
 		EssbaseReportingService rptgService = new EssbaseReportingService(service);
 		return rptgService;
 	}

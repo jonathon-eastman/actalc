@@ -1,6 +1,5 @@
 package com.antm.fdsm.caas.actadm;
 
-
 import com.antm.fdsm.orcl.oac.EssbaseApplication;
 import com.antm.fdsm.orcl.oac.EssbaseCube;
 import com.antm.fdsm.orcl.oac.EssbaseServer;
@@ -16,8 +15,8 @@ public class EssbaseReportingService {
 	public EssbaseReportingService(Singleton oacServiceSingleton) {
 		service = oacServiceSingleton;
 		server = new EssbaseServer(service);
-		rptgApp = server.getApplication(service, ServiceDefs.RPTG_NAME);
-		rptgCube = rptgApp.getCube(ServiceDefs.RPTG_NAME);
+		rptgApp = server.getApplication(service, Def.RPTG_NAME);
+		rptgCube = rptgApp.getCube(Def.RPTG_NAME);
 	}
 	public EssbaseReportingService clearAllData() {
 		rptgCube.clear();
@@ -25,12 +24,12 @@ public class EssbaseReportingService {
 	}
 	
 	public EssbaseReportingService loadHistory() {
-		rptgCube.loadFilesInCloudDirectory(service.getHome() + "/" + ServiceDefs.DIRECTORY_PROJECT + "/" + ServiceDefs.DIRECTORY_DATA + "/" + ServiceDefs.DIRECTORY_HISTORY);
+		rptgCube.loadFilesInCloudDirectory(service.getHome() + "/" + Def.DIR_PROJECT + "/" + Def.DIR_HISTORY);
 		return this;
 	}
 	
 	public EssbaseReportingService loadCurrentPeriod() {
-		rptgCube.loadFilesInDirectory(service.getHome()  + "/" + ServiceDefs.DIRECTORY_PROJECT + "/" + ServiceDefs.DIRECTORY_DATA + "/" + ServiceDefs.DIRECTORY_CURRENTPERIOD + "/" + ServiceDefs.DIRECTORY_RELATIONAL);
+		rptgCube.loadFilesInDirectory(service.getHome()  + "/" + Def.DIR_PROJECT  + Def.DIR_RELATIONAL);
 		//CREATE FUNCTION TO DOWNLOAD FROM CLOUD HISTORY FILES.
 		//rptgCube.loadFilesInCloudDirectory(config.getHome() + "/" +ServiceDefs.DIRECTORY_PROJECT + "/" + ServiceDefs.DIRECTORY_DATA + "/" + ServiceDefs.DIRECTORY_CURRENTPERIOD + "/" + ServiceDefs.DIRECTORY_HISTORY);
 		return this;
@@ -41,12 +40,16 @@ public class EssbaseReportingService {
 	}
 	
 	public EssbaseReportingService moveToProduction1() {
-		rptgApp.rename(ServiceDefs.CUBE_NAME).getCube(ServiceDefs.RPTG_NAME).rename(ServiceDefs.CUBE_NAME);
+		rptgApp.rename(Def.CUBE_NAME)
+			.getCube(Def.RPTG_NAME)
+			.rename(Def.CUBE_NAME);
 		return this;
 	}
 	
 	public EssbaseReportingService moveToProduction2() {
-		rptgApp.rename(ServiceDefs.CUBE_NAME + "2").getCube(ServiceDefs.RPTG_NAME).rename(ServiceDefs.CUBE_NAME +"2");
+		rptgApp.rename(Def.CUBE_NAME + "2")
+			.getCube(Def.RPTG_NAME)
+			.rename(Def.CUBE_NAME +"2");
 		return this;
 	}
 	
