@@ -1,6 +1,5 @@
 package com.antm.fdsm.caas.actadm;
 
-import com.antm.fdsm.orcl.oac.AnalyticExportFile;
 import com.antm.fdsm.orcl.oac.EssbaseCube;
 import com.antm.fdsm.orcl.oac.EssbaseServer;
 import com.antm.fdsm.orcl.oac.LoadRule;
@@ -23,10 +22,20 @@ public class EssbaseCalculationService {
 		return this;
 	}
 
-	public AnalyticExportFile exportCube() throws Exception {
-		return calcCube.export(f -> f.fileName(Def.DIR_PROJECT + ".txt"))
-			.bringLocally(service.getHome() + "/" + Def.DIR_NEW + "/" + Def.DIR_PROJECT + ".txt")
+	public EssbaseCalculationService exportCube() throws Exception {
+		calcCube.export(f -> f.fileName(Def.DIR_PROJECT + ".txt"))
+			.bringLocally(
+				service.getHome() + "/" + Def.DIR_PREVIOUS + "/" + Def.DIR_PROJECT + ".txt",
+				service.getHome() + "/" + Def.DIR_NEW + "/" + Def.DIR_PROJECT + ".txt"
+			).pipeify();
+		return this;
+	}
+	
+	public EssbaseCalculationService exportIncremental() throws Exception {
+		calcCube.export(f -> f.fileName(Def.DIR_PROJECT + ".txt"))
+			.bringLocally(service.getHome() + "/" + Def.DIR_INCREMENTAL + "/" + Def.DIR_PROJECT + ".txt")
 			.pipeify();
+		return this;
 	}
 
 	public EssbaseCalculationService loadCurrentPeriod() {
@@ -35,12 +44,13 @@ public class EssbaseCalculationService {
 		return this;
 	}
 
-	public void loadSubtractPrevious() {
+	public EssbaseCalculationService loadPreviousExport() {
 		calcCube.load((loadFile, ruleFile) -> {
-			loadFile.localPath(service.getHome() + "/" + Def.DIR_PREVIOUS + "/" + Def.DIR_PROJECT + ".txt");
+			loadFile.localPath(service.getHome() + "/" + Def.DIR_PREVIOUS + "/" + Def.DIR_PROJECT + ".txt").isFileLocal(true);
 			ruleFile.aiSourceFile(service.getHome() + "/" + Def.DIR_PREVIOUS + "/" + Def.DIR_PROJECT + ".txt")
 				.setValuesOperator(LoadRule.ValuesOperator.SUBTRACT);
 		});
+		return this;
 	}
 
 }
