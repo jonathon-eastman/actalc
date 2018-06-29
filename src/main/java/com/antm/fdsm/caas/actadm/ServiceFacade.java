@@ -5,22 +5,27 @@ import com.antm.fdsm.orcl.utils.Singleton;
 public class ServiceFacade {
 
 	public void archive() {
-		
+
 	}
 
-	public static void base(Singleton config) {
-		EssbaseMetadataService metaService = new EssbaseMetadataService(config);
+	public static void base(Singleton service) {
+		EssbaseMetadataService metaService = new EssbaseMetadataService(service);
 		EssbaseReportingService rptgService = metaService.createReportingCube();
 		metaService.createCalculatingCube();
 		//RelationalDatabaseService.extractPSGLCurrentMonth();
 		rptgService.clearAllData().loadCurrentPeriod().loadHistory();
 	}
 
-	public static void incremental(Singleton s) throws Exception {
+	public static void incremental(Singleton service) throws Exception {
 		//RelationalDatabaseService.extractPSGLCurrentMonth();
-		EssbaseCalculationService calcService = new EssbaseCalculationService(s);
-		calcService.clearAllData().loadCurrentPeriod();
-		calcService.exportCube();
+		EssbaseCalculationService calcService = new EssbaseCalculationService(service);
+		calcService.clearAllData()
+			.loadCurrentPeriod()
+			.exportCube()
+			.loadPreviousExport()
+			.exportIncremental();
+		//put ASO Slice load here.
+		//update time here.
 	}
 
 	public void transitionPlan() {
