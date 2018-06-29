@@ -34,13 +34,14 @@ public class EssbaseCalculationService {
 	public EssbaseCalculationService exportIncremental() throws Exception {
 		calcCube.export(f -> f.fileName(Def.DIR_PROJECT + ".txt"))
 			.bringLocally(service.getHome() + "/" + Def.DIR_INCREMENTAL + "/" + Def.DIR_PROJECT + ".txt")
-			.pipeify();
+			.pipeify()
+			.removeZeros();
 		return this;
 	}
 
 	public EssbaseCalculationService loadCurrentPeriod() {
 		calcCube.loadFilesInDirectory(service.getHome() + "/" + Def.DIR_RELATIONAL);
-		calcCube.loadFilesInCloudDirectory(service.getHome() + "/" + Def.DIR_HISTORY);
+		calcCube.loadFilesInCloudDirectory(service.getHome() + "/" + Def.DIR_CPHISTORY);
 		return this;
 	}
 

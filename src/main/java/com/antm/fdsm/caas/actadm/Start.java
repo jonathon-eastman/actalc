@@ -10,6 +10,7 @@ public class Start {
 		try {
 			//automatically handle backups with exports.
 			//remove zero function.
+			//automatically download wh files.
 			ServiceFacade.incremental(oacActService);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
