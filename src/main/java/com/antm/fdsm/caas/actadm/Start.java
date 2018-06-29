@@ -8,9 +8,13 @@ public class Start {
 
 	public static void main(String[] args) {
 		try {
-			//automatically handle backups with exports.
-			//remove zero function.
 			//automatically download wh files.
+			//aso slices and finalize base process.
+			//add slack support + messaging.
+			//add security.
+			//test on server.
+			//database service... make consistent.
+			//error handling.
 			ServiceFacade.incremental(oacActService);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

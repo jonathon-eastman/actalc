@@ -27,7 +27,7 @@ public class EssbaseCalculationService {
 			.bringLocally(
 				service.getHome() + "/" + Def.DIR_PREVIOUS + "/" + Def.DIR_PROJECT + ".txt",
 				service.getHome() + "/" + Def.DIR_NEW + "/" + Def.DIR_PROJECT + ".txt"
-			).pipeify();
+			).pipeify().copy2Backup(service.getHome() + "/" + Def.DIR_BKP);
 		return this;
 	}
 	
