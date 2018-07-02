@@ -22,19 +22,31 @@ public class EssbaseReportingService {
 		rptgCube.clear();
 		return this;
 	}
-	
-	public EssbaseReportingService loadHistory() {
-		rptgCube.loadFilesInCloudDirectory(service.getHome() + "/" + Def.DIR_HISTORY);
-		return this;
-	}
-	
+
 	public EssbaseReportingService loadCurrentPeriod() {
 		rptgCube.loadFilesInDirectory(service.getHome()  + "/"+ Def.DIR_NEW);
 		//CREATE FUNCTION TO DOWNLOAD FROM CLOUD HISTORY FILES.
 		//rptgCube.loadFilesInCloudDirectory(config.getHome() + "/" +ServiceDefs.DIRECTORY_PROJECT + "/" + ServiceDefs.DIRECTORY_DATA + "/" + ServiceDefs.DIRECTORY_CURRENTPERIOD + "/" + ServiceDefs.DIRECTORY_HISTORY);
 		return this;
 	}
-	
+
+	public EssbaseReportingService loadHistory() {
+		rptgCube.loadFilesInCloudDirectory(service.getHome() + "/" + Def.DIR_HISTORY);
+		return this;
+	}
+
+	public EssbaseReportingService loadIncrementalSlice() {
+		rptgCube.createBuffer(1000, 0.99)
+			.load2Buffer((loadFile, ruleFile) -> {
+				loadFile.localPath(service.getHome() + "/" + Def.DIR_INCREMENTAL);
+				ruleFile.aiSourceFile(
+					service.getHome() + "/" + Def.DIR_INCREMENTAL
+				);
+			})
+			.addBufferAsSlice(1000);
+		return this;
+	}
+
 	public void loadCurrentPeriodWithPartialClear() {
 		
 	}

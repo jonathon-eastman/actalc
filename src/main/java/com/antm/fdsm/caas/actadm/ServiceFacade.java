@@ -24,7 +24,9 @@ public class ServiceFacade {
 			.exportCube()
 			.loadPreviousExport()
 			.exportIncremental();
-		//put ASO Slice load here.
+		
+		EssbaseReportingService rptgService = new EssbaseReportingService(service);
+		rptgService.loadIncrementalSlice();
 		//update time here.
 	}
 
