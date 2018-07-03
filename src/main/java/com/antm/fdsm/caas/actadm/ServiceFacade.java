@@ -36,8 +36,8 @@ public class ServiceFacade {
 			.exportIncremental()
 			.moveNewExport2Previous();
 		
-		EssbaseReportingService rptgService = new EssbaseReportingService(service);
-		rptgService.loadIncrementalSlice();
+		EssbaseCubeService cubeService = new EssbaseCubeService(service);
+		cubeService.loadIncrementalSlice();
 		//update time here.
 	}
 

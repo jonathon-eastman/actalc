@@ -11,16 +11,12 @@ public class EssbaseReportingService {
 	private EssbaseServer server;
 	private EssbaseApplication rptgApp;
 	private EssbaseCube rptgCube;
-	private EssbaseApplication app;
-	private EssbaseCube cube;
 	
 	public EssbaseReportingService(Singleton oacServiceSingleton) {
 		service = oacServiceSingleton;
 		server = new EssbaseServer(service);
 		rptgApp = server.getApplication(service, Def.RPTG_NAME);
 		rptgCube = rptgApp.getCube(Def.RPTG_NAME);
-		app = server.getApplication(service, Def.CUBE_NAME);
-		cube = app.getCube(Def.CUBE_NAME);
 	}
 
 	public EssbaseReportingService agg() {
@@ -45,33 +41,21 @@ public class EssbaseReportingService {
 		return this;
 	}
 
-	public EssbaseReportingService loadIncrementalSlice() {
-		cube.createBuffer(1000, 0.99)
-			.load2Buffer((loadFile, ruleFile) -> {
-				loadFile.localPath(service.getHome() + "/" + Def.DIR_INCREMENTAL + "/" + Def.DIR_PROJECT + ".txt");
-				ruleFile.aiSourceFile(service.getHome() + "/" + Def.DIR_INCREMENTAL + "/" + Def.DIR_PROJECT + ".txt").applyBufferNumber(1000);
-			})
-			.addBufferAsSlice(1000);
-		return this;
-	}
-
 	public void loadCurrentPeriodWithPartialClear() {
 		
 	}
 	
 	public EssbaseReportingService move2Production() {
-		app.existsThenDelete();
-
-		rptgApp.rename(Def.CUBE_NAME)
+		rptgApp.ifAppExistsThenDelete(Def.CUBE_NAME)
+			.rename(Def.CUBE_NAME)
 			.getCube(Def.RPTG_NAME)
 			.rename(Def.CUBE_NAME);
 		return this;
 	}
 	
 	public EssbaseReportingService move2Production2() {
-		app.existsThenDelete();
-
-		rptgApp.rename(Def.CUBE_NAME + "2")
+		rptgApp.ifAppExistsThenDelete(Def.CUBE_NAME + "2")
+			.rename(Def.CUBE_NAME + "2")
 			.getCube(Def.RPTG_NAME)
 			.rename(Def.CUBE_NAME +"2");
 		return this;
