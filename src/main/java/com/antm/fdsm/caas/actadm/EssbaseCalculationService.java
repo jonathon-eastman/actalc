@@ -3,6 +3,7 @@ package com.antm.fdsm.caas.actadm;
 import com.antm.fdsm.orcl.oac.EssbaseCube;
 import com.antm.fdsm.orcl.oac.EssbaseServer;
 import com.antm.fdsm.orcl.oac.LoadRule;
+import com.antm.fdsm.orcl.utils.Helpers;
 import com.antm.fdsm.orcl.utils.Singleton;
 
 public class EssbaseCalculationService {
@@ -51,6 +52,15 @@ public class EssbaseCalculationService {
 			ruleFile.aiSourceFile(service.getHome() + "/" + Def.DIR_PREVIOUS + "/" + Def.DIR_PROJECT + ".txt")
 				.setValuesOperator(LoadRule.ValuesOperator.SUBTRACT);
 		});
+		return this;
+	}
+
+	public EssbaseCalculationService moveNewExport2Previous() {
+		Helpers.moveLocalFile(
+			service.getHome() + "/" + Def.DIR_NEW + "/" + Def.DIR_PROJECT + ".txt", 
+			service.getHome() + "/" + Def.DIR_PREVIOUS + "/" + Def.DIR_PROJECT + ".txt", 
+			service.getFs()
+		);
 		return this;
 	}
 

@@ -8,12 +8,22 @@ public class ServiceFacade {
 
 	}
 
-	public static void base(Singleton service) {
+	public static void base(Singleton service) throws Exception {
 		EssbaseMetadataService metaService = new EssbaseMetadataService(service);
 		EssbaseReportingService rptgService = metaService.createReportingCube();
 		metaService.createCalculatingCube();
 		//RelationalDatabaseService.extractPSGLCurrentMonth();
-		rptgService.clearAllData().loadCurrentPeriod().loadHistory();
+		EssbaseCalculationService calcService = new EssbaseCalculationService(service);
+		calcService.clearAllData()
+			.loadCurrentPeriod()
+			.exportCube()
+			.moveNewExport2Previous();
+		rptgService
+			.clearAllData()
+			.loadCurrentPeriod()
+			.loadHistory()
+			.agg()
+			.move2Production();
 	}
 
 	public static void incremental(Singleton service) throws Exception {
@@ -23,7 +33,8 @@ public class ServiceFacade {
 			.loadCurrentPeriod()
 			.exportCube()
 			.loadPreviousExport()
-			.exportIncremental();
+			.exportIncremental()
+			.moveNewExport2Previous();
 		
 		EssbaseReportingService rptgService = new EssbaseReportingService(service);
 		rptgService.loadIncrementalSlice();
