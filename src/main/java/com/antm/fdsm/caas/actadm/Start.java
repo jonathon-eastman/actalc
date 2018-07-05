@@ -1,5 +1,7 @@
 package com.antm.fdsm.caas.actadm;
 
+import org.pmw.tinylog.Logger;
+
 import com.antm.fdsm.orcl.utils.Singleton;
 
 public class Start {
@@ -15,7 +17,7 @@ public class Start {
 			//test on server.
 			//database service... make consistent.
 			//error handling.
-			ServiceFacade.incremental(oacActService);
+			ServiceFacade.base(oacActService);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

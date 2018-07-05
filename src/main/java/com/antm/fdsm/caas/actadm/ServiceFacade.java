@@ -1,5 +1,6 @@
 package com.antm.fdsm.caas.actadm;
 
+import com.antm.fdsm.orcl.oac.EssbaseApplication;
 import com.antm.fdsm.orcl.utils.Singleton;
 
 public class ServiceFacade {
@@ -59,5 +60,10 @@ public class ServiceFacade {
 
 	public void transitionActualYear() {
 
+	}
+	
+	public static void test(Singleton service) {
+		EssbaseApplication app = new EssbaseApplication(service, "ACTADM");
+		app.exists();
 	}
 }
