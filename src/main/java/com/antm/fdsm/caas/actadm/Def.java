@@ -10,6 +10,9 @@ public class Def {
 	public final static String CALC_NAME = "CALC-BSO-" + CUBE_NAME;
 	public final static String META_NAME_BSO = "META-BSO-" + CUBE_NAME;
 	public final static String META_NAME_ASO = "META-ASO-" + CUBE_NAME;
+	
+	public final static String SLACK_WEBHOOK_APP = "/services/TBNP5JXQT/BBP290HB4/TyOqMLrMjYSN7CY8ILhzXZYe";
+
 
 	public static final String DIR_PROJECT = CUBE_NAME.toLowerCase();
 	public static final String DIR_BALANCE = DIR_PROJECT + "/" +"balances";

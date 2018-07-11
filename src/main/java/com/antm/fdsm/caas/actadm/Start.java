@@ -1,10 +1,9 @@
 package com.antm.fdsm.caas.actadm;
-
-import org.pmw.tinylog.Logger;
-
 import com.antm.fdsm.orcl.utils.Singleton;
 
-public class Start {
+import io.vertx.core.AbstractVerticle;
+
+public class Start extends AbstractVerticle {
 
 	private final static Singleton oacActService = Singleton.OACDEV.setDirs(Def.DIRS);
 
@@ -18,11 +17,14 @@ public class Start {
 			//database service... make consistent.
 			//error handling.
 			ServiceFacade.base(oacActService);
+			System.exit(0);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.exit(0);
+
 	}
+	
+	
 
 }

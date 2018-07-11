@@ -23,11 +23,11 @@ public class EssbaseReportingService {
 		rptgCube.aggregate();
 		return this;
 	}
-
+	
 	public EssbaseReportingService clearAllData() {
 		rptgCube.clear();
-		return this;
-	}
+		return this ;
+	};
 
 	public EssbaseReportingService loadCurrentPeriod() {
 		rptgCube.loadFilesInDirectory(service.getHome()  + "/"+ Def.DIR_NEW);
@@ -64,4 +64,5 @@ public class EssbaseReportingService {
 	public void updateTime() {
 
 	}
+	
 }
