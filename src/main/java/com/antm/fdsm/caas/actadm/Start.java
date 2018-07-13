@@ -18,6 +18,7 @@ public class Start extends AbstractVerticle {
 			//localhost on mac + SSL.
 			//error handling.
 			//maybe change from runnable to observable
+			//
 			ServiceFacade.base(oacActService, dbHypusrService);
 			System.exit(0);
 		} catch (Exception e) {

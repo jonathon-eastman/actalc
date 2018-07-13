@@ -12,7 +12,7 @@ public class ServiceFacade {
 	}
 
 	public static void base(Singleton oacService, Singleton dbService) throws Exception {
-		//service.slackInfo(Def.SLACK_WEBHOOK_APP, "Starting " + Def.CUBE_NAME + " update[base].");
+		oacService.slackInfo(Def.SLACK_WEBHOOK_APP, "Starting " + Def.CUBE_NAME + " update[base].");
 		RelationalDatabaseService relationalService = new RelationalDatabaseService(dbService);
 
 		final EssbaseMetadataService metaService = new EssbaseMetadataService(oacService);
@@ -28,7 +28,7 @@ public class ServiceFacade {
 		List<Runnable> parallel1 = Arrays.asList(step1, step2);
 		parallel1.stream().parallel().forEach((step) -> step.run());
 
-		/*EssbaseCalculationService calcService = new EssbaseCalculationService(oacService);
+		EssbaseCalculationService calcService = new EssbaseCalculationService(oacService);
 		calcService.clearAllData()
 			.loadCurrentPeriod()
 			.exportCube()
@@ -42,7 +42,7 @@ public class ServiceFacade {
 			.agg()
 			.move2Production();
 
-		service.slackInfo(Def.SLACK_WEBHOOK_APP, "Finished " + Def.CUBE_NAME + "update[base].");*/
+		oacService.slackInfo(Def.SLACK_WEBHOOK_APP, "Finished " + Def.CUBE_NAME + "update[base].");
 	}
 
 	public static void incremental(Singleton oacService, Singleton dbService) throws Exception {
