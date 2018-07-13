@@ -11,31 +11,30 @@ public class ServiceFacade {
 
 	}
 
-	public static void base(Singleton service) throws Exception {
-		service.slackInfo(Def.SLACK_WEBHOOK_APP, "Starting " + Def.CUBE_NAME + " update[base].");
+	public static void base(Singleton oacService, Singleton dbService) throws Exception {
+		//service.slackInfo(Def.SLACK_WEBHOOK_APP, "Starting " + Def.CUBE_NAME + " update[base].");
+		RelationalDatabaseService relationalService = new RelationalDatabaseService(dbService);
 
-		//create meta service,
-		final EssbaseMetadataService metaService = new EssbaseMetadataService(service);
+		final EssbaseMetadataService metaService = new EssbaseMetadataService(oacService);
 
 		Runnable step1 = () -> {
-			metaService.createCalculatingCube();
+			relationalService.extractPSGLCurrentMonth();
 		};
 		Runnable step2 = () -> {
+			metaService.createCalculatingCube();
 			metaService.createReportingCube();
 		};
 
 		List<Runnable> parallel1 = Arrays.asList(step1, step2);
 		parallel1.stream().parallel().forEach((step) -> step.run());
 
-		//RelationalDatabaseService.extractPSGLCurrentMonth();
-		
-		EssbaseCalculationService calcService = new EssbaseCalculationService(service);
+		/*EssbaseCalculationService calcService = new EssbaseCalculationService(oacService);
 		calcService.clearAllData()
 			.loadCurrentPeriod()
 			.exportCube()
 			.moveNewExport2Previous();
 
-		EssbaseReportingService rptgService = new EssbaseReportingService(service);
+		EssbaseReportingService rptgService = new EssbaseReportingService(oacService);
 		rptgService
 			.clearAllData()
 			.loadCurrentPeriod()
@@ -43,13 +42,14 @@ public class ServiceFacade {
 			.agg()
 			.move2Production();
 
-		service.slackInfo(Def.SLACK_WEBHOOK_APP, "Finished " + Def.CUBE_NAME + "update[base].");
+		service.slackInfo(Def.SLACK_WEBHOOK_APP, "Finished " + Def.CUBE_NAME + "update[base].");*/
 	}
 
-	public static void incremental(Singleton service) throws Exception {
-		service.slackInfo(Def.SLACK_WEBHOOK_APP, "Starting " + Def.CUBE_NAME + "update[incremental].");
-		//RelationalDatabaseService.extractPSGLCurrentMonth();
-		EssbaseCalculationService calcService = new EssbaseCalculationService(service);
+	public static void incremental(Singleton oacService, Singleton dbService) throws Exception {
+		oacService.slackInfo(Def.SLACK_WEBHOOK_APP, "Starting " + Def.CUBE_NAME + "update[incremental].");
+		RelationalDatabaseService relationalService = new RelationalDatabaseService(dbService);
+		relationalService.extractPSGLCurrentMonth();
+		EssbaseCalculationService calcService = new EssbaseCalculationService(oacService);
 		calcService.clearAllData()
 			.loadCurrentPeriod()
 			.exportCube()
@@ -57,10 +57,10 @@ public class ServiceFacade {
 			.exportIncremental()
 			.moveNewExport2Previous();
 		
-		EssbaseCubeService cubeService = new EssbaseCubeService(service);
+		EssbaseCubeService cubeService = new EssbaseCubeService(oacService);
 		cubeService.loadIncrementalSlice();
 		//update time here.
-		service.slackInfo(Def.SLACK_WEBHOOK_APP, "Finished " + Def.CUBE_NAME + "update[incremental].");
+		oacService.slackInfo(Def.SLACK_WEBHOOK_APP, "Finished " + Def.CUBE_NAME + "update[incremental].");
 	}
 
 	public void transitionPlan() {
