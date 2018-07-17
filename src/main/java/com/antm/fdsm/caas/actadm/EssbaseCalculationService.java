@@ -43,6 +43,7 @@ public class EssbaseCalculationService {
 	public EssbaseCalculationService loadCurrentPeriod() {
 		calcCube.loadFilesInDirectory(service.getHome() + "/" + Def.DIR_RELATIONAL);
 		calcCube.loadFilesInCloudDirectory(service.getHome() + "/" + Def.DIR_CPHISTORY);
+		Helpers.moveFilesInLocalDirectory(service.getHome() + "/" + Def.DIR_RELATIONAL, service.getHome() + "/" + Def.DIR_LAST, service.getFs());
 		return this;
 	}
 

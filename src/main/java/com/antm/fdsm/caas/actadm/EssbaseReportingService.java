@@ -45,12 +45,13 @@ public class EssbaseReportingService {
 		
 	}
 	
-	public EssbaseReportingService move2Production() {
+	public EssbaseCubeService move2Production() {
 		rptgApp.ifAppExistsThenDelete(Def.CUBE_NAME)
 			.rename(Def.CUBE_NAME)
 			.getCube(Def.RPTG_NAME)
 			.rename(Def.CUBE_NAME);
-		return this;
+		EssbaseCubeService cubeService = new EssbaseCubeService(service);
+		return cubeService;
 	}
 	
 	public EssbaseReportingService move2Production2() {

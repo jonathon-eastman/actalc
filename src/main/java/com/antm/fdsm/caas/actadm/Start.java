@@ -13,13 +13,12 @@ public class Start extends AbstractVerticle {
 			//automatically download wh files.
 			//add security.
 			//test on server.
-			//database service... make consistent.
-			//add support for analyze
 			//localhost on mac + SSL.
 			//error handling.
 			//maybe change from runnable to observable
-			//
-			ServiceFacade.base(oacActService, dbHypusrService);
+			//error warning on relational load.
+			//missing members.
+			ServiceFacade.base(oacActService,dbHypusrService);
 			System.exit(0);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -27,7 +26,5 @@ public class Start extends AbstractVerticle {
 		}
 
 	}
-	
-	
 
 }

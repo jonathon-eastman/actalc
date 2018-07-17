@@ -2,21 +2,20 @@ package com.antm.fdsm.caas.actadm;
 
 import java.util.Arrays;
 import java.util.List;
-import com.antm.fdsm.orcl.oac.EssbaseApplication;
 import com.antm.fdsm.orcl.utils.Singleton;
 
 public class ServiceFacade {
 
-	public void archive() {
-
+	public static void archive(Singleton oacService) {
+		//EssbaseCubeService svc = new EssbaseCubeService(oacService).balance();
 	}
 
 	public static void base(Singleton oacService, Singleton dbService) throws Exception {
-		oacService.slackInfo(Def.SLACK_WEBHOOK_APP, "Starting " + Def.CUBE_NAME + " update[base].");
+		oacService.slackInfo(Def.SLACK_WEBHOOK_APP, ":rocket: starting " + Def.CUBE_NAME + " update[base].");
 		RelationalDatabaseService relationalService = new RelationalDatabaseService(dbService);
 
 		final EssbaseMetadataService metaService = new EssbaseMetadataService(oacService);
-
+		metaService.createReportingCube();
 		Runnable step1 = () -> {
 			relationalService.extractPSGLCurrentMonth();
 		};
@@ -31,8 +30,8 @@ public class ServiceFacade {
 		EssbaseCalculationService calcService = new EssbaseCalculationService(oacService);
 		calcService.clearAllData()
 			.loadCurrentPeriod()
-			.exportCube()
-			.moveNewExport2Previous();
+			.moveNewExport2Previous()
+			.exportCube();
 
 		EssbaseReportingService rptgService = new EssbaseReportingService(oacService);
 		rptgService
@@ -40,9 +39,10 @@ public class ServiceFacade {
 			.loadCurrentPeriod()
 			.loadHistory()
 			.agg()
-			.move2Production();
+			.move2Production()
+			.balance();
 
-		oacService.slackInfo(Def.SLACK_WEBHOOK_APP, "Finished " + Def.CUBE_NAME + "update[base].");
+		oacService.slackInfo(Def.SLACK_WEBHOOK_APP, ":checkered_flag: finished " + Def.CUBE_NAME + "update[base].");
 	}
 
 	public static void incremental(Singleton oacService, Singleton dbService) throws Exception {
@@ -56,9 +56,10 @@ public class ServiceFacade {
 			.loadPreviousExport()
 			.exportIncremental()
 			.moveNewExport2Previous();
-		
+
 		EssbaseCubeService cubeService = new EssbaseCubeService(oacService);
-		cubeService.loadIncrementalSlice();
+		cubeService.loadIncrementalSlice().balance();
+
 		//update time here.
 		oacService.slackInfo(Def.SLACK_WEBHOOK_APP, "Finished " + Def.CUBE_NAME + "update[incremental].");
 	}
@@ -81,10 +82,5 @@ public class ServiceFacade {
 
 	public void transitionActualYear() {
 
-	}
-	
-	public static void test(Singleton service) {
-		EssbaseApplication app = new EssbaseApplication(service, "ACTADM");
-		app.exists();
 	}
 }
