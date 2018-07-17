@@ -42,7 +42,7 @@ public class ServiceFacade {
 			.move2Production()
 			.balance();
 
-		oacService.slackInfo(Def.SLACK_WEBHOOK_APP, ":checkered_flag: finished " + Def.CUBE_NAME + "update[base].");
+		oacService.slackInfo(Def.SLACK_WEBHOOK_APP, ":checkered_flag: finished " + Def.CUBE_NAME + " update[base].");
 	}
 
 	public static void incremental(Singleton oacService, Singleton dbService) throws Exception {
