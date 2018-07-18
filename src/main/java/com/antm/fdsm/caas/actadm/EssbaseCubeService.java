@@ -64,7 +64,7 @@ public class EssbaseCubeService {
 		}
 		else {
 			Logger.info(Def.CUBE_NAME + " balances to the PeopleSoft gl ACTUALS ledger");
-			service.slackBalance(Def.SLACK_WEBHOOK_APP, ":stuck_out_tongue_winking: " + Def.CUBE_NAME + " balances to the PeopleSoft gl ACTUALS ledger");
+			service.slackBalance(Def.SLACK_WEBHOOK_APP, ":stuck_out_tongue_winking_eye: " + Def.CUBE_NAME + " balances to the PeopleSoft gl ACTUALS ledger");
 		}
 
 		return this;
