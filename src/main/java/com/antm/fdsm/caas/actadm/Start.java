@@ -11,7 +11,7 @@ public class Start extends AbstractVerticle {
 		try {
 			//automatically download wh files.
 			//add security.
-			//test on server.
+			//error handling needs improvement.
 			//localhost on mac + SSL.
 			//maybe change from runnable to observable
 			ServiceFacade.base(oacActService,dbHypusrService);
