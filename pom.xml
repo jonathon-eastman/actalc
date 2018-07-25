@@ -4,7 +4,7 @@
 
   <groupId>com.antm.fdsm.caas</groupId>
   <artifactId>actadm</artifactId>
-  <version>0.2.5</version>
+  <version>0.2.6</version>
   <packaging>jar</packaging>
 
   <name>actadm</name>
@@ -27,7 +27,7 @@
     <dependency>
     	<groupId>com.antm.fdsm.orcl</groupId>
     	<artifactId>odc</artifactId>
-    	<version>0.3.4</version>
+    	<version>0.3.5</version>
     </dependency>
     <dependency>
     	<groupId>com.antm.fdsm.orcl</groupId>

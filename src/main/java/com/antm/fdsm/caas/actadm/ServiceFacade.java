@@ -40,7 +40,8 @@ public class ServiceFacade {
 			.loadHistory()
 			.agg()
 			.move2Production()
-			.balance();
+			.balance()
+			.associate(dbService);
 
 		oacService.slackInfo(Def.SLACK_WEBHOOK_APP, ":checkered_flag: finished " + Def.CUBE_NAME + " update[base].");
 	}

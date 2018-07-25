@@ -5,6 +5,7 @@ import org.pmw.tinylog.Logger;
 import com.antm.fdsm.orcl.oac.EssbaseApplication;
 import com.antm.fdsm.orcl.oac.EssbaseCube;
 import com.antm.fdsm.orcl.oac.EssbaseServer;
+import com.antm.fdsm.orcl.odc.DatabaseService;
 import com.antm.fdsm.orcl.utils.Helpers;
 import com.antm.fdsm.orcl.utils.Singleton;
 
@@ -23,6 +24,12 @@ public class EssbaseCubeService {
 		server = new EssbaseServer(service);
 		app = server.getApplication(service, Def.CUBE_NAME);
 		cube = app.getCube(Def.CUBE_NAME);
+	}
+	
+	public EssbaseCubeService associate(Singleton dbService) {
+		DatabaseService hypusr = new DatabaseService(dbService);
+		cube.associateFilterPermissions(hypusr);
+		return this;
 	}
 	
 	public EssbaseCubeService balance() {
