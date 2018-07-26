@@ -14,7 +14,15 @@ public class Start extends AbstractVerticle {
 			//error handling needs improvement.
 			//localhost on mac + SSL.
 			//maybe change from runnable to observable
-			ServiceFacade.base(oacActService,dbHypusrService);
+			//create archive script.
+			//encrypt file.
+			//if (args[0].equalsIgnoreCase("base")) {
+				ServiceFacade.base(oacActService,dbHypusrService);
+			//}
+			//else if(args[0].equalsIgnoreCase("incr")) {
+			//	ServiceFacade.incremental(oacActService,dbHypusrService);
+			//}
+
 			System.exit(0);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

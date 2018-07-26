@@ -30,7 +30,7 @@ public class Def {
 	public static final String DIR_INCREMENTAL = DIR_EXPORT + "/" + "incremental";
 	public static final List<String> DIRS = Arrays.asList(DIR_PROJECT,DIR_BALANCE,DIR_BKP,DIR_TMP,DIR_DATA,DIR_HISTORY,DIR_CP,DIR_EXPORT,DIR_RELATIONAL,DIR_CPHISTORY,DIR_NEW,DIR_PREVIOUS,DIR_INCREMENTAL, DIR_LAST);
 
-	public static final int CP  = 6;
+	public static final int CP  = 7;
 	public static final int CY  = 2018;
 	
 	public static final int VARIANCE_TOLERANCE = 1;
