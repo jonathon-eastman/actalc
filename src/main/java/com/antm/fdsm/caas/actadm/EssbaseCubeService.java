@@ -46,18 +46,18 @@ public class EssbaseCubeService {
 		
 		//gl adm
 		JsonArray glResultsAdm = Helpers.readJsonArrayFile(service.getHome() + "/" + Def.DIR_BALANCE + "/act_adm" + Def.CP + "_" + Def.CY + ".json", service.getFs());
-		double admGl = Helpers.ifNumberGetDoubleElseZero(glResultsAdm.getString(1));
+		double admGl = glResultsAdm.getDouble(1);
 		//gl hc
 		JsonArray glResultsHct = Helpers.readJsonArrayFile(service.getHome() + "/" + Def.DIR_BALANCE + "/act_hct" + Def.CP + "_" + Def.CY + ".json", service.getFs());
-		double hctGl = Helpers.ifNumberGetDoubleElseZero(glResultsHct.getString(1));
+		double hctGl = glResultsHct.getDouble(1);
 
 		//gl fte
 		JsonArray glResultsFte = Helpers.readJsonArrayFile(service.getHome() + "/" + Def.DIR_BALANCE + "/act_fte" + Def.CP + "_" + Def.CY + ".json", service.getFs());
-		double fteGl = Helpers.ifNumberGetDoubleElseZero(glResultsFte.getString(1));
+		double fteGl = glResultsFte.getDouble(1);
 
 		//gl hrs
 		JsonArray glResultsHrs = Helpers.readJsonArrayFile(service.getHome() + "/" + Def.DIR_BALANCE + "/act_hrs" + Def.CP + "_" + Def.CY + ".json", service.getFs());
-		double hrsGl = Helpers.ifNumberGetDoubleElseZero(glResultsHrs.getString(1));
+		double hrsGl = glResultsHrs.getDouble(1);
 
 		//variances
 		double varAdm  = admEssbase - admGl;
