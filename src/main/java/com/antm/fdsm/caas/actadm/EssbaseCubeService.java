@@ -52,8 +52,11 @@ public class EssbaseCubeService {
 		double hctGl = glResultsHct.getDouble(1);
 
 		//gl fte
-		JsonArray glResultsFte = Helpers.readJsonArrayFile(service.getHome() + "/" + Def.DIR_BALANCE + "/act_fte" + Def.CP + "_" + Def.CY + ".json", service.getFs());
-		double fteGl = glResultsFte.getDouble(1);
+		double fteGl = 0.00;
+		if ( !Helpers.fileExists(service.getHome() + "/" + Def.DIR_BALANCE + "/act_fte" + Def.CP + "_" + Def.CY + ".json", service.getFs())) {
+			JsonArray glResultsFte = Helpers.readJsonArrayFile(service.getHome() + "/" + Def.DIR_BALANCE + "/act_fte" + Def.CP + "_" + Def.CY + ".json", service.getFs());
+			fteGl = glResultsFte.getDouble(1);
+		}
 
 		//gl hrs
 		JsonArray glResultsHrs = Helpers.readJsonArrayFile(service.getHome() + "/" + Def.DIR_BALANCE + "/act_hrs" + Def.CP + "_" + Def.CY + ".json", service.getFs());
