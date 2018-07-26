@@ -39,34 +39,26 @@ public class EssbaseCubeService {
 		//essbase
 		JsonObject essbaseResults = cube.runMdx(mdx);
 		Logger.info("Got essbase results as json [{}].", essbaseResults);
-		double admEssbase = Double.parseDouble(essbaseResults.getJsonObject("slice").getJsonObject("data").getJsonArray("ranges").getJsonObject(0).getJsonArray("values").getString(21));
-		double hctEssbase = Double.parseDouble(essbaseResults.getJsonObject("slice").getJsonObject("data").getJsonArray("ranges").getJsonObject(0).getJsonArray("values").getString(22));
-		double fteEssbase = Double.parseDouble(essbaseResults.getJsonObject("slice").getJsonObject("data").getJsonArray("ranges").getJsonObject(0).getJsonArray("values").getString(23));
-		double hrsEssbase = Double.parseDouble(essbaseResults.getJsonObject("slice").getJsonObject("data").getJsonArray("ranges").getJsonObject(0).getJsonArray("values").getString(24));
+		double admEssbase = Helpers.ifNumberGetDoubleElseZero(essbaseResults.getJsonObject("slice").getJsonObject("data").getJsonArray("ranges").getJsonObject(0).getJsonArray("values").getString(21));
+		double hctEssbase = Helpers.ifNumberGetDoubleElseZero(essbaseResults.getJsonObject("slice").getJsonObject("data").getJsonArray("ranges").getJsonObject(0).getJsonArray("values").getString(22));
+		double fteEssbase = Helpers.ifNumberGetDoubleElseZero(essbaseResults.getJsonObject("slice").getJsonObject("data").getJsonArray("ranges").getJsonObject(0).getJsonArray("values").getString(23));
+		double hrsEssbase = Helpers.ifNumberGetDoubleElseZero(essbaseResults.getJsonObject("slice").getJsonObject("data").getJsonArray("ranges").getJsonObject(0).getJsonArray("values").getString(24));
+		
 		//gl adm
 		JsonArray glResultsAdm = Helpers.readJsonArrayFile(service.getHome() + "/" + Def.DIR_BALANCE + "/act_adm" + Def.CP + "_" + Def.CY + ".json", service.getFs());
-		double admGl = 0.00;
-		if (Helpers.isNumber(glResultsAdm.getString(1))) {
-			admGl = glResultsAdm.getDouble(1);
-		}
+		double admGl = Helpers.ifNumberGetDoubleElseZero(glResultsAdm.getString(1));
 		//gl hc
 		JsonArray glResultsHct = Helpers.readJsonArrayFile(service.getHome() + "/" + Def.DIR_BALANCE + "/act_hct" + Def.CP + "_" + Def.CY + ".json", service.getFs());
-		double hctGl = 0.00;
-		if (Helpers.isNumber(glResultsHct.getString(1))) {
-			hctGl = glResultsHct.getDouble(1);
-		}
+		double hctGl = Helpers.ifNumberGetDoubleElseZero(glResultsHct.getString(1));
+
 		//gl fte
 		JsonArray glResultsFte = Helpers.readJsonArrayFile(service.getHome() + "/" + Def.DIR_BALANCE + "/act_fte" + Def.CP + "_" + Def.CY + ".json", service.getFs());
-		double fteGl = 0.00;
-		if (Helpers.isNumber(glResultsFte.getString(1))) {
-			fteGl = glResultsFte.getDouble(1);
-		}
+		double fteGl = Helpers.ifNumberGetDoubleElseZero(glResultsFte.getString(1));
+
 		//gl hrs
 		JsonArray glResultsHrs = Helpers.readJsonArrayFile(service.getHome() + "/" + Def.DIR_BALANCE + "/act_hrs" + Def.CP + "_" + Def.CY + ".json", service.getFs());
-		double hrsGl = 0.00;
-		if (Helpers.isNumber(glResultsHrs.getString(1))) {
-			hrsGl = glResultsHrs.getDouble(1);
-		}
+		double hrsGl = Helpers.ifNumberGetDoubleElseZero(glResultsHrs.getString(1));
+
 		//variances
 		double varAdm  = admEssbase - admGl;
 		double varHct  = hctEssbase - hctGl;
