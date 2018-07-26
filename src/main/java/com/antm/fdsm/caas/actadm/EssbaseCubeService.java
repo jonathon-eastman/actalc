@@ -28,6 +28,7 @@ public class EssbaseCubeService {
 	
 	public EssbaseCubeService associate(Singleton dbService) {
 		DatabaseService hypusr = new DatabaseService(dbService);
+		app.associateApplicationPermissions(hypusr);
 		cube.associateFilterPermissions(hypusr);
 		return this;
 	}

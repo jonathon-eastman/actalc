@@ -10,12 +10,12 @@ public class Start extends AbstractVerticle {
 	public static void main(String[] args) {
 		try {
 			//automatically download wh files.
-			//add security.
 			//error handling needs improvement.
 			//localhost on mac + SSL.
 			//maybe change from runnable to observable
 			//create archive script.
 			//encrypt file.
+			//attach to fdsmstart.
 			//if (args[0].equalsIgnoreCase("base")) {
 				ServiceFacade.base(oacActService,dbHypusrService);
 			//}

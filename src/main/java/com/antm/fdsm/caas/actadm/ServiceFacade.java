@@ -6,8 +6,8 @@ import com.antm.fdsm.orcl.utils.Singleton;
 
 public class ServiceFacade {
 
-	public static void archive(Singleton oacService) {
-		//EssbaseCubeService svc = new EssbaseCubeService(oacService).balance();
+	public static void archive(Singleton oacService, Singleton dbService) {
+		//EssbaseCubeService svc = new EssbaseCubeService(oacService).associate(dbService);
 	}
 
 	public static void base(Singleton oacService, Singleton dbService) throws Exception {
