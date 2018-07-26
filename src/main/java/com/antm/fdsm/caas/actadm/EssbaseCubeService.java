@@ -47,32 +47,28 @@ public class EssbaseCubeService {
 
 		//gl adm
 		double admGl = 0.00;
-		if ( !Helpers.fileExists(service.getHome() + "/" + Def.DIR_BALANCE + "/act_adm" + Def.CP + "_" + Def.CY + ".json", service.getFs())) {
-			System.out.println("ADMIN FILE EXISTS");
+		if ( Helpers.fileExists(service.getHome() + "/" + Def.DIR_BALANCE + "/act_adm" + Def.CP + "_" + Def.CY + ".json", service.getFs())) {
 			JsonArray glResultsAdm = Helpers.readJsonArrayFile(service.getHome() + "/" + Def.DIR_BALANCE + "/act_adm" + Def.CP + "_" + Def.CY + ".json", service.getFs());
 			admGl = glResultsAdm.getDouble(1);
-		}
-		else {
-			System.out.println("ADMIN FILE DOES NOT EXISTS");
 		}
 
 		//gl hc
 		double hctGl = 0.00;
-		if ( !Helpers.fileExists(service.getHome() + "/" + Def.DIR_BALANCE + "/act_hct" + Def.CP + "_" + Def.CY + ".json", service.getFs())) {
+		if ( Helpers.fileExists(service.getHome() + "/" + Def.DIR_BALANCE + "/act_hct" + Def.CP + "_" + Def.CY + ".json", service.getFs())) {
 			JsonArray glResultsHct = Helpers.readJsonArrayFile(service.getHome() + "/" + Def.DIR_BALANCE + "/act_hct" + Def.CP + "_" + Def.CY + ".json", service.getFs());
 			hctGl = glResultsHct.getDouble(1);
 		}
 
 		//gl fte
 		double fteGl = 0.00;
-		if ( !Helpers.fileExists(service.getHome() + "/" + Def.DIR_BALANCE + "/act_fte" + Def.CP + "_" + Def.CY + ".json", service.getFs())) {
+		if ( Helpers.fileExists(service.getHome() + "/" + Def.DIR_BALANCE + "/act_fte" + Def.CP + "_" + Def.CY + ".json", service.getFs())) {
 			JsonArray glResultsFte = Helpers.readJsonArrayFile(service.getHome() + "/" + Def.DIR_BALANCE + "/act_fte" + Def.CP + "_" + Def.CY + ".json", service.getFs());
 			fteGl = glResultsFte.getDouble(1);
 		}
 
 		//gl hrs
 		double hrsGl = 0.00;
-		if ( !Helpers.fileExists(service.getHome() + "/" + Def.DIR_BALANCE + "/act_hrs" + Def.CP + "_" + Def.CY + ".json", service.getFs())) {
+		if ( Helpers.fileExists(service.getHome() + "/" + Def.DIR_BALANCE + "/act_hrs" + Def.CP + "_" + Def.CY + ".json", service.getFs())) {
 			JsonArray glResultsHrs = Helpers.readJsonArrayFile(service.getHome() + "/" + Def.DIR_BALANCE + "/act_hrs" + Def.CP + "_" + Def.CY + ".json", service.getFs());
 			hrsGl = glResultsHrs.getDouble(1);
 		}
