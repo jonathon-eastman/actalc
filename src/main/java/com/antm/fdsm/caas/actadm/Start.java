@@ -1,6 +1,12 @@
 package com.antm.fdsm.caas.actadm;
+import java.util.List;
+
+import org.pmw.tinylog.Logger;
+
+import com.antm.fdsm.orcl.odc.DatabaseService;
 import com.antm.fdsm.orcl.utils.Singleton;
 import io.vertx.core.AbstractVerticle;
+import io.vertx.core.json.JsonArray;
 
 public class Start extends AbstractVerticle {
 
@@ -16,13 +22,29 @@ public class Start extends AbstractVerticle {
 			//create archive script.
 			//encrypt file.
 			//attach to fdsmstart.
-			//if (args[0].equalsIgnoreCase("base")) {
-				ServiceFacade.base(oacActService,dbHypusrService);
-			//}
-			//else if(args[0].equalsIgnoreCase("incr")) {
-			//	ServiceFacade.incremental(oacActService,dbHypusrService);
-			//}
-
+			//update time in cube.
+			DatabaseService hypusr = new DatabaseService(dbHypusrService);
+			
+			//jobid actadm 74
+			JsonArray ja = new JsonArray().add(72);
+			List<JsonArray> record = hypusr.queryFromStringWithParams(
+					"SELECT state, state_config\n" + 
+					"FROM start_fact \n" + 
+					"WHERE (job_id = ?)\n" + 
+					"GROUP BY state, state_config", ja );
+			if( record.get(0).getInteger(0) == 1) {
+				if( record.get(0).getInteger(1) == 2) {
+					Logger.info("running base.");
+					ServiceFacade.base(oacActService,dbHypusrService);
+				}
+				else if ( record.get(0).getInteger(1) == 1) {
+					Logger.info("running incremental.");
+					ServiceFacade.incremental(oacActService,dbHypusrService);
+				}
+			}
+			else {
+				Logger.info("nothting to run here.");
+			}
 			System.exit(0);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
