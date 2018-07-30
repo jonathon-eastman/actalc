@@ -88,8 +88,8 @@ public class EssbaseCubeService {
 			service.slackErrorDev(Def.SLACK_WEBHOOK_APP, ":sob: an imbalance between " + Def.CUBE_NAME + " and the PeopleSoft gl ACTUALS ledger exists.");
 		}
 		else {
-			Logger.info(Def.CUBE_NAME + " balances :ghost: to the PeopleSoft gl ACTUALS ledger");
-			service.slackBalance(Def.SLACK_WEBHOOK_APP, ":stuck_out_tongue_winking_eye: " + Def.CUBE_NAME + " balances to the PeopleSoft gl ACTUALS ledger");
+			Logger.info(Def.CUBE_NAME + " balances to the PeopleSoft gl ACTUALS ledger");
+			service.slackBalance(Def.SLACK_WEBHOOK_APP, ":stuck_out_tongue_winking_eye: " + Def.CUBE_NAME + " balances :ghost: to the PeopleSoft gl ACTUALS ledger");
 		}
 
 		return this;
