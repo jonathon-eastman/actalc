@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Def {
 
-	public final static String CUBE_NAME = "ACTADM2";
+	public final static String CUBE_NAME = "ACTADM";
 	public final static String RPTG_NAME = "RPTG-ASO-" + CUBE_NAME;
 	public final static String CALC_NAME = "CALC-BSO-" + CUBE_NAME;
 	public final static String META_NAME_BSO = "META-BSO-" + CUBE_NAME;

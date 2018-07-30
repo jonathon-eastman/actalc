@@ -53,14 +53,6 @@ public class EssbaseReportingService {
 		EssbaseCubeService cubeService = new EssbaseCubeService(service);
 		return cubeService;
 	}
-	
-	public EssbaseReportingService move2Production2() {
-		rptgApp.ifAppExistsThenDelete(Def.CUBE_NAME + "2")
-			.rename(Def.CUBE_NAME + "2")
-			.getCube(Def.RPTG_NAME)
-			.rename(Def.CUBE_NAME +"2");
-		return this;
-	}
 
 	public void updateTime() {
 

@@ -22,11 +22,11 @@ public class Start extends AbstractVerticle {
 			//create archive script.
 			//encrypt file.
 			//attach to fdsmstart.
-			//update time in cube.
+			//if (args[0].equalsIgnoreCase("base")) {
 			DatabaseService hypusr = new DatabaseService(dbHypusrService);
 			
 			//jobid actadm 74
-			JsonArray ja = new JsonArray().add(72);
+			JsonArray ja = new JsonArray().add(74);
 			List<JsonArray> record = hypusr.queryFromStringWithParams(
 					"SELECT state, state_config\n" + 
 					"FROM start_fact \n" + 
@@ -38,13 +38,18 @@ public class Start extends AbstractVerticle {
 					ServiceFacade.base(oacActService,dbHypusrService);
 				}
 				else if ( record.get(0).getInteger(1) == 1) {
-					Logger.info("running incremental.");
+					Logger.info("running base.");
 					ServiceFacade.incremental(oacActService,dbHypusrService);
 				}
 			}
 			else {
 				Logger.info("nothting to run here.");
 			}
+			//}
+			//else if(args[0].equalsIgnoreCase("incr")) {
+			//	ServiceFacade.incremental(oacActService,dbHypusrService);
+			//}
+
 			System.exit(0);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
