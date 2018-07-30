@@ -25,7 +25,7 @@ public class Start extends AbstractVerticle {
 			//attach to fdsmstart.
 			//if (args[0].equalsIgnoreCase("base")) {
 			
-			int num = Helpers.numberOfRunningProcesses(".*" + Def.CUBE_NAME.toLowerCase() + "-[0-9]\\.[0-9]\\.[0-9]*\\.jar.*");
+			/*int num = Helpers.numberOfRunningProcesses(".*" + Def.CUBE_NAME.toLowerCase() + "-[0-9]\\.[0-9]\\.[0-9]*\\.jar.*");
 			if ( num == -1) {
 				Logger.error("something crazy going on.");
 				System.exit(0);
@@ -59,12 +59,14 @@ public class Start extends AbstractVerticle {
 			else {
 				Logger.info("already running, no need to run.");
 				System.exit(0);
-			}
-		} catch (Exception e) {
+			}*/
+		ServiceFacade.base(oacActService,dbHypusrService);
+		} 
+		catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Logger.error("bubbled up error to main method. [{}].", e.getMessage());
 		}
-
+		
 	}
 
 }
