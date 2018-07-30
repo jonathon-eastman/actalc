@@ -25,39 +25,36 @@ public class Start extends AbstractVerticle {
 			//attach to fdsmstart.
 			//if (args[0].equalsIgnoreCase("base")) {
 			
-			int num = Helpers.numberOfRunningProcesses(".*actadm-[0-9]\\.[0-9]\\.[0-9]*\\.jar.*");
-			System.out.println("NUM == " + num);
+			int num = Helpers.numberOfRunningProcesses(".*" + Def.CUBE_NAME.toLowerCase() + "-[0-9]\\.[0-9]\\.[0-9]*\\.jar.*");
 			if ( num == -1) {
 				Logger.error("something crazy going on.");
+				System.exit(0);
 			} 
-			else if ( num == 0) {
-			DatabaseService hypusr = new DatabaseService(dbHypusrService);
-			
-			//jobid actadm 74
-			JsonArray ja = new JsonArray().add(74);
-			List<JsonArray> record = hypusr.queryFromStringWithParams(
-					"SELECT state, state_config\n" + 
-					"FROM start_fact \n" + 
-					"WHERE (job_id = ?)\n" + 
-					"GROUP BY state, state_config", ja );
-			if( record.get(0).getInteger(0) == 1) {
-				if( record.get(0).getInteger(1) == 2) {
-					Logger.info("running base.");
-					ServiceFacade.base(oacActService,dbHypusrService);
+			else if ( num == 1) {
+				Logger.info("one job is running including this process.  So its ok to go ahead and run.");
+				DatabaseService hypusr = new DatabaseService(dbHypusrService);
+				
+				//jobid actadm 74
+				JsonArray ja = new JsonArray().add(74);
+				List<JsonArray> record = hypusr.queryFromStringWithParams(
+						"SELECT state, state_config\n" + 
+						"FROM start_fact \n" + 
+						"WHERE (job_id = ?)\n" + 
+						"GROUP BY state, state_config", ja );
+				if( record.get(0).getInteger(0) == 1) {
+					if( record.get(0).getInteger(1) == 2) {
+						Logger.info("running base.");
+						ServiceFacade.base(oacActService,dbHypusrService);
+					}
+					else if ( record.get(0).getInteger(1) == 1) {
+						Logger.info("running base.");
+						ServiceFacade.incremental(oacActService,dbHypusrService);
+					}
 				}
-				else if ( record.get(0).getInteger(1) == 1) {
-					Logger.info("running base.");
-					ServiceFacade.incremental(oacActService,dbHypusrService);
+				else {
+					Logger.info("nothting to run here.");
 				}
-			}
-			else {
-				Logger.info("nothting to run here.");
-			}
-			//}
-			//else if(args[0].equalsIgnoreCase("incr")) {
-			//	ServiceFacade.incremental(oacActService,dbHypusrService);
-			//}
-			System.exit(0);
+				System.exit(0);
 			}
 			else {
 				Logger.info("already running, no need to run.");
