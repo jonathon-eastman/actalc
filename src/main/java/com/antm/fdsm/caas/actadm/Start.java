@@ -25,7 +25,8 @@ public class Start extends AbstractVerticle {
 			//attach to fdsmstart.
 			//if (args[0].equalsIgnoreCase("base")) {
 			
-			int num = Helpers.numberOfRunningProcesses("actadm-[0-9]\\.[0-9]\\.[0-9]+\\.jar");
+			int num = Helpers.numberOfRunningProcesses(".*actadm-[0-9]\\.[0-9]\\.[0-9]*\\.jar.*");
+			System.out.println("NUM == " + num);
 			if ( num == -1) {
 				Logger.error("something crazy going on.");
 			} 
