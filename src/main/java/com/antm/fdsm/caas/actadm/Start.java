@@ -4,6 +4,7 @@ import java.util.List;
 import org.pmw.tinylog.Logger;
 
 import com.antm.fdsm.orcl.odc.DatabaseService;
+import com.antm.fdsm.orcl.utils.Helpers;
 import com.antm.fdsm.orcl.utils.Singleton;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.json.JsonArray;
@@ -23,6 +24,12 @@ public class Start extends AbstractVerticle {
 			//encrypt file.
 			//attach to fdsmstart.
 			//if (args[0].equalsIgnoreCase("base")) {
+			
+			int num = Helpers.numberOfRunningProcesses("actadm/actadm");
+			if ( num == -1) {
+				Logger.error("something crazy going on.");
+			} 
+			else if ( num == 0) {
 			DatabaseService hypusr = new DatabaseService(dbHypusrService);
 			
 			//jobid actadm 74
@@ -49,8 +56,12 @@ public class Start extends AbstractVerticle {
 			//else if(args[0].equalsIgnoreCase("incr")) {
 			//	ServiceFacade.incremental(oacActService,dbHypusrService);
 			//}
-
 			System.exit(0);
+			}
+			else {
+				Logger.info("already running, no need to run.");
+				System.exit(0);
+			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
