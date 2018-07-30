@@ -61,6 +61,7 @@ public class Start extends AbstractVerticle {
 				System.exit(0);
 			}*/
 		ServiceFacade.base(oacActService,dbHypusrService);
+		System.exit(0);
 		} 
 		catch (Exception e) {
 			// TODO Auto-generated catch block
