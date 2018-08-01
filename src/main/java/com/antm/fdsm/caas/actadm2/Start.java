@@ -62,7 +62,7 @@ public class Start extends AbstractVerticle {
 				Logger.info("already running, no need to run.");
 				System.exit(0);
 			}*/
-		ServiceFacade.incremental(oacActService,dbHypusrService);
+		ServiceFacade.base(oacActService,dbHypusrService);
 		System.exit(0);
 		} 
 		catch (Exception e) {
