@@ -1,4 +1,4 @@
-package com.antm.fdsm.caas.actadm;
+package com.antm.fdsm.caas.actadm2;
 
 import com.antm.fdsm.orcl.oac.EssbaseApplication;
 import com.antm.fdsm.orcl.oac.EssbaseCube;

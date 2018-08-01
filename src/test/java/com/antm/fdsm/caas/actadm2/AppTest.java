@@ -1,4 +1,4 @@
-package com.antm.fdsm.caas.actadm;
+package com.antm.fdsm.caas.actadm2;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
