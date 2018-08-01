@@ -25,7 +25,7 @@ public class Start extends AbstractVerticle {
 			//attach to fdsmstart.
 			//if (args[0].equalsIgnoreCase("base")) {
 			
-			/*int num = Helpers.numberOfRunningProcesses(".*" + Def.CUBE_NAME.toLowerCase() + "-[0-9]\\.[0-9]\\.[0-9]*\\.jar.*");
+			int num = Helpers.numberOfRunningProcesses(".*" + Def.CUBE_NAME.toLowerCase() + "-[0-9]\\.[0-9]\\.[0-9]*\\.jar.*");
 			if ( num == -1) {
 				Logger.error("something crazy going on.");
 				System.exit(0);
@@ -35,13 +35,13 @@ public class Start extends AbstractVerticle {
 				DatabaseService hypusr = new DatabaseService(dbHypusrService);
 				
 				//jobid actadm 74
-				JsonArray ja = new JsonArray().add(74);
+				JsonArray ja = new JsonArray().add(72);
 				List<JsonArray> record = hypusr.queryFromStringWithParams(
 						"SELECT state, state_config\n" + 
 						"FROM start_fact \n" + 
 						"WHERE (job_id = ?)\n" + 
 						"GROUP BY state, state_config", ja );
-				if( record.get(0).getInteger(0) == 1) {
+				if( record.get(0).getInteger(0) >= 1) {
 					if( record.get(0).getInteger(1) == 2) {
 						Logger.info("running base.");
 						ServiceFacade.base(oacActService,dbHypusrService);
@@ -59,9 +59,9 @@ public class Start extends AbstractVerticle {
 			else {
 				Logger.info("already running, no need to run.");
 				System.exit(0);
-			}*/
-		ServiceFacade.base(oacActService,dbHypusrService);
-		System.exit(0);
+			}
+		//ServiceFacade.base(oacActService,dbHypusrService);
+		//System.exit(0);
 		} 
 		catch (Exception e) {
 			// TODO Auto-generated catch block
