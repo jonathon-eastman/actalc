@@ -36,7 +36,7 @@ public class EssbaseCubeService {
 	public EssbaseCubeService balance() {
 		String mdx = 	"SELECT CROSSJOIN({[Project Total]},CROSSJOIN({[Anthem, Inc. (Cons)]},CROSSJOIN({[Administrative Expenses for Cost Allocations],[Headcount],[FTE],[Hours]},{[Actual]}))) ON AXIS(0),\n" + 
 						"{ [" + Helpers.convertMonthNumber(Def.CP) + "]} ON AXIS(1)\n" + 
-						"FROM ACTADM.ACTADM";
+						"FROM " + Def.CUBE_NAME + "." + Def.CUBE_NAME;
 		//essbase
 		JsonObject essbaseResults = cube.runMdx(mdx);
 		Logger.info("Got essbase results as json [{}].", essbaseResults);

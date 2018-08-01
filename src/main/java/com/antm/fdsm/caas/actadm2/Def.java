@@ -5,13 +5,13 @@ import java.util.List;
 
 public class Def {
 
-	public final static String CUBE_NAME = "ACTADM";
+	public final static String CUBE_NAME = "ACTADM2";
 	public final static String RPTG_NAME = "RPTG-ASO-" + CUBE_NAME;
 	public final static String CALC_NAME = "CALC-BSO-" + CUBE_NAME;
-	public final static String META_NAME_BSO = "META-BSO-" + CUBE_NAME;
-	public final static String META_NAME_ASO = "META-ASO-" + CUBE_NAME;
+	public final static String META_NAME_BSO = "META-BSO-ACTADM";
+	public final static String META_NAME_ASO = "META-ASO-ACTADM";
 	
-	public final static String SLACK_WEBHOOK_APP = "/services/TBNP5JXQT/BBP290HB4/TyOqMLrMjYSN7CY8ILhzXZYe";
+	public final static String SLACK_WEBHOOK_APP = "/services/TBNP5JXQT/BC27FMF2T/O3Yycwp0lZc8cI5qau1h9RzS";
 
 
 	public static final String DIR_PROJECT = CUBE_NAME.toLowerCase();
