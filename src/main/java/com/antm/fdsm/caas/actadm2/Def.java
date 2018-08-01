@@ -18,6 +18,7 @@ public class Def {
 	public static final String DIR_BALANCE = DIR_PROJECT + "/" +"balances";
 	public static final String DIR_BKP = DIR_PROJECT + "/" +"bkp";
 	public static final String DIR_TMP = DIR_PROJECT +"/" +"tmp";
+	public static final String DIR_LOG = DIR_PROJECT + "/" + "logs";
 	public static final String DIR_DATA = DIR_PROJECT +"/" +"data";
 	public static final String DIR_HISTORY = DIR_DATA + "/" + "history";
 	public static final String DIR_CP = DIR_DATA + "/" + "cp";
@@ -28,7 +29,7 @@ public class Def {
 	public static final String DIR_NEW = DIR_EXPORT + "/" + "new";
 	public static final String DIR_PREVIOUS = DIR_EXPORT + "/" + "previous";
 	public static final String DIR_INCREMENTAL = DIR_EXPORT + "/" + "incremental";
-	public static final List<String> DIRS = Arrays.asList(DIR_PROJECT,DIR_BALANCE,DIR_BKP,DIR_TMP,DIR_DATA,DIR_HISTORY,DIR_CP,DIR_EXPORT,DIR_RELATIONAL,DIR_CPHISTORY,DIR_NEW,DIR_PREVIOUS,DIR_INCREMENTAL, DIR_LAST);
+	public static final List<String> DIRS = Arrays.asList(DIR_PROJECT,DIR_BALANCE,DIR_BKP,DIR_TMP,DIR_DATA,DIR_HISTORY,DIR_CP,DIR_EXPORT,DIR_RELATIONAL,DIR_CPHISTORY,DIR_NEW,DIR_PREVIOUS,DIR_INCREMENTAL, DIR_LAST, DIR_LOG);
 
 	public static final int CP  = 7;
 	public static final int CY  = 2018;
