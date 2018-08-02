@@ -1,5 +1,7 @@
 package com.antm.fdsm.caas.actadm2;
 
+import org.pmw.tinylog.Logger;
+
 import com.antm.fdsm.orcl.oac.EssbaseCube;
 import com.antm.fdsm.orcl.oac.EssbaseServer;
 import com.antm.fdsm.orcl.oac.LoadRule;
@@ -41,6 +43,7 @@ public class EssbaseCalculationService {
 	}
 
 	public EssbaseCalculationService loadCurrentPeriod() {
+		Logger.info("loading current period.");
 		calcCube.loadFilesInDirectory(service.getHome() + "/" + Def.DIR_RELATIONAL);
 		calcCube.loadFilesInCloudDirectory(service.getHome() + "/" + Def.DIR_CPHISTORY);
 		Helpers.moveFilesInLocalDirectory(service.getHome() + "/" + Def.DIR_RELATIONAL, service.getHome() + "/" + Def.DIR_LAST, service.getFs());
@@ -48,6 +51,7 @@ public class EssbaseCalculationService {
 	}
 
 	public EssbaseCalculationService loadPreviousExport() {
+		Logger.info("loading previous period.");
 		calcCube.load((loadFile, ruleFile) -> {
 			loadFile.localPath(service.getHome() + "/" + Def.DIR_PREVIOUS + "/" + Def.DIR_PROJECT + ".txt").isFileLocal(true);
 			ruleFile.aiSourceFile(service.getHome() + "/" + Def.DIR_PREVIOUS + "/" + Def.DIR_PROJECT + ".txt")
