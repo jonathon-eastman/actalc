@@ -12,13 +12,13 @@ public class Start extends AbstractVerticle {
 
 	public static void main(String[] args) {
 		try {
-		if( args[0].equals("1")) {
-			ServiceFacade.base(oacActService,dbHypusrService);
-		}
-		else if ( args[0].equals("2")) {
-			ServiceFacade.incremental(oacActService,dbHypusrService);
-		}
-		System.exit(0);
+			if( args[0].equals("1")) {
+				ServiceFacade.base(oacActService,dbHypusrService);
+			}
+			else if ( args[0].equals("2")) {
+				ServiceFacade.incremental(oacActService,dbHypusrService);
+			}
+			System.exit(0);
 		} 
 		catch (Exception e) {
 			// TODO Auto-generated catch block
