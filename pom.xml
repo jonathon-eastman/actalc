@@ -31,12 +31,12 @@
     <dependency>
     	<groupId>com.antm.fdsm.orcl</groupId>
     	<artifactId>oac</artifactId>
-    	<version>0.6.1</version>
+    	<version>0.6.7</version>
     </dependency>
     <dependency>
     	<groupId>com.antm.fdsm.orcl</groupId>
     	<artifactId>utils</artifactId>
-    	<version>0.3.8</version>
+    	<version>0.3.9</version>
     </dependency>
   </dependencies>
   <parent>
