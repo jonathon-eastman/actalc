@@ -85,7 +85,7 @@ public class EssbaseCubeService {
 		Logger.info("\nessbase hours[{}]\ngl hours[{}]\n------------------------------------------------------\nvariance[{}]\n", hrsEssbase, hrsGl, varHrs);
 		if ( (Math.abs(varAdm) + Math.abs(varHct) + Math.abs(varFte) + Math.abs(varHrs) > Def.VARIANCE_TOLERANCE) ){
 			Logger.info("an imbalance between " + Def.CUBE_NAME + " and the PeopleSoft gl ACTUALS ledger exists.");
-			service.slackErrorDev(Def.SLACK_WEBHOOK_APP, ":sob: an imbalance between " + Def.CUBE_NAME + " and the PeopleSoft gl ACTUALS ledger exists.");
+			Singleton.slackErrorDev(Def.SLACK_WEBHOOK_APP, ":sob: an imbalance between " + Def.CUBE_NAME + " and the PeopleSoft gl ACTUALS ledger exists.");
 		}
 		else {
 			Logger.info(Def.CUBE_NAME + " balances to the PeopleSoft gl ACTUALS ledger");
