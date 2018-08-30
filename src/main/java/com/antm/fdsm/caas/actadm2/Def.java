@@ -35,11 +35,11 @@ public class Def {
 	public static final List<String> DIRS = Arrays.asList(DIR_PROJECT,DIR_BALANCE,DIR_BKP,DIR_TMP,DIR_DATA,DIR_HISTORY,DIR_CP,DIR_EXPORT,DIR_RELATIONAL,DIR_CPHISTORY,DIR_NEW,DIR_PREVIOUS,DIR_INCREMENTAL, DIR_LAST, DIR_LOG);
 	public static final Map<String, String> LINKS = new HashMap<String, String>();
 	static {
-		LINKS.put("/wh/h_" + CUBE_NAME.toLowerCase() + "_ar_17.txt", DIR_HISTORY);
-		LINKS.put("/wh/h_" + CUBE_NAME.toLowerCase() + "_ar_16.txt", DIR_HISTORY);
-		LINKS.put("/wh/h_" + CUBE_NAME.toLowerCase() + "_af48_18.txt", DIR_HISTORY);
-		LINKS.put("/wh/h_" + CUBE_NAME.toLowerCase() + "_wp_18.txt", DIR_HISTORY);
-		LINKS.put("/wh/h_" + CUBE_NAME.toLowerCase() + "_ar_18.txt", DIR_CPHISTORY);
+		LINKS.put("/wh/h_" + CUBE_NAME_SOURCE.toLowerCase() + "_ar_17.txt", DIR_HISTORY);
+		LINKS.put("/wh/h_" + CUBE_NAME_SOURCE.toLowerCase() + "_ar_16.txt", DIR_HISTORY);
+		LINKS.put("/wh/h_" + CUBE_NAME_SOURCE.toLowerCase() + "_af48_18.txt", DIR_HISTORY);
+		LINKS.put("/wh/h_" + CUBE_NAME_SOURCE.toLowerCase() + "_wp_18.txt", DIR_HISTORY);
+		LINKS.put("/wh/h_" + CUBE_NAME_SOURCE.toLowerCase() + "_ar_18.txt", DIR_CPHISTORY);
 	};
 	public static final int CP  = 7;
 	public static final int CY  = 2018;
