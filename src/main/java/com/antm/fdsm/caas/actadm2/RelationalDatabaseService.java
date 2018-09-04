@@ -20,7 +20,7 @@ public class RelationalDatabaseService {
 
 		DatabaseService hypusr = new DatabaseService(dbService);
 		hypusr.executeUpdate("truncate.sql").blockingSingle();
-		hypusr.executeUpdate("insert_from_gl.sql", new JsonArray().add(Def.CP).add(Def.CY));
+		hypusr.executeUpdate("insert_from_gl.sql", new JsonArray().add(Def.CP).add(Def.CY)).blockingSingle();
 		hypusr.executeUpdate("update_project.sql").blockingSingle();
 		
 		Observable<DatabaseService> qryAdm = hypusr.query2File("balance_adm.sql", Def.DIR_BALANCE + "/act_adm" + Def.CP + "_" + Def.CY + ".json");
