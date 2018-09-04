@@ -9,7 +9,7 @@
   <groupId>com.antm.fdsm.caas</groupId>
   <artifactId>actadm2</artifactId>
   <name>actadm2</name>
-  <version>0.0.7</version>
+  <version>0.0.9</version>
   <url>http://maven.apache.org</url>
   <dependencies>
     <dependency>
