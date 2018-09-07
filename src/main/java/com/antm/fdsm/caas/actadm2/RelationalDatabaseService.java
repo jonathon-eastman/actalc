@@ -28,12 +28,12 @@ public class RelationalDatabaseService {
 				hypusr.executeUpdate("insert_from_gl.sql", new JsonArray().add(Def.CP).add(Def.CY)).get();
 				hypusr.executeUpdate("update_project.sql").get();
 				
-				CompletableFuture<Object> qryAdm = hypusr.query2File("balance_adm.sql", Def.DIR_BALANCE + "/act_adm" + Def.CP + "_" + Def.CY + ".json");
-				CompletableFuture<Object> qryFte = hypusr.query2File("balance_fte.sql", Def.DIR_BALANCE + "/act_fte" + Def.CP + "_" + Def.CY + ".json");
-				CompletableFuture<Object> qryHct = hypusr.query2File("balance_hct.sql", Def.DIR_BALANCE + "/act_hct" + Def.CP + "_" + Def.CY + ".json");
-				CompletableFuture<Object> qryHrs = hypusr.query2File("balance_hrs.sql", Def.DIR_BALANCE + "/act_hrs" + Def.CP + "_" + Def.CY + ".json");
-				CompletableFuture<Object> qryMon = hypusr.query2File("query_act_monetary.sql",  Def.DIR_RELATIONAL + "/act_monetary_ap" + Def.CP + "_" + Def.CY + ".txt");
-				CompletableFuture<Object> qryStt = hypusr.query2File("query_act_statistical.sql",  Def.DIR_RELATIONAL + "/act_statistical_ap" + Def.CP + "_" + Def.CY + ".txt");
+				CompletableFuture<Void> qryAdm = hypusr.query2File("balance_adm.sql", Def.DIR_BALANCE + "/act_adm" + Def.CP + "_" + Def.CY + ".json");
+				CompletableFuture<Void> qryFte = hypusr.query2File("balance_fte.sql", Def.DIR_BALANCE + "/act_fte" + Def.CP + "_" + Def.CY + ".json");
+				CompletableFuture<Void> qryHct = hypusr.query2File("balance_hct.sql", Def.DIR_BALANCE + "/act_hct" + Def.CP + "_" + Def.CY + ".json");
+				CompletableFuture<Void> qryHrs = hypusr.query2File("balance_hrs.sql", Def.DIR_BALANCE + "/act_hrs" + Def.CP + "_" + Def.CY + ".json");
+				CompletableFuture<Void> qryMon = hypusr.query2File("query_act_monetary.sql",  Def.DIR_RELATIONAL + "/act_monetary_ap" + Def.CP + "_" + Def.CY + ".txt");
+				CompletableFuture<Void> qryStt = hypusr.query2File("query_act_statistical.sql",  Def.DIR_RELATIONAL + "/act_statistical_ap" + Def.CP + "_" + Def.CY + ".txt");
 				
 				Logger.info("waiting......for parallel code extractPSGLCurrentMonth.");
 				
