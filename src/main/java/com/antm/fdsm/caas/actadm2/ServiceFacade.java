@@ -1,7 +1,7 @@
 package com.antm.fdsm.caas.actadm2;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.concurrent.CompletableFuture;
+
 import com.antm.fdsm.orcl.utils.Singleton;
 
 public class ServiceFacade {
@@ -15,29 +15,27 @@ public class ServiceFacade {
 		RelationalDatabaseService relationalService = new RelationalDatabaseService(dbService);
 
 		final EssbaseMetadataService metaService = new EssbaseMetadataService(oacService);
-		metaService.createReportingCube();
-		Runnable step1 = () -> {
-			relationalService.extractPSGLCurrentMonth();
-		};
-		Runnable step2 = () -> {
-			metaService.createCalculatingCube();
-			metaService.createReportingCube();
-		};
+		CompletableFuture<Void> createRptg =  metaService.createReportingCube();
+		CompletableFuture<Void> createCalc =  metaService.createCalculatingCube();
+		CompletableFuture<Void> extract = relationalService.extractPSGLCurrentMonth();
 
-		List<Runnable> parallel1 = Arrays.asList(step1, step2);
-		parallel1.stream().parallel().forEach((step) -> step.run());
-
+		
+		extract.get();
+		createCalc.get();
+		
 		EssbaseCalculationService calcService = new EssbaseCalculationService(oacService);
+		
 		calcService.clearAllData()
 			.loadCurrentPeriod()
 			.moveNewExport2Previous()
 			.exportCube();
-
+		
+		createRptg.get();
 		EssbaseReportingService rptgService = new EssbaseReportingService(oacService);
 		rptgService
 			.clearAllData()
-			.loadCurrentPeriod()
 			.loadHistory()
+			.loadCurrentPeriod()
 			.agg()
 			.move2Production()
 			.balance()

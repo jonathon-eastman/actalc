@@ -1,5 +1,7 @@
 package com.antm.fdsm.caas.actadm2;
 
+import java.util.concurrent.CompletableFuture;
+
 import com.antm.fdsm.orcl.oac.EssbaseApplication;
 import com.antm.fdsm.orcl.oac.EssbaseCube;
 import com.antm.fdsm.orcl.oac.EssbaseServer;
@@ -19,22 +21,28 @@ public class EssbaseMetadataService {
 		metaAsoCube = server.getApplication(service, Def.META_NAME_ASO).getCube(Def.META_NAME_ASO);
 	}
 
-	public EssbaseMetadataService createCalculatingCube() {
-		EssbaseApplication calcBsoApp = server.getApplication(service, Def.CALC_NAME);
-		if (calcBsoApp.exists()) {
-			calcBsoApp.delete();
-		}
-		metaBsoCube.copyToNewApplication(Def.CALC_NAME).getCube(Def.META_NAME_BSO).rename(Def.CALC_NAME);
-		return this;
+	public CompletableFuture<Void> createCalculatingCube() {
+		CompletableFuture<Void> cf = CompletableFuture.supplyAsync(() -> {
+			EssbaseApplication calcBsoApp = server.getApplication(service, Def.CALC_NAME);
+			if (calcBsoApp.exists()) {
+				calcBsoApp.delete();
+			}
+			metaBsoCube.copyToNewApplication(Def.CALC_NAME).getCube(Def.META_NAME_BSO).rename(Def.CALC_NAME);
+			return null;
+		});
+		return cf;
 	}
 
-	public EssbaseReportingService createReportingCube() {
-		EssbaseApplication rptgApp = server.getApplication(service, Def.RPTG_NAME);
-		if (rptgApp.exists()) {
-			rptgApp.delete();
-		}
-		metaAsoCube.copyToNewApplication(Def.RPTG_NAME).getCube(Def.META_NAME_ASO).rename(Def.RPTG_NAME);
-		EssbaseReportingService rptgService = new EssbaseReportingService(service);
-		return rptgService;
+	public CompletableFuture<Void> createReportingCube() {
+		CompletableFuture<Void> cf = CompletableFuture.supplyAsync(() -> {
+			EssbaseApplication rptgApp = server.getApplication(service, Def.RPTG_NAME);
+			if (rptgApp.exists()) {
+				rptgApp.delete();
+			}
+			metaAsoCube.copyToNewApplication(Def.RPTG_NAME).getCube(Def.META_NAME_ASO).rename(Def.RPTG_NAME);
+			//EssbaseReportingService rptgService = new EssbaseReportingService(service);
+			return null;
+		});
+		return cf;
 	}
 }
