@@ -2,6 +2,8 @@ package com.antm.fdsm.caas.actadm2;
 
 import java.util.concurrent.CompletableFuture;
 
+import org.pmw.tinylog.Logger;
+
 import com.antm.fdsm.orcl.utils.Singleton;
 
 public class ServiceFacade {
@@ -23,6 +25,7 @@ public class ServiceFacade {
 		extract.get();
 		createCalc.get();
 		
+		Logger.info("calc cube creation completed.");
 		EssbaseCalculationService calcService = new EssbaseCalculationService(oacService);
 		
 		calcService.clearAllData()
@@ -30,7 +33,7 @@ public class ServiceFacade {
 			.moveNewExport2Previous()
 			.exportCube();
 		
-		createRptg.get();
+		/*createRptg.get();
 		EssbaseReportingService rptgService = new EssbaseReportingService(oacService);
 		rptgService
 			.clearAllData()
@@ -39,7 +42,7 @@ public class ServiceFacade {
 			.agg()
 			.move2Production()
 			.balance()
-			.associate(dbService);
+			.associate(dbService);*/
   
 		oacService.slackInfo(Def.SLACK_WEBHOOK_APP, ":checkered_flag: finished " + Def.CUBE_NAME + " update[base].");
 	}
