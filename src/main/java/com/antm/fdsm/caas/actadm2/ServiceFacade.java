@@ -24,15 +24,16 @@ public class ServiceFacade {
 		
 		extract.get();
 		createCalc.get();
-		createRptg.get();
+		
 		Logger.info("calc cube creation completed.");
 		EssbaseCalculationService calcService = new EssbaseCalculationService(oacService);
 		
-		//calcService.clearAllData()
-		//	.loadCurrentPeriod();
+		calcService.clearAllData()
+			.loadCurrentPeriod();
 			//.moveNewExport2Previous()
 			//.exportCube();
-		
+		createRptg.get();
+		Logger.info("all done.");
 		/*createRptg.get();
 		EssbaseReportingService rptgService = new EssbaseReportingService(oacService);
 		rptgService
