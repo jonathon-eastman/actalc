@@ -28,13 +28,12 @@ public class ServiceFacade {
 		Logger.info("calc cube creation completed.");
 		EssbaseCalculationService calcService = new EssbaseCalculationService(oacService);
 		
-		calcService//.clearAllData()
+		calcService.clearAllData()
 			.loadCurrentPeriod()
-			//.moveNewExport2Previous()
+			.moveNewExport2Previous()
 			.exportCube();
+
 		createRptg.get();
-		Logger.info("all done.");
-		/*createRptg.get();
 		EssbaseReportingService rptgService = new EssbaseReportingService(oacService);
 		rptgService
 			.clearAllData()
@@ -43,7 +42,7 @@ public class ServiceFacade {
 			.agg()
 			.move2Production()
 			.balance()
-			.associate(dbService);*/
+			.associate(dbService);
   
 		oacService.slackInfo(Def.SLACK_WEBHOOK_APP, ":checkered_flag: finished " + Def.CUBE_NAME + " update[base].");
 	}
