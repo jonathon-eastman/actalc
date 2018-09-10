@@ -28,7 +28,7 @@ public class ServiceFacade {
 		Logger.info("calc cube creation completed.");
 		EssbaseCalculationService calcService = new EssbaseCalculationService(oacService);
 		
-		calcService.clearAllData()
+		calcService//.clearAllData()
 			.loadCurrentPeriod()
 			//.moveNewExport2Previous()
 			.exportCube();
