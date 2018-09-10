@@ -29,9 +29,9 @@ public class ServiceFacade {
 		EssbaseCalculationService calcService = new EssbaseCalculationService(oacService);
 		
 		calcService.clearAllData()
-			.loadCurrentPeriod()
-			.moveNewExport2Previous()
-			.exportCube();
+			.loadCurrentPeriod();
+			//.moveNewExport2Previous()
+			//.exportCube();
 		
 		/*createRptg.get();
 		EssbaseReportingService rptgService = new EssbaseReportingService(oacService);
