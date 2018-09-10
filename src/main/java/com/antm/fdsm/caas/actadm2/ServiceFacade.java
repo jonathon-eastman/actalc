@@ -17,12 +17,12 @@ public class ServiceFacade {
 		RelationalDatabaseService relationalService = new RelationalDatabaseService(dbService);
 
 		final EssbaseMetadataService metaService = new EssbaseMetadataService(oacService);
-		CompletableFuture<Void> createRptg =  metaService.createReportingCube();
+		//CompletableFuture<Void> createRptg =  metaService.createReportingCube();
 		CompletableFuture<Void> createCalc =  metaService.createCalculatingCube();
-		CompletableFuture<Void> extract = relationalService.extractPSGLCurrentMonth();
+		//CompletableFuture<Void> extract = relationalService.extractPSGLCurrentMonth();
 
 		
-		extract.get();
+		//extract.get();
 		createCalc.get();
 		
 		Logger.info("calc cube creation completed.");
