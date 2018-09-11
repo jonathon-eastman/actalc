@@ -45,10 +45,12 @@ public class EssbaseReportingService {
 	}
 	
 	public EssbaseCubeService move2Production() throws InterruptedException, ExecutionException {
-		rptgApp.ifAppExistsThenDelete(Def.CUBE_NAME)
-			.rename(Def.CUBE_NAME)
-			.getCube(Def.RPTG_NAME)
+		rptgApp.ifAppExistsThenDelete(Def.CUBE_NAME);
+			
+		rptgApp.rename(Def.CUBE_NAME).get()
+			.getCube(Def.CUBE_NAME)
 			.rename(Def.CUBE_NAME).get();
+		
 		EssbaseCubeService cubeService = new EssbaseCubeService(service);
 		return cubeService;
 	}
