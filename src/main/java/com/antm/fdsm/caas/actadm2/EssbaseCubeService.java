@@ -49,6 +49,7 @@ public class EssbaseCubeService {
 		double admGl = 0.00;
 		if ( Helpers.fileExists(service.getHome() + "/" + Def.DIR_BALANCE + "/act_adm" + Def.CP + "_" + Def.CY + ".json", service.getFs())) {
 			JsonArray glResultsAdm = Helpers.readJsonArrayFile(service.getHome() + "/" + Def.DIR_BALANCE + "/act_adm" + Def.CP + "_" + Def.CY + ".json", service.getFs());
+			System.out.println("TEST: " + glResultsAdm.encodePrettily());
 			admGl = glResultsAdm.getDouble(1);
 		}
 
