@@ -1,5 +1,8 @@
 package com.antm.fdsm.caas.actadm2;
 
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+
 import com.antm.fdsm.orcl.oac.EssbaseApplication;
 import com.antm.fdsm.orcl.oac.EssbaseCube;
 import com.antm.fdsm.orcl.oac.EssbaseServer;
@@ -29,15 +32,11 @@ public class EssbaseReportingService {
 		return this ;
 	};
 
-	public EssbaseReportingService loadCurrentPeriod() {
-		rptgCube.loadFilesInDirectory(service.getHome()  + "/"+ Def.DIR_NEW);
-		//CREATE FUNCTION TO DOWNLOAD FROM CLOUD HISTORY FILES.
-		//rptgCube.loadFilesInCloudDirectory(config.getHome() + "/" +ServiceDefs.DIRECTORY_PROJECT + "/" + ServiceDefs.DIRECTORY_DATA + "/" + ServiceDefs.DIRECTORY_CURRENTPERIOD + "/" + ServiceDefs.DIRECTORY_HISTORY);
-		return this;
-	}
-
-	public EssbaseReportingService loadHistory() {
-		rptgCube.loadFilesInCloudDirectory(service.getHome() + "/" + Def.DIR_HISTORY);
+	public EssbaseReportingService loadData() throws InterruptedException, ExecutionException {
+		CompletableFuture<Void> curentPeriodLoad = rptgCube.loadFilesInDirectory(service.getHome()  + "/"+ Def.DIR_NEW);
+		CompletableFuture<Void> historyLoad = rptgCube.loadFilesInDirectory(service.getHome() + "/" + Def.DIR_HISTORY);
+		curentPeriodLoad.get();
+		historyLoad.get();
 		return this;
 	}
 
@@ -45,11 +44,11 @@ public class EssbaseReportingService {
 		
 	}
 	
-	public EssbaseCubeService move2Production() {
+	public EssbaseCubeService move2Production() throws InterruptedException, ExecutionException {
 		rptgApp.ifAppExistsThenDelete(Def.CUBE_NAME)
 			.rename(Def.CUBE_NAME)
 			.getCube(Def.RPTG_NAME)
-			.rename(Def.CUBE_NAME);
+			.rename(Def.CUBE_NAME).get();
 		EssbaseCubeService cubeService = new EssbaseCubeService(service);
 		return cubeService;
 	}

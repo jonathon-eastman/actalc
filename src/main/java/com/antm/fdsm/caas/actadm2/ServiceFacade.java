@@ -34,11 +34,10 @@ public class ServiceFacade {
 			.exportCube();
 
 		createRptg.get();
+
 		EssbaseReportingService rptgService = new EssbaseReportingService(oacService);
-		rptgService
-			.clearAllData()
-			.loadHistory()
-			.loadCurrentPeriod()
+		rptgService.clearAllData()
+			.loadData()
 			.agg()
 			.move2Production()
 			.balance()

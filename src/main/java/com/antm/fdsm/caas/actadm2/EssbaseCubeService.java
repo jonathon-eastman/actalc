@@ -35,12 +35,12 @@ public class EssbaseCubeService {
 		return this;
 	}
 	
-	public EssbaseCubeService balance() {
+	public EssbaseCubeService balance() throws InterruptedException, ExecutionException {
 		String mdx = 	"SELECT CROSSJOIN({[Project Total]},CROSSJOIN({[Anthem, Inc. (Cons)]},CROSSJOIN({[Administrative Expenses for Cost Allocations],[Headcount],[FTE],[Hours]},{[Actual]}))) ON AXIS(0),\n" + 
 						"{ [" + Helpers.convertMonthNumber(Def.CP) + "]} ON AXIS(1)\n" + 
 						"FROM " + Def.CUBE_NAME + "." + Def.CUBE_NAME;
 		//essbase
-		JsonObject essbaseResults = cube.runMdx(mdx);
+		JsonObject essbaseResults = cube.runMdx(mdx).get();
 		Logger.info("Got essbase results as json [{}].", essbaseResults);
 		double admEssbase = Helpers.ifNumberGetDoubleElseZero(essbaseResults.getJsonObject("slice").getJsonObject("data").getJsonArray("ranges").getJsonObject(0).getJsonArray("values").getString(21));
 		double hctEssbase = Helpers.ifNumberGetDoubleElseZero(essbaseResults.getJsonObject("slice").getJsonObject("data").getJsonArray("ranges").getJsonObject(0).getJsonArray("values").getString(22));
@@ -98,13 +98,13 @@ public class EssbaseCubeService {
 		return this;
 	}
 
-	public EssbaseCubeService loadIncrementalSlice() {
-		cube.createBuffer(1000, 0.99)
-			.load2Buffer((loadFile, ruleFile) -> {
-				loadFile.localPath(service.getHome() + "/" + Def.DIR_INCREMENTAL + "/" + Def.DIR_PROJECT + ".txt");
-				ruleFile.aiSourceFile(service.getHome() + "/" + Def.DIR_INCREMENTAL + "/" + Def.DIR_PROJECT + ".txt").applyBufferNumber(1000);
-			})
-			.addBufferAsSlice(1000);
+	public EssbaseCubeService loadIncrementalSlice() throws InterruptedException, ExecutionException {
+		cube.createBuffer(1000, 0.99).get();
+		cube.load2Buffer((loadFile, ruleFile) -> {
+			loadFile.localPath(service.getHome() + "/" + Def.DIR_INCREMENTAL + "/" + Def.DIR_PROJECT + ".txt");
+			ruleFile.aiSourceFile(service.getHome() + "/" + Def.DIR_INCREMENTAL + "/" + Def.DIR_PROJECT + ".txt").applyBufferNumber(1000);
+		}).get();
+		cube.addBufferAsSlice(1000).get();
 		return this;
 	}
 

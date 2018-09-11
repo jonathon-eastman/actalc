@@ -26,7 +26,7 @@ public class EssbaseCalculationService {
 	}
 
 	public EssbaseCalculationService exportCube() throws Exception {
-		calcCube.export(f -> f.fileName(Def.DIR_PROJECT + ".txt"))
+		calcCube.export(f -> f.fileName(Def.DIR_PROJECT + ".txt")).get()
 			.bringLocally(
 				service.getHome() + "/" + Def.DIR_PREVIOUS + "/" + Def.DIR_PROJECT + ".txt",
 				service.getHome() + "/" + Def.DIR_NEW + "/" + Def.DIR_PROJECT + ".txt"
@@ -35,7 +35,7 @@ public class EssbaseCalculationService {
 	}
 	
 	public EssbaseCalculationService exportIncremental() throws Exception {
-		calcCube.export(f -> f.fileName(Def.DIR_PROJECT + ".txt"))
+		calcCube.export(f -> f.fileName(Def.DIR_PROJECT + ".txt")).get()
 			.bringLocally(service.getHome() + "/" + Def.DIR_INCREMENTAL + "/" + Def.DIR_PROJECT + ".txt")
 			.pipeify()
 			.removeZeros();

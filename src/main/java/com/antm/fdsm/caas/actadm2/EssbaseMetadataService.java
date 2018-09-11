@@ -1,6 +1,7 @@
 package com.antm.fdsm.caas.actadm2;
 
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 import com.antm.fdsm.orcl.oac.EssbaseApplication;
 import com.antm.fdsm.orcl.oac.EssbaseCube;
@@ -27,7 +28,12 @@ public class EssbaseMetadataService {
 			if (calcBsoApp.exists()) {
 				calcBsoApp.delete();
 			}
-			metaBsoCube.copyToNewApplication(Def.CALC_NAME).getCube(Def.META_NAME_BSO).rename(Def.CALC_NAME);
+			try {
+				metaBsoCube.copyToNewApplication(Def.CALC_NAME).getCube(Def.META_NAME_BSO).rename(Def.CALC_NAME).get();
+			} catch (InterruptedException | ExecutionException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			return null;
 		});
 		return cf;
@@ -39,7 +45,12 @@ public class EssbaseMetadataService {
 			if (rptgApp.exists()) {
 				rptgApp.delete();
 			}
-			metaAsoCube.copyToNewApplication(Def.RPTG_NAME).getCube(Def.META_NAME_ASO).rename(Def.RPTG_NAME);
+			try {
+				metaAsoCube.copyToNewApplication(Def.RPTG_NAME).getCube(Def.META_NAME_ASO).rename(Def.RPTG_NAME).get();
+			} catch (InterruptedException | ExecutionException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			//EssbaseReportingService rptgService = new EssbaseReportingService(service);
 			return null;
 		});
