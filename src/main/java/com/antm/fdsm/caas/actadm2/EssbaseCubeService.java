@@ -1,5 +1,7 @@
 package com.antm.fdsm.caas.actadm2;
 
+import java.util.concurrent.ExecutionException;
+
 import org.pmw.tinylog.Logger;
 
 import com.antm.fdsm.orcl.oac.EssbaseApplication;
@@ -26,7 +28,7 @@ public class EssbaseCubeService {
 		cube = app.getCube(Def.CUBE_NAME);
 	}
 	
-	public EssbaseCubeService associate(Singleton dbService) {
+	public EssbaseCubeService associate(Singleton dbService) throws InterruptedException, ExecutionException {
 		DatabaseService hypusr = new DatabaseService(dbService);
 		app.associateApplicationPermissions(hypusr);
 		cube.associateFilterPermissions(hypusr);
