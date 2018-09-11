@@ -23,6 +23,8 @@ public class Start extends AbstractVerticle {
 		catch (Exception e) {
 			// TODO Auto-generated catch block
 			Logger.error("bubbled up error to main method. [{}].", e.getMessage());
+			e.printStackTrace();
+			System.exit(0);
 		}
 		
 	}
