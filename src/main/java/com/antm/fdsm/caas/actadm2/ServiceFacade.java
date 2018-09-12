@@ -28,10 +28,13 @@ public class ServiceFacade {
 		Logger.info("calc cube creation completed.");
 		EssbaseCalculationService calcService = new EssbaseCalculationService(oacService);
 		
-		calcService.clearAllData()
-			.loadCurrentPeriod()
-			.moveNewExport2Previous()
-			.exportCube();
+		CompletableFuture<EssbaseCalculationService> historyLoad = calcService.clearAllData().loadCurrentPeriodHistory();
+			
+		calcService.loadCurrentPeriod().get().moveNewExport2Previous();
+		
+		historyLoad.get();
+		
+		calcService.exportCube();
 
 		createRptg.get();
 
@@ -52,7 +55,7 @@ public class ServiceFacade {
 		relationalService.extractPSGLCurrentMonth();
 		EssbaseCalculationService calcService = new EssbaseCalculationService(oacService);
 		calcService.clearAllData()
-			.loadCurrentPeriod()
+			.loadCurrentPeriod().get()
 			.exportCube()
 			.loadPreviousExport()
 			.exportIncremental()

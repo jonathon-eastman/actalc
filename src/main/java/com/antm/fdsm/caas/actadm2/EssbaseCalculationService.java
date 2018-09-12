@@ -45,14 +45,39 @@ public class EssbaseCalculationService {
 		return this;
 	}
 
-	public EssbaseCalculationService loadCurrentPeriod() throws InterruptedException, ExecutionException {
-		Logger.info("loading current period.");
-		CompletableFuture<Void> relationalLoads = calcCube.loadFilesInDirectory(service.getHome() + "/" + Def.DIR_RELATIONAL);
-		CompletableFuture<Void> historyLoads = calcCube.loadFilesInDirectory(service.getHome() + "/" + Def.DIR_CPHISTORY);
-		relationalLoads.get();
-		Helpers.moveFilesInLocalDirectory(service.getHome() + "/" + Def.DIR_RELATIONAL, service.getHome() + "/" + Def.DIR_LAST, service.getFs());
-		historyLoads.get();
-		return this;
+	public CompletableFuture<EssbaseCalculationService> loadCurrentPeriod() {
+		CompletableFuture<EssbaseCalculationService> cf = CompletableFuture.supplyAsync(() -> {
+			Logger.info("loading current period.");
+			try {
+				calcCube.loadFilesInDirectory(service.getHome() + "/" + Def.DIR_RELATIONAL).get();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ExecutionException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			Helpers.moveFilesInLocalDirectory(service.getHome() + "/" + Def.DIR_RELATIONAL, service.getHome() + "/" + Def.DIR_LAST, service.getFs());
+			return this;
+		});
+		return cf;
+	}
+	
+	public CompletableFuture<EssbaseCalculationService> loadCurrentPeriodHistory()  {
+		CompletableFuture<EssbaseCalculationService> cf = CompletableFuture.supplyAsync(() -> {
+			Logger.info("loading current period.");
+			try {
+				calcCube.loadFilesInDirectory(service.getHome() + "/" + Def.DIR_CPHISTORY).get();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ExecutionException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return this;
+		});
+		return cf;
 	}
 
 	public EssbaseCalculationService loadPreviousExport() {
