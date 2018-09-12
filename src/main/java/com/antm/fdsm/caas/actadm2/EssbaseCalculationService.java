@@ -24,8 +24,8 @@ public class EssbaseCalculationService {
 		calcCube = server.getApplication(service, Def.CALC_NAME).getCube(Def.CALC_NAME);
 	}
 
-	public EssbaseCalculationService clearAllData() {
-		calcCube.clear();
+	public EssbaseCalculationService clearAllData() throws InterruptedException, ExecutionException {
+		calcCube.clear().get();
 		return this;
 	}
 
