@@ -19,29 +19,29 @@ public class ServiceFacade {
 		final EssbaseMetadataService metaService = new EssbaseMetadataService(oacService);
 		CompletableFuture<Void> createRptg =  metaService.createReportingCube();
 		CompletableFuture<Void> createCalc =  metaService.createCalculatingCube();
-		CompletableFuture<Void> extract = relationalService.extractPSGLCurrentMonth();
+		//CompletableFuture<Void> extract = relationalService.extractPSGLCurrentMonth();
 
 		
-		extract.get();
+		//extract.get();
 		createCalc.get();
 		
-		Logger.info("calc cube creation completed.");
-		EssbaseCalculationService calcService = new EssbaseCalculationService(oacService);
+		//Logger.info("calc cube creation completed.");
+		//EssbaseCalculationService calcService = new EssbaseCalculationService(oacService);
 		
-		calcService.clearAllData()
+		/*calcService.clearAllData()
 			.loadCurrentPeriod()
 			.moveNewExport2Previous()
-			.exportCube();
+			.exportCube();*/
 
 		createRptg.get();
 
-		EssbaseReportingService rptgService = new EssbaseReportingService(oacService);
+		/*EssbaseReportingService rptgService = new EssbaseReportingService(oacService);
 		rptgService.clearAllData()
 			.loadData()
 			.agg()
 			.move2Production()
 			.balance()
-			.associate(dbService);
+			.associate(dbService);*/
   
 		oacService.slackInfo(Def.SLACK_WEBHOOK_APP, ":checkered_flag: finished " + Def.CUBE_NAME + " update[base].");
 	}
