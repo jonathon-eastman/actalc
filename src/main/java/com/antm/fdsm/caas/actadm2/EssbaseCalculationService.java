@@ -1,5 +1,8 @@
 package com.antm.fdsm.caas.actadm2;
 
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+
 import org.pmw.tinylog.Logger;
 
 import com.antm.fdsm.orcl.oac.EssbaseCube;
@@ -42,11 +45,13 @@ public class EssbaseCalculationService {
 		return this;
 	}
 
-	public EssbaseCalculationService loadCurrentPeriod() {
+	public EssbaseCalculationService loadCurrentPeriod() throws InterruptedException, ExecutionException {
 		Logger.info("loading current period.");
-		calcCube.loadFilesInDirectory(service.getHome() + "/" + Def.DIR_RELATIONAL);
-		calcCube.loadFilesInCloudDirectory(service.getHome() + "/" + Def.DIR_CPHISTORY);
+		CompletableFuture<Void> relationalLoads = calcCube.loadFilesInDirectory(service.getHome() + "/" + Def.DIR_RELATIONAL);
+		CompletableFuture<Void> historyLoads = calcCube.loadFilesInDirectory(service.getHome() + "/" + Def.DIR_CPHISTORY);
+		relationalLoads.get();
 		Helpers.moveFilesInLocalDirectory(service.getHome() + "/" + Def.DIR_RELATIONAL, service.getHome() + "/" + Def.DIR_LAST, service.getFs());
+		historyLoads.get();
 		return this;
 	}
 
