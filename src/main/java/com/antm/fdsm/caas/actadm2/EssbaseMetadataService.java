@@ -24,11 +24,11 @@ public class EssbaseMetadataService {
 
 	public CompletableFuture<Void> createCalculatingCube() {
 		CompletableFuture<Void> cf = CompletableFuture.supplyAsync(() -> {
-			EssbaseApplication calcBsoApp = server.getApplication(service, Def.CALC_NAME);
-			if (calcBsoApp.exists()) {
-				calcBsoApp.delete();
-			}
 			try {
+				EssbaseApplication calcBsoApp = server.getApplication(service, Def.CALC_NAME);
+				if (calcBsoApp.exists()) {
+					calcBsoApp.delete().get();
+				}
 				metaBsoCube.copyToNewApplication(Def.CALC_NAME).getCube(Def.META_NAME_BSO).rename(Def.CALC_NAME).get();
 			} catch (InterruptedException | ExecutionException e) {
 				// TODO Auto-generated catch block
@@ -42,13 +42,14 @@ public class EssbaseMetadataService {
 	public CompletableFuture<Void> createReportingCube() {
 		CompletableFuture<Void> cf = CompletableFuture.supplyAsync(() -> {
 			EssbaseApplication rptgApp = server.getApplication(service, Def.RPTG_NAME);
-			if (rptgApp.exists()) {
-				rptgApp.delete();
-			}
 			try {
+				if (rptgApp.exists()) {
+					rptgApp.delete().get();
+				}
 				metaAsoCube.copyToNewApplication(Def.RPTG_NAME).getCube(Def.META_NAME_ASO).rename(Def.RPTG_NAME).get();
-			} catch (InterruptedException | ExecutionException e) {
-				// TODO Auto-generated catch block
+			} 
+			catch (InterruptedException | ExecutionException e) {
+					// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			//EssbaseReportingService rptgService = new EssbaseReportingService(service);
