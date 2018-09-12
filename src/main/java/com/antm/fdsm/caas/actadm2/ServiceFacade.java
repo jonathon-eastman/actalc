@@ -21,16 +21,16 @@ public class ServiceFacade {
 		CompletableFuture<Void> createCalc =  metaService.createCalculatingCube();
 		CompletableFuture<Void> extract = relationalService.extractPSGLCurrentMonth();
 
-		
-		extract.get();
 		createCalc.get();
 		
 		Logger.info("calc cube creation completed.");
 		EssbaseCalculationService calcService = new EssbaseCalculationService(oacService);
-		
 		CompletableFuture<EssbaseCalculationService> historyLoad = calcService.clearAllData().loadCurrentPeriodHistory();
-			
-		calcService.loadCurrentPeriod().get().moveNewExport2Previous();
+		
+		Logger.info("waiting for extract to finish before loading current period.");
+		extract.get();
+		calcService.loadCurrentPeriod().get();
+		calcService.moveNewExport2Previous();
 		
 		historyLoad.get();
 		

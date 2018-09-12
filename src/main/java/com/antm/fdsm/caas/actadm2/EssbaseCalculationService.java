@@ -5,6 +5,7 @@ import java.util.concurrent.ExecutionException;
 
 import org.pmw.tinylog.Logger;
 
+import com.antm.fdsm.orcl.oac.AnalyticExportFile;
 import com.antm.fdsm.orcl.oac.EssbaseCube;
 import com.antm.fdsm.orcl.oac.EssbaseServer;
 import com.antm.fdsm.orcl.oac.LoadRule;
@@ -29,8 +30,8 @@ public class EssbaseCalculationService {
 	}
 
 	public EssbaseCalculationService exportCube() throws Exception {
-		calcCube.export(f -> f.fileName(Def.DIR_PROJECT + ".txt")).get()
-			.bringLocally(
+		AnalyticExportFile export = calcCube.export(f -> f.fileName(Def.DIR_PROJECT + ".txt")).get();
+		export.bringLocally(
 				service.getHome() + "/" + Def.DIR_PREVIOUS + "/" + Def.DIR_PROJECT + ".txt",
 				service.getHome() + "/" + Def.DIR_NEW + "/" + Def.DIR_PROJECT + ".txt"
 			).pipeify().copy2Backup(service.getHome() + "/" + Def.DIR_BKP);
