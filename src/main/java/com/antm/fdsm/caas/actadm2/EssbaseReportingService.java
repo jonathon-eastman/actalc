@@ -22,13 +22,13 @@ public class EssbaseReportingService {
 		rptgCube = rptgApp.getCube(Def.RPTG_NAME);
 	}
 
-	public EssbaseReportingService agg() {
-		rptgCube.aggregate();
+	public EssbaseReportingService agg() throws InterruptedException, ExecutionException {
+		rptgCube.aggregate().get();
 		return this;
 	}
 	
-	public EssbaseReportingService clearAllData() {
-		rptgCube.clear();
+	public EssbaseReportingService clearAllData() throws InterruptedException, ExecutionException {
+		rptgCube.clear().get();
 		return this ;
 	};
 
@@ -47,7 +47,7 @@ public class EssbaseReportingService {
 	}
 	
 	public EssbaseCubeService move2Production() throws InterruptedException, ExecutionException {
-		rptgApp.ifAppExistsThenDelete(Def.CUBE_NAME);
+		rptgApp.ifAppExistsThenDelete(Def.CUBE_NAME).get();
 			
 		rptgApp.rename(Def.CUBE_NAME).get()
 			.getCube(Def.CUBE_NAME)
