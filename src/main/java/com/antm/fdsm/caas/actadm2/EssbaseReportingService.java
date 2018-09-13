@@ -51,7 +51,7 @@ public class EssbaseReportingService {
 		rptgApp.ifAppExistsThenDelete(Def.CUBE_NAME).get();
 			
 		rptgApp.rename(Def.CUBE_NAME).get()
-			.getCube(Def.CUBE_NAME)
+			.getCube(Def.RPTG_NAME)
 			.rename(Def.CUBE_NAME).get();
 		
 		EssbaseCubeService cubeService = new EssbaseCubeService(service);
