@@ -33,12 +33,13 @@ public class EssbaseReportingService {
 	};
 
 	public EssbaseReportingService loadData() throws InterruptedException, ExecutionException {
-		rptgCube.createBuffer(1000, .1).get();
-		CompletableFuture<Void> curentPeriodLoad = rptgCube.loadFilesInDirectory(service.getHome()  + "/"+ Def.DIR_NEW);
-		CompletableFuture<Void> historyLoad = rptgCube.loadFilesInDirectory(service.getHome() + "/" + Def.DIR_HISTORY);
+		int bufferNumber = 1000;
+		rptgCube.createBuffer(bufferNumber, 0.1).get();
+		CompletableFuture<Void> curentPeriodLoad = rptgCube.loadFilesInDirectory(service.getHome()  + "/"+ Def.DIR_NEW, bufferNumber);
+		CompletableFuture<Void> historyLoad = rptgCube.loadFilesInDirectory(service.getHome() + "/" + Def.DIR_HISTORY, bufferNumber);
 		curentPeriodLoad.get();
 		historyLoad.get();
-		rptgCube.commitBuffer(1000).get();
+		rptgCube.commitBuffer(bufferNumber).get();
 		return this;
 	}
 
