@@ -39,8 +39,8 @@ public class ServiceFacade {
 		createRptg.get();
 
 		EssbaseReportingService rptgService = new EssbaseReportingService(oacService);
-		rptgService.clearAllData();
-			//.loadData()
+		rptgService.clearAllData()
+			.loadData();
 			//.agg()
 			//.move2Production()
 			//.balance()
