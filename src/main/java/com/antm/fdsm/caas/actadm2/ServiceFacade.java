@@ -40,11 +40,11 @@ public class ServiceFacade {
 
 		EssbaseReportingService rptgService = new EssbaseReportingService(oacService);
 		rptgService.clearAllData()
-			.loadData();
-			//.agg()
-			//.move2Production()
-			//.balance()
-			//.associate(dbService);
+			.loadData()
+			.agg()
+			.move2Production()
+			.balance()
+			.associate(dbService);
   
 		oacService.slackInfo(Def.SLACK_WEBHOOK_APP, ":checkered_flag: finished " + Def.CUBE_NAME + " update[base].");
 	}
