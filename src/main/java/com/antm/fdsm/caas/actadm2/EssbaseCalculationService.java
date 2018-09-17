@@ -39,8 +39,8 @@ public class EssbaseCalculationService {
 	}
 	
 	public EssbaseCalculationService exportIncremental() throws Exception {
-		calcCube.export(f -> f.fileName(Def.DIR_PROJECT + ".txt")).get()
-			.bringLocally(service.getHome() + "/" + Def.DIR_INCREMENTAL + "/" + Def.DIR_PROJECT + ".txt")
+		AnalyticExportFile export = calcCube.export(f -> f.fileName(Def.DIR_PROJECT + ".txt")).get();
+		export.bringLocally(service.getHome() + "/" + Def.DIR_INCREMENTAL + "/" + Def.DIR_PROJECT + ".txt")
 			.pipeify()
 			.removeZeros();
 		return this;
@@ -81,13 +81,13 @@ public class EssbaseCalculationService {
 		return cf;
 	}
 
-	public EssbaseCalculationService loadPreviousExport() {
+	public EssbaseCalculationService loadPreviousExport() throws InterruptedException, ExecutionException {
 		Logger.info("loading previous period.");
 		calcCube.load((loadFile, ruleFile) -> {
 			loadFile.localPath(service.getHome() + "/" + Def.DIR_PREVIOUS + "/" + Def.DIR_PROJECT + ".txt").isFileLocal(true);
 			ruleFile.aiSourceFile(service.getHome() + "/" + Def.DIR_PREVIOUS + "/" + Def.DIR_PROJECT + ".txt")
 				.setValuesOperator(LoadRule.ValuesOperator.SUBTRACT);
-		});
+		}).get();
 		return this;
 	}
 

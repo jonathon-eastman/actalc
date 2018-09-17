@@ -31,7 +31,7 @@ public class EssbaseCubeService {
 	public EssbaseCubeService associate(Singleton dbService) throws InterruptedException, ExecutionException {
 		DatabaseService hypusr = new DatabaseService(dbService);
 		app.associateApplicationPermissions(hypusr);
-		cube.associateFilterPermissions(hypusr);
+		cube.associateFilterPermissions(hypusr).get();
 		return this;
 	}
 	
