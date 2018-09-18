@@ -41,7 +41,7 @@ public class ServiceFacade {
 		EssbaseReportingService rptgService = new EssbaseReportingService(oacService);
 		rptgService.clearAllData()
 			.loadData()
-			.agg()
+			//.agg()
 			.move2Production()
 			.balance()
 			.associate(dbService);

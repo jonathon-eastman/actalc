@@ -1,6 +1,5 @@
 package com.antm.fdsm.caas.actadm2;
 
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
 import com.antm.fdsm.orcl.oac.EssbaseApplication;
@@ -33,13 +32,13 @@ public class EssbaseReportingService {
 	};
 
 	public EssbaseReportingService loadData() throws InterruptedException, ExecutionException {
-		int bufferNumber = 1000;
-		rptgCube.createBuffer(bufferNumber, 0.1).get();
-		CompletableFuture<Void> curentPeriodLoad = rptgCube.loadFilesInDirectory(service.getHome()  + "/"+ Def.DIR_NEW, bufferNumber);
-		CompletableFuture<Void> historyLoad = rptgCube.loadFilesInDirectory(service.getHome() + "/" + Def.DIR_HISTORY, bufferNumber);
-		curentPeriodLoad.get();
-		historyLoad.get();
-		rptgCube.commitBuffer(bufferNumber).get();
+		//int bufferNumber = 1000;
+		//rptgCube.createBuffer(bufferNumber, 0.1).get();
+		/*CompletableFuture<Void> curentPeriodLoad = */rptgCube.loadFilesInDirectory(service.getHome()  + "/"+ Def.DIR_NEW/*, bufferNumber*/);
+		/*CompletableFuture<Void> historyLoad = */rptgCube.loadFilesInDirectory(service.getHome() + "/" + Def.DIR_HISTORY/*, bufferNumber*/);
+		//curentPeriodLoad.get();
+		//historyLoad.get();
+		//rptgCube.commitBuffer(bufferNumber).get();
 		return this;
 	}
 
