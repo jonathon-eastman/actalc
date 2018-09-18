@@ -1,4 +1,4 @@
-package com.antm.fdsm.caas.actadm2;
+package com.antm.fdsm.caas.actalc;
 
 import java.util.concurrent.ExecutionException;
 
@@ -27,17 +27,17 @@ public class EssbaseCubeService {
 		app = server.getApplication(service, Def.CUBE_NAME);
 		cube = app.getCube(Def.CUBE_NAME);
 	}
-	
+
 	public EssbaseCubeService associate(Singleton dbService) throws InterruptedException, ExecutionException {
 		DatabaseService hypusr = new DatabaseService(dbService);
 		app.associateApplicationPermissions(hypusr);
 		cube.associateFilterPermissions(hypusr).get();
 		return this;
 	}
-	
+
 	public EssbaseCubeService balance() throws InterruptedException, ExecutionException {
-		String mdx = 	"SELECT CROSSJOIN({[Project Total]},CROSSJOIN({[Anthem, Inc. (Cons)]},CROSSJOIN({[Administrative Expenses for Cost Allocations],[Headcount],[FTE],[Hours]},{[Actual]}))) ON AXIS(0),\n" + 
-						"{ [" + Helpers.convertMonthNumber(Def.CP) + "]} ON AXIS(1)\n" + 
+		String mdx = 	"SELECT CROSSJOIN({[Project Total]},CROSSJOIN({[Anthem, Inc. (Cons)]},CROSSJOIN({[Administrative Expenses for Cost Allocations],[Headcount],[FTE],[Hours]},{[Actual]}))) ON AXIS(0),\n" +
+						"{ [" + Helpers.convertMonthNumber(Def.CP) + "]} ON AXIS(1)\n" +
 						"FROM " + Def.CUBE_NAME + "." + Def.CUBE_NAME;
 		//essbase
 		JsonObject essbaseResults = cube.runMdx(mdx).get();
@@ -81,7 +81,7 @@ public class EssbaseCubeService {
 		double varHct  = hctEssbase - hctGl;
 		double varFte  = fteEssbase - fteGl;
 		double varHrs  = hrsEssbase - hrsGl;
-		
+
 		Logger.info("\nessbase administrative expenses[{}]\ngl administrative expenses[{}]\n------------------------------------------------------\nvariance[{}]\n", admEssbase, admGl, varAdm);
 		Logger.info("\nessbase headcount[{}]\ngl headcount[{}]\n------------------------------------------------------\nvariance[{}]\n", hctEssbase, hctGl, varHct);
 		Logger.info("\nessbase fte[{}]\ngl fte[{}]\n------------------------------------------------------\nvariance[{}]\n", fteEssbase, fteGl, varFte);

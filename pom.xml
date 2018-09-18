@@ -3,10 +3,10 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.antm.fdsm.caas</groupId>
-  <artifactId>actadm2</artifactId>
+  <artifactId>actalc</artifactId>
   <packaging>jar</packaging>
 
-  <name>actadm2</name>
+  <name>cost allocations</name>
   <url>http://maven.apache.org</url>
 
   <properties>
@@ -45,5 +45,5 @@
   	<version>0.0.2</version>
   	<relativePath>../</relativePath>
   </parent>
-  <version>0.2.4</version>
+  <version>0.0.1</version>
 </project>

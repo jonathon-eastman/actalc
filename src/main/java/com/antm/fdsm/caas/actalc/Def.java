@@ -1,4 +1,4 @@
-package com.antm.fdsm.caas.actadm2;
+package com.antm.fdsm.caas.actalc;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -13,7 +13,7 @@ public class Def {
 	public final static String CALC_NAME = "CALC-BSO-" + CUBE_NAME;
 	public final static String META_NAME_BSO = "META-BSO-" +CUBE_NAME_SOURCE;
 	public final static String META_NAME_ASO = "META-ASO-" + CUBE_NAME_SOURCE;
-	
+
 	public final static String SLACK_WEBHOOK_APP = "/services/TBNP5JXQT/BC27FMF2T/O3Yycwp0lZc8cI5qau1h9RzS";
 
 
@@ -43,7 +43,7 @@ public class Def {
 	};
 	public static final int CP  = 7;
 	public static final int CY  = 2018;
-	
+
 	public static final int VARIANCE_TOLERANCE = 1;
 
 }
