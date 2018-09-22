@@ -14,48 +14,59 @@ public class ServiceFacade {
 
 	public static void base(Singleton oacService, Singleton dbService) throws Exception {
 		oacService.slackInfo(Def.SLACK_WEBHOOK_APP, ":rocket: starting " + Def.CUBE_NAME + " update[base].");
-		RelationalDatabaseService relationalService = new RelationalDatabaseService(dbService);
 
 		final EssbaseMetadataService metaService = new EssbaseMetadataService(oacService);
+		final Actadm2CubeService actadm2 = new Actadm2CubeService(oacService);
+		CompletableFuture<Void> extract = actadm2.extractUnallocated();
 		CompletableFuture<Void> createRptg =  metaService.createReportingCube();
 		CompletableFuture<Void> createCalc =  metaService.createCalculatingCube();
-		CompletableFuture<Void> extract = relationalService.extractPSGLCurrentMonth();
-
+		
+		
+		
+		createCalc.get();
+		extract.get();
+		
+		EssbaseCalculationService calcService = new EssbaseCalculationService(oacService);
+		calcService.clearAllData();
+		CompletableFuture<Void> unallocatedLoad = calcService.loadUnallocated();
+		unallocatedLoad.get();
+		calcService.exportCube();
+		createRptg.get();
+		/*EssbaseReportingService rptgService = new EssbaseReportingService(oacService);
+		rptgService.clearAllData()
+			.loadData();
+		
 		createCalc.get();
 
 		Logger.info("calc cube creation completed.");
 		EssbaseCalculationService calcService = new EssbaseCalculationService(oacService);
-		CompletableFuture<EssbaseCalculationService> historyLoad = calcService.clearAllData().loadCurrentPeriodHistory();
+		calcService.clearAllData();
+		CompletableFuture<Void> unallocatedLoad = calcService.loadUnallocated();
+		CompletableFuture<Void> driverLoad = calcService.loadDrivers();
+		unallocatedLoad.get();
+		driverLoad.get();
 
-		Logger.info("waiting for extract to finish before loading current period.");
-		extract.get();
-		calcService.loadCurrentPeriod().get();
-		calcService.moveNewExport2Previous();
-
-		historyLoad.get();
-
-		calcService.exportCube();
+		calcService.allocate()
+			.exportCube()
+			.moveNewExport2Previous();
 
 		createRptg.get();
 
-		EssbaseReportingService rptgService = new EssbaseReportingService(oacService);
-		rptgService.clearAllData()
-			.loadData()
-			//.agg()
-			.move2Production()
+		rptgService.move2Production()
 			.balance()
-			.associate(dbService);
+			.associate(dbService);*/
 
 		oacService.slackInfo(Def.SLACK_WEBHOOK_APP, ":checkered_flag: finished " + Def.CUBE_NAME + " update[base].");
 	}
 
 	public static void incremental(Singleton oacService, Singleton dbService) throws Exception {
 		oacService.slackInfo(Def.SLACK_WEBHOOK_APP, ":rocket: starting " + Def.CUBE_NAME + " update[incremental].");
-		RelationalDatabaseService relationalService = new RelationalDatabaseService(dbService);
+		/*RelationalDatabaseService relationalService = new RelationalDatabaseService(dbService);
 		relationalService.extractPSGLCurrentMonth();
 		EssbaseCalculationService calcService = new EssbaseCalculationService(oacService);
 		calcService.clearAllData()
-			.loadCurrentPeriod().get()
+			.loadDrivers().get()
+			.loadUnallocated().get()
 			.exportCube()
 			.loadPreviousExport()
 			.exportIncremental()
@@ -64,7 +75,7 @@ public class ServiceFacade {
 		EssbaseCubeService cubeService = new EssbaseCubeService(oacService);
 		cubeService.loadIncrementalSlice().balance();
 
-		//update time here.
+		//update time here.*/
 		oacService.slackInfo(Def.SLACK_WEBHOOK_APP, ":checkered_flag: finished " + Def.CUBE_NAME + " update[incremental].");
 	}
 

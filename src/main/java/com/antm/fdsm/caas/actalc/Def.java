@@ -7,14 +7,14 @@ import java.util.Map;
 
 public class Def {
 
-	public final static String CUBE_NAME = "ACTADM2";
-	public final static String CUBE_NAME_SOURCE = "ACTADM";
+	public final static String CUBE_NAME = "ACTALC";
+	public final static String CUBE_NAME_SOURCE = "ACTALC";
 	public final static String RPTG_NAME = "RPTG-ASO-" + CUBE_NAME;
 	public final static String CALC_NAME = "CALC-BSO-" + CUBE_NAME;
 	public final static String META_NAME_BSO = "META-BSO-" +CUBE_NAME_SOURCE;
 	public final static String META_NAME_ASO = "META-ASO-" + CUBE_NAME_SOURCE;
 
-	public final static String SLACK_WEBHOOK_APP = "/services/TBNP5JXQT/BC27FMF2T/O3Yycwp0lZc8cI5qau1h9RzS";
+	public final static String SLACK_WEBHOOK_APP = "/services/TBNP5JXQT/BCXHTUREG/UaV6MeFMgY4zhonkus9YlLLp";
 
 
 	public static final String DIR_PROJECT = CUBE_NAME.toLowerCase();
@@ -23,6 +23,7 @@ public class Def {
 	public static final String DIR_TMP = DIR_PROJECT +"/" +"tmp";
 	public static final String DIR_LOG = DIR_PROJECT + "/" + "log";
 	public static final String DIR_DATA = DIR_PROJECT +"/" +"data";
+	public static final String DIR_MDX = DIR_DATA + "/" + "mdx";
 	public static final String DIR_HISTORY = DIR_DATA + "/" + "history";
 	public static final String DIR_CP = DIR_DATA + "/" + "cp";
 	public static final String DIR_EXPORT = DIR_DATA + "/" + "export";
@@ -32,7 +33,7 @@ public class Def {
 	public static final String DIR_NEW = DIR_EXPORT + "/" + "new";
 	public static final String DIR_PREVIOUS = DIR_EXPORT + "/" + "previous";
 	public static final String DIR_INCREMENTAL = DIR_EXPORT + "/" + "incremental";
-	public static final List<String> DIRS = Arrays.asList(DIR_PROJECT,DIR_BALANCE,DIR_BKP,DIR_TMP,DIR_DATA,DIR_HISTORY,DIR_CP,DIR_EXPORT,DIR_RELATIONAL,DIR_CPHISTORY,DIR_NEW,DIR_PREVIOUS,DIR_INCREMENTAL, DIR_LAST, DIR_LOG);
+	public static final List<String> DIRS = Arrays.asList(DIR_PROJECT,DIR_BALANCE,DIR_BKP,DIR_TMP,DIR_DATA,DIR_HISTORY,DIR_CP,DIR_EXPORT,DIR_RELATIONAL,DIR_CPHISTORY,DIR_NEW,DIR_PREVIOUS,DIR_INCREMENTAL, DIR_LAST, DIR_LOG, DIR_MDX);
 	public static final Map<String, String> LINKS = new HashMap<String, String>();
 	static {
 		LINKS.put("/wh/h_" + CUBE_NAME_SOURCE.toLowerCase() + "_ar_17.txt", DIR_HISTORY);

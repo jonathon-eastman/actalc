@@ -6,6 +6,9 @@ import java.util.concurrent.ExecutionException;
 import com.antm.fdsm.orcl.oac.EssbaseApplication;
 import com.antm.fdsm.orcl.oac.EssbaseCube;
 import com.antm.fdsm.orcl.oac.EssbaseServer;
+import com.antm.fdsm.orcl.oac.otl.ConsolidationAttribute;
+import com.antm.fdsm.orcl.oac.otl.EssbaseOutline;
+import com.antm.fdsm.orcl.oac.otl.RestructureOption;
 import com.antm.fdsm.orcl.utils.Singleton;
 
 public class EssbaseMetadataService {
@@ -46,7 +49,22 @@ public class EssbaseMetadataService {
 				if (rptgApp.exists()) {
 					rptgApp.delete().get();
 				}
-				metaAsoCube.copyToNewApplication(Def.RPTG_NAME).getCube(Def.META_NAME_ASO).rename(Def.RPTG_NAME).get();
+				EssbaseCube cube = metaAsoCube.copyToNewApplication(Def.RPTG_NAME).getCube(Def.META_NAME_ASO).rename(Def.RPTG_NAME).get();
+				EssbaseOutline metaOtl = cube.getOutline();
+				metaOtl.beginBatchOutlineEdit();
+				metaOtl.addMember(mbr -> mbr
+					.name("QI Alloc Exp")
+					.parent("Accounts")
+					.previousSibling("Drivers")
+					.consolidation(ConsolidationAttribute.INGORE)
+				);
+				metaOtl.addMember(mbr -> mbr
+					.name("CareMore QI Exp")
+					.parent("Accounts")
+					.previousSibling("QI Alloc Exp")
+					.consolidation(ConsolidationAttribute.INGORE)
+				);
+				metaOtl.finishBatchOutlineEdit(RestructureOption.NO_DATA);
 			}
 			catch (InterruptedException | ExecutionException e) {
 					// TODO Auto-generated catch block
