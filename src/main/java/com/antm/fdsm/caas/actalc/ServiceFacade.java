@@ -2,8 +2,6 @@ package com.antm.fdsm.caas.actalc;
 
 import java.util.concurrent.CompletableFuture;
 
-import org.pmw.tinylog.Logger;
-
 import com.antm.fdsm.orcl.utils.Singleton;
 
 public class ServiceFacade {
@@ -29,7 +27,12 @@ public class ServiceFacade {
 		EssbaseCalculationService calcService = new EssbaseCalculationService(oacService);
 		calcService.clearAllData();
 		CompletableFuture<Void> unallocatedLoad = calcService.loadUnallocated();
+		CompletableFuture<Void> detailRates = calcService.loadCostCenterRatesDetail();
+		CompletableFuture<Void> summaryRates = calcService.loadCostCenterRatesSummary();
 		unallocatedLoad.get();
+		detailRates.get();
+		summaryRates.get();
+		calcService.allocate();
 		calcService.exportCube();
 		createRptg.get();
 		/*EssbaseReportingService rptgService = new EssbaseReportingService(oacService);

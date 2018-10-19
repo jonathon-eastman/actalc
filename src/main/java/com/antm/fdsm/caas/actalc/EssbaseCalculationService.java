@@ -8,15 +8,12 @@ import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
 import org.pmw.tinylog.Logger;
-
 import com.antm.fdsm.orcl.oac.AnalyticExportFile;
 import com.antm.fdsm.orcl.oac.EssbaseCube;
 import com.antm.fdsm.orcl.oac.EssbaseServer;
 import com.antm.fdsm.orcl.oac.LoadRule;
 import com.antm.fdsm.orcl.utils.Helpers;
 import com.antm.fdsm.orcl.utils.Singleton;
-
-import io.vertx.core.json.JsonObject;
 
 public class EssbaseCalculationService {
 
@@ -33,7 +30,14 @@ public class EssbaseCalculationService {
 	public EssbaseCalculationService allocate() throws Exception {
 		List<String> alternateStructures = Arrays.asList("par_dtl1", "par_dtl2", "par_dtl3", "par_dtl4", "par_dtl5", "par_dtl6");
 		List<CompletableFuture<Void>> cfList = alternateStructures.stream().parallel().map(str -> calcCube.calculate(str)).collect(Collectors.toList());
-		//cfList.parallelStream().forEach(cf -> cf.get());
+		cfList.parallelStream().forEach(cf -> {
+			try {
+				cf.get();
+			} catch (InterruptedException | ExecutionException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
 		return this;
 	}
 
@@ -89,13 +93,13 @@ public class EssbaseCalculationService {
 				calcCube.load((loadFile, ruleFile) -> {
 					loadFile.localPath(service.getHome() + "/" + Def.DIR_MDX + "/unallocated_admin.txt");
 					ruleFile.aiSourceFile(service.getHome() + "/" + Def.DIR_MDX + "/unallocated_admin.txt")
-					.addVirtualVolumn("MBU", "MUDDDD")
-					.addVirtualVolumn("Product", "PRDDD")
-					.addVirtualVolumn("Company", "GDDDD")
-					.addVirtualVolumn("Funding Type", "DD")
-					.addVirtualVolumn("Scenarios", "Actual")
-					.addVirtualVolumn("Time Periods", "Aug")
-					.addVirtualVolumn("Fixed Pool", "F00");
+					.addVirtualColumn("MBU", "MUDDDD")
+					.addVirtualColumn("Product", "PRDDD")
+					.addVirtualColumn("Company", "GDDDD")
+					.addVirtualColumn("Funding Type", "DD")
+					.addVirtualColumn("Time Periods", Helpers.translateMonthNumber(Def.CP))
+					.addVirtualColumn("Fixed Pool", "F00")
+					.addVirtualColumn("Scenarios", "Actual");
 				}).get();
 			} catch (InterruptedException | ExecutionException e) {
 				// TODO Auto-generated catch block
@@ -106,22 +110,18 @@ public class EssbaseCalculationService {
 		return cf;
 	}
 	
-	public CompletableFuture<Void> loadDrivers() {
-		CompletableFuture<Void> cf = CompletableFuture.supplyAsync(() -> {
-			Logger.info("loading current period.");
-			try {
-				calcCube.loadFilesInDirectory(service.getHome() + "/" + Def.DIR_RELATIONAL).get();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (ExecutionException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			Helpers.moveFilesInLocalDirectory(service.getHome() + "/" + Def.DIR_RELATIONAL, service.getHome() + "/" + Def.DIR_LAST, service.getFs());
-			return null;
+	public CompletableFuture<Void> loadCostCenterRatesDetail() {
+		return calcCube.load((loadFile, ruleFile) -> {
+			loadFile.localPath(service.getHome() + "/" + Def.DIR_REQUIRED + "/" + Def.DIR_PROJECT + "_r1.txt");
+			ruleFile.aiSourceFile(service.getHome() + "/" + Def.DIR_REQUIRED + "/" + Def.DIR_PROJECT + "_r1.txt");
 		});
-		return cf;
+	}
+	
+	public CompletableFuture<Void> loadCostCenterRatesSummary() {
+		return calcCube.load((loadFile, ruleFile) -> {
+			loadFile.localPath(service.getHome() + "/" + Def.DIR_REQUIRED + "/" + Def.DIR_PROJECT + "_r1.txt");
+			ruleFile.aiSourceFile(service.getHome() + "/" + Def.DIR_REQUIRED + "/" + Def.DIR_PROJECT + "_r1.txt");
+		});
 	}
 
 	public CompletableFuture<EssbaseCalculationService> loadCurrentPeriodHistory()  {

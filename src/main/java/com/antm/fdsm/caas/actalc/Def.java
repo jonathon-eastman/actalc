@@ -33,17 +33,25 @@ public class Def {
 	public static final String DIR_NEW = DIR_EXPORT + "/" + "new";
 	public static final String DIR_PREVIOUS = DIR_EXPORT + "/" + "previous";
 	public static final String DIR_INCREMENTAL = DIR_EXPORT + "/" + "incremental";
-	public static final List<String> DIRS = Arrays.asList(DIR_PROJECT,DIR_BALANCE,DIR_BKP,DIR_TMP,DIR_DATA,DIR_HISTORY,DIR_CP,DIR_EXPORT,DIR_RELATIONAL,DIR_CPHISTORY,DIR_NEW,DIR_PREVIOUS,DIR_INCREMENTAL, DIR_LAST, DIR_LOG, DIR_MDX);
+	public static final String DIR_REQUIRED = DIR_EXPORT + "/" + "required";
+	public static final String DIR_DRIVERS = DIR_EXPORT + "/" + "drivers";
+	public static final List<String> DIRS = Arrays.asList(DIR_PROJECT,DIR_BALANCE,DIR_BKP,DIR_TMP,DIR_DATA,DIR_HISTORY,DIR_CP,DIR_EXPORT,DIR_RELATIONAL,DIR_CPHISTORY,DIR_NEW,DIR_PREVIOUS,DIR_INCREMENTAL, DIR_LAST, DIR_LOG, DIR_MDX, DIR_REQUIRED, DIR_DRIVERS);
 	public static final Map<String, String> LINKS = new HashMap<String, String>();
-	static {
-		LINKS.put("/wh/h_" + CUBE_NAME_SOURCE.toLowerCase() + "_ar_17.txt", DIR_HISTORY);
-		LINKS.put("/wh/h_" + CUBE_NAME_SOURCE.toLowerCase() + "_ar_16.txt", DIR_HISTORY);
-		LINKS.put("/wh/h_" + CUBE_NAME_SOURCE.toLowerCase() + "_af48_18.txt", DIR_HISTORY);
-		LINKS.put("/wh/h_" + CUBE_NAME_SOURCE.toLowerCase() + "_wp_18.txt", DIR_HISTORY);
-		LINKS.put("/wh/h_" + CUBE_NAME_SOURCE.toLowerCase() + "_ar_18.txt", DIR_CPHISTORY);
-	};
-	public static final int CP  = 7;
+	
+	public static final int CP  = 9;
 	public static final int CY  = 2018;
+	public static final int YR2D = 18;
+	public static final int YR2DS1 = 17;
+	public static final int YR2DS2 = 16;
+	
+	static {
+		LINKS.put("/wh/h_" + CUBE_NAME_SOURCE.toLowerCase() + "_ar_" + YR2DS1 + ".txt", DIR_HISTORY);
+		LINKS.put("/wh/h_" + CUBE_NAME_SOURCE.toLowerCase() + "_ar_" + YR2DS2 + ".txt", DIR_HISTORY);
+		LINKS.put("/wh/h_" + CUBE_NAME_SOURCE.toLowerCase() + "_af48_" + YR2D + ".txt", DIR_HISTORY);
+		LINKS.put("/wh/h_" + CUBE_NAME_SOURCE.toLowerCase() + "_wp_" + YR2D + ".txt", DIR_HISTORY);
+		LINKS.put("/wh/h_" + CUBE_NAME_SOURCE.toLowerCase() + "_ar_" + YR2D + ".txt", DIR_CPHISTORY);
+		LINKS.put("/tstalc/data/export/required/tstalc_r1.txt", DIR_DRIVERS);
+	};
 
 	public static final int VARIANCE_TOLERANCE = 1;
 
