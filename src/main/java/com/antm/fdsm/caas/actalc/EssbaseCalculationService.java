@@ -97,7 +97,7 @@ public class EssbaseCalculationService {
 				service.getHome() + "/" + Def.DIR_NEW + "/" + export.fileName)
 			.pipeify().copy2Backup(service.getHome() + "/" + Def.DIR_BKP);
 			
-			String fn = export.fileName.replace(".txt", "_qireclass.txt");
+			String fn = export.fileName.replace(".txt", "_qi_reclass.txt");
 			export.intersect(ccs, service.getHome() + "/" + Def.DIR_REQUIRED + "/" + fn);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
