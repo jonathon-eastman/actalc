@@ -7,6 +7,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
 import org.pmw.tinylog.Logger;
+
 import com.antm.fdsm.orcl.oac.AnalyticExportFile;
 import com.antm.fdsm.orcl.oac.EssbaseCube;
 import com.antm.fdsm.orcl.oac.EssbaseServer;
@@ -27,7 +28,7 @@ public class EssbaseCalculationService {
 	}
 	
 	public EssbaseCalculationService allocate() throws Exception {
-		List<String> alternateStructures = Arrays.asList("par_dtl1", "par_dtl2", "par_dtl3", "par_dtl4", "par_dtl5", "par_dtl6");
+		List<String> alternateStructures = Arrays.asList("allocate_region1.csc", "allocate_region2.csc", "allocate_region3.csc", "allocate_region4.csc", "allocate_region5.csc", "allocate_region6.csc");
 		List<CompletableFuture<Void>> cfList = alternateStructures.stream().parallel().map(str -> calcCube.calculate(str)).collect(Collectors.toList());
 		cfList.parallelStream().forEach(cf -> {
 			try {
@@ -131,14 +132,28 @@ public class EssbaseCalculationService {
 	public CompletableFuture<Void> loadCostCenterRatesDetail() {
 		return calcCube.load((loadFile, ruleFile) -> {
 			loadFile.localPath(service.getHome() + "/" + Def.DIR_REQUIRED + "/" + Def.DIR_PROJECT + "_r1.txt");
-			ruleFile.aiSourceFile(service.getHome() + "/" + Def.DIR_REQUIRED + "/" + Def.DIR_PROJECT + "_r1.txt");
+			ruleFile.aiSourceFile(service.getHome() + "/" + Def.DIR_REQUIRED + "/" + Def.DIR_PROJECT + "_r1.txt")
+			.ignoreFileColumn("Accounts")
+			.addVirtualColumn("Accounts", "Driver Detail");
 		});
 	}
 	
 	public CompletableFuture<Void> loadCostCenterRatesSummary() {
 		return calcCube.load((loadFile, ruleFile) -> {
 			loadFile.localPath(service.getHome() + "/" + Def.DIR_REQUIRED + "/" + Def.DIR_PROJECT + "_r1.txt");
-			ruleFile.aiSourceFile(service.getHome() + "/" + Def.DIR_REQUIRED + "/" + Def.DIR_PROJECT + "_r1.txt");
+			ruleFile.aiSourceFile(service.getHome() + "/" + Def.DIR_REQUIRED + "/" + Def.DIR_PROJECT + "_r1.txt")
+			.ignoreFileColumn("Fixed Pool")
+			.ignoreFileColumn("Company")
+			.ignoreFileColumn("Product")
+			.ignoreFileColumn("MBU")
+			.ignoreFileColumn("Funding Type")
+			.ignoreFileColumn("Accounts")
+			.addVirtualColumn("Fixed Pool", "F00")
+			.addVirtualColumn("Company", "GDDDD")
+			.addVirtualColumn("Product", "PRDDD")
+			.addVirtualColumn("MBU", "MUDDDD")
+			.addVirtualColumn("Funding Type", "DD")
+			.addVirtualColumn("Accounts", "Driver Summary");
 		});
 	}
 
