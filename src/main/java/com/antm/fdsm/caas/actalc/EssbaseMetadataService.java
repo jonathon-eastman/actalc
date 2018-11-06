@@ -199,6 +199,10 @@ public class EssbaseMetadataService {
 					.name("Q4")
 					.storage(DataStorage.DYNAMIC)
 				);
+				metaOtl.updateMember(mbr -> mbr
+					.name("Q4")
+					.storage(DataStorage.LABEL_ONLY)
+				);
 				metaOtl.finishBatchOutlineEdit(RestructureOption.NO_DATA);
 			} catch (InterruptedException | ExecutionException e) {
 				// TODO Auto-generated catch block
