@@ -158,7 +158,7 @@ public class EssbaseCalculationService {
 			.addVirtualColumn("Product", "PRDDD")
 			.addVirtualColumn("MBU", "MUDDDD")
 			.addVirtualColumn("Funding Type", "DD")
-			.addVirtualColumn("Accounts", "Driver Summary");
+			.addVirtualColumn("Accounts", "Driver Total");
 		});
 	}
 
