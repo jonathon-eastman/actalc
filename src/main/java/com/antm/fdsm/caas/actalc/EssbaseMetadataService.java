@@ -40,7 +40,7 @@ public class EssbaseMetadataService {
 				metaOtl.deleteMember("Alt Company Hierarchies");
 				metaOtl.deleteMember("Unconsolidated Companies");
 				metaOtl.deleteMember("Company Alloc");
-				metaOtl.deleteDimension("Time Periods");
+				//metaOtl.deleteDimension("Time Periods");
 				/*metaOtl.addDimension( dim -> dim
 					.name("Time Periods blah")
 					.previousSibling("Funding Type")
@@ -51,14 +51,14 @@ public class EssbaseMetadataService {
 
 				metaOtl.deleteMember("Alt Product Structures");
 				metaOtl.deleteMember("Product Alloc");
-				metaOtl.deleteMember("DOI Product");
-				metaOtl.deleteMember("MBU Alloc");
-				metaOtl.deleteMember("Drivers");
-				metaOtl.deleteMember("Scenarios");
-				metaOtl.deleteMember("CBE");
-				metaOtl.deleteMember("Brand State");
-				metaOtl.deleteMember("Product Type");
-				metaOtl.deleteMember("CC Function");
+				//metaOtl.deleteMember("DOI Product");
+				//metaOtl.deleteMember("MBU Alloc");
+				//metaOtl.deleteMember("Drivers");
+				//metaOtl.deleteMember("Scenarios");
+				//metaOtl.deleteMember("CBE");
+				//metaOtl.deleteMember("Brand State");
+				//metaOtl.deleteMember("Product Type");
+				//metaOtl.deleteMember("CC Function");
 				/*metaOtl.addMember(mbr -> mbr
 					.name("BegBalance")
 					.parent("Time Periods")
