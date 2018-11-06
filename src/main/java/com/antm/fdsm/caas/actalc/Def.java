@@ -50,7 +50,7 @@ public class Def {
 		LINKS.put("/wh/h_" + CUBE_NAME_SOURCE.toLowerCase() + "_af48_" + YR2D + ".txt", DIR_HISTORY);
 		LINKS.put("/wh/h_" + CUBE_NAME_SOURCE.toLowerCase() + "_wp_" + YR2D + ".txt", DIR_HISTORY);
 		LINKS.put("/wh/h_" + CUBE_NAME_SOURCE.toLowerCase() + "_ar_" + YR2D + ".txt", DIR_CPHISTORY);
-		LINKS.put("/js/tstalc/data/export/required/" + CUBE_NAME_SOURCE.toLowerCase() + ".txt", DIR_DRIVERS);
+		LINKS.put("/js/tstalc/data/export/required/" + CUBE_NAME_SOURCE.toLowerCase() + "_r1.txt", DIR_DRIVERS);
 	};
 
 	public static final int VARIANCE_TOLERANCE = 1;
