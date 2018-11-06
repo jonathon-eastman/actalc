@@ -200,7 +200,7 @@ public class EssbaseMetadataService {
 					.storage(DataStorage.DYNAMIC)
 				);
 				metaOtl.updateMember(mbr -> mbr
-					.name("Q4")
+					.name("Time Periods")
 					.storage(DataStorage.LABEL_ONLY)
 				);
 				metaOtl.finishBatchOutlineEdit(RestructureOption.NO_DATA);
