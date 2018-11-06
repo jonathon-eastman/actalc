@@ -40,15 +40,6 @@ public class EssbaseMetadataService {
 				metaOtl.deleteMember("Alt Company Hierarchies");
 				metaOtl.deleteMember("Unconsolidated Companies");
 				metaOtl.deleteMember("Company Alloc");
-				//
-				/*metaOtl.addDimension( dim -> dim
-					.name("Time Periods blah")
-					.previousSibling("Funding Type")
-					.category(MemberCategory.TIME)
-					.storage(DimensionStorage.SPARSE)
-				);*/
-				
-
 				metaOtl.deleteMember("Alt Product Structures");
 				metaOtl.deleteMember("Product Alloc");
 				metaOtl.deleteMember("DOI Product");
@@ -104,6 +95,12 @@ public class EssbaseMetadataService {
 					.consolidation(ConsolidationAttribute.INGORE)
 				);
 				metaOtl.deleteMember("Time Periods");
+				metaOtl.addDimension( dim -> dim
+					.name("Time Periods")
+					.previousSibling("Funding Type")
+					.category(MemberCategory.TIME)
+					.storage(DimensionStorage.SPARSE)
+				);
 				metaOtl.finishBatchOutlineEdit(RestructureOption.NO_DATA);
 			} catch (InterruptedException | ExecutionException e) {
 				// TODO Auto-generated catch block
