@@ -42,7 +42,7 @@ public class EssbaseMetadataService {
 				metaOtl.deleteMember("Company Alloc");
 				metaOtl.deleteDimension("Time Periods");
 				metaOtl.addDimension( dim -> dim
-					.name("Time Periods")
+					.name("Time Periods blah")
 					.previousSibling("Funding Type")
 					.category(MemberCategory.TIME)
 					.storage(DimensionStorage.SPARSE)
