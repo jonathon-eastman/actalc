@@ -50,10 +50,10 @@ public class EssbaseMetadataService {
 				metaOtl.deleteMember("YTD Options");
 				metaOtl.deleteMember("QTD Options");
 				metaOtl.deleteMember("CM vs PM Pct");
-				metaOtl.deleteMember("Alt Product Structures");
+				/*metaOtl.deleteMember("Alt Product Structures");
 				metaOtl.deleteMember("Product Alloc");
 				metaOtl.deleteMember("DOI Product");
-				/*metaOtl.deleteMember("MBU Alloc");
+				metaOtl.deleteMember("MBU Alloc");
 				metaOtl.deleteMember("Drivers");
 				metaOtl.deleteMember("Scenarios");
 				metaOtl.deleteMember("CBE");
