@@ -39,8 +39,8 @@ public class EssbaseMetadataService {
 				metaOtl.deleteMember("Alt Company Hierarchies");
 				metaOtl.deleteMember("Unconsolidated Companies");
 				metaOtl.deleteMember("Company Alloc");
-			/*	metaOtl.deleteMember("Alternate Time Periods");
-				metaOtl.deleteMember("YTD");
+				metaOtl.deleteMember("Alternate Time Periods");
+				/*metaOtl.deleteMember("YTD");
 				metaOtl.deleteMember("QTD");
 				metaOtl.deleteMember("CM");
 				metaOtl.deleteMember("PM");
