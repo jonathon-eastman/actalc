@@ -7,6 +7,7 @@ import com.antm.fdsm.orcl.oac.EssbaseApplication;
 import com.antm.fdsm.orcl.oac.EssbaseCube;
 import com.antm.fdsm.orcl.oac.EssbaseServer;
 import com.antm.fdsm.orcl.oac.otl.ConsolidationAttribute;
+import com.antm.fdsm.orcl.oac.otl.DimensionStorage;
 import com.antm.fdsm.orcl.oac.otl.EssbaseOutline;
 import com.antm.fdsm.orcl.oac.otl.RestructureOption;
 import com.antm.fdsm.orcl.utils.Singleton;
@@ -52,18 +53,74 @@ public class EssbaseMetadataService {
 				EssbaseCube cube = metaAsoCube.copyToNewApplication(Def.RPTG_NAME).getCube(Def.META_NAME_ASO).rename(Def.RPTG_NAME).get();
 				EssbaseOutline metaOtl = cube.getOutline();
 				metaOtl.beginBatchOutlineEdit();
+				metaOtl.deleteMember("Alt Company Hierarchies");
+				metaOtl.deleteMember("Unconsolidated Companies");
+				metaOtl.deleteMember("Company Alloc");
+				metaOtl.deleteMember("Alternate Time Periods");
+				metaOtl.deleteMember("YTD");
+				metaOtl.deleteMember("QTD");
+				metaOtl.deleteMember("CM");
+				metaOtl.deleteMember("PM");
+				metaOtl.deleteMember("FM");
+				metaOtl.deleteMember("PP");
+				metaOtl.deleteMember("CM vs PM");
+				metaOtl.deleteMember("YTD Options");
+				metaOtl.deleteMember("QTD Options");
+				metaOtl.deleteMember("CM vs PM Pct");
+				metaOtl.deleteMember("Alt Product Structures");
+				metaOtl.deleteMember("Product Alloc");
+				metaOtl.deleteMember("DOI Product");
+				metaOtl.deleteMember("MBU Alloc");
+				metaOtl.deleteMember("Drivers");
+				metaOtl.deleteMember("Scenarios");
+				metaOtl.deleteMember("CBE");
+				metaOtl.deleteMember("Brand State");
+				metaOtl.deleteMember("Product Type");
+				metaOtl.deleteMember("CC Function");
+				metaOtl.addMember(mbr -> mbr
+					.name("BegBalance")
+					.parent("Time Periods")
+					.consolidation(ConsolidationAttribute.INGORE)
+				);
+				metaOtl.updateDimension(mbr -> mbr
+					.storage(DimensionStorage.SPARSE)
+					.name("Time Periods")
+				);
+				metaOtl.addMember(mbr -> mbr
+					.name("Admin Unallocated")
+					.parent("Accounts")
+					.previousSibling("Admin Exp Alloc")
+					.consolidation(ConsolidationAttribute.INGORE)
+				);
+						
 				metaOtl.addMember(mbr -> mbr
 					.name("QI Alloc Exp")
 					.parent("Accounts")
-					.previousSibling("Drivers")
+					.previousSibling("Admin Exp Alloc")
 					.consolidation(ConsolidationAttribute.INGORE)
 				);
 				metaOtl.addMember(mbr -> mbr
-					.name("CareMore QI Exp")
+					.name("Drivers")
 					.parent("Accounts")
 					.previousSibling("QI Alloc Exp")
 					.consolidation(ConsolidationAttribute.INGORE)
 				);
+				metaOtl.addMember(mbr -> mbr
+					.name("Driver Detail")
+					.parent("Drivers")
+					.consolidation(ConsolidationAttribute.INGORE)
+				);
+				metaOtl.addMember(mbr -> mbr
+					.name("Driver Total")
+					.parent("Drivers")
+					.consolidation(ConsolidationAttribute.INGORE)
+				);
+				metaOtl.addMember(mbr -> mbr
+						.name("Drivers")
+						.parent("Accounts")
+						.previousSibling("QI Alloc Exp")
+						.consolidation(ConsolidationAttribute.INGORE)
+					);
 				metaOtl.finishBatchOutlineEdit(RestructureOption.NO_DATA);
 			}
 			catch (InterruptedException | ExecutionException e) {
