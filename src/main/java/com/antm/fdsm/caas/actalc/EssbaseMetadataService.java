@@ -39,7 +39,7 @@ public class EssbaseMetadataService {
 				metaOtl.deleteMember("Alt Company Hierarchies");
 				metaOtl.deleteMember("Unconsolidated Companies");
 				metaOtl.deleteMember("Company Alloc");
-				metaOtl.deleteMember("Alternate Time Periods");
+			/*	metaOtl.deleteMember("Alternate Time Periods");
 				metaOtl.deleteMember("YTD");
 				metaOtl.deleteMember("QTD");
 				metaOtl.deleteMember("CM");
@@ -59,7 +59,7 @@ public class EssbaseMetadataService {
 				metaOtl.deleteMember("CBE");
 				metaOtl.deleteMember("Brand State");
 				metaOtl.deleteMember("Product Type");
-				metaOtl.deleteMember("CC Function");
+				metaOtl.deleteMember("CC Function");*./
 				/*metaOtl.addMember(mbr -> mbr
 					.name("BegBalance")
 					.parent("Time Periods")
