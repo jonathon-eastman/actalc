@@ -10,7 +10,7 @@ SET CALCTASKDIMS 1;
 
 
 FIX ( @RELATIVE("Alloc_3",0),@RELATIVE("MBU Total" ,0),@RELATIVE("Funding Type Total" ,0),@RELATIVE("Product Total" ,0),@RELATIVE("Anthem, Inc. (Cons)" ,0),
-			@RELATIVE("Fixed Pool Total",0), &CUR_PER_A)
+			@RELATIVE("Fixed Pool Total",0), <<CURRENT_PERIOD_ACTUAL>>)
 
 		"Admin Exp Alloc" =
 					"Admin Exp Alloc"->"GDDDD"->"MUDDDD"->"PRDDD"->"DD"->"F00"
