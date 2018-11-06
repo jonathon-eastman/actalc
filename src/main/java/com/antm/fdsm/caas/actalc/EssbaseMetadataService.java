@@ -103,6 +103,7 @@ public class EssbaseMetadataService {
 					.previousSibling("QI Alloc Exp")
 					.consolidation(ConsolidationAttribute.INGORE)
 				);
+				metaOtl.deleteDimension("Time Periods");
 				metaOtl.finishBatchOutlineEdit(RestructureOption.NO_DATA);
 			} catch (InterruptedException | ExecutionException e) {
 				// TODO Auto-generated catch block
@@ -135,7 +136,6 @@ public class EssbaseMetadataService {
 					.previousSibling("QI Alloc Exp")
 					.consolidation(ConsolidationAttribute.INGORE)
 				);
-				metaOtl.deleteDimension("Time Periods");
 				metaOtl.finishBatchOutlineEdit(RestructureOption.NO_DATA);
 			}
 			catch (InterruptedException | ExecutionException e) {
