@@ -7,7 +7,9 @@ import com.antm.fdsm.orcl.oac.EssbaseApplication;
 import com.antm.fdsm.orcl.oac.EssbaseCube;
 import com.antm.fdsm.orcl.oac.EssbaseServer;
 import com.antm.fdsm.orcl.oac.otl.ConsolidationAttribute;
+import com.antm.fdsm.orcl.oac.otl.DimensionStorage;
 import com.antm.fdsm.orcl.oac.otl.EssbaseOutline;
+import com.antm.fdsm.orcl.oac.otl.MemberCategory;
 import com.antm.fdsm.orcl.oac.otl.RestructureOption;
 import com.antm.fdsm.orcl.utils.Singleton;
 
@@ -39,10 +41,11 @@ public class EssbaseMetadataService {
 				metaOtl.deleteMember("Unconsolidated Companies");
 				metaOtl.deleteMember("Company Alloc");
 				metaOtl.deleteDimension("Time Periods");
-				metaOtl.addMember( mbr -> mbr
+				metaOtl.addDimension( dim -> dim
 					.name("Time Periods")
 					.previousSibling("Funding Type")
-					.parent("")
+					.category(MemberCategory.TIME)
+					.storage(DimensionStorage.SPARSE)
 				);
 				
 
