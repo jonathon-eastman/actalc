@@ -62,7 +62,7 @@ public class EssbaseCalculationService {
 		String fix = "FIX (@RELATIVE(\"Company\", 0), @RELATIVE(\"Funding Type Total\", 0),@RELATIVE(\"Fixed Pool Total\", 0),@RELATIVE(\"" + str +"\", 0),@RELATIVE(\"Product Total\", 0),@RELATIVE(\"" + str + "\", 0), \"Admin Exp Alloc\", \"" + str + "\", " + Helpers.convertMonthNumber(Def.CP) + ")"; 
 		CompletableFuture<AnalyticExportFile> export = null;
 		try {
-			export = cube.export(f -> f.fileName(Def.DIR_PROJECT + "_" + str + ".txt").addFixStatement(fix));
+			export = cube.export(f -> f.fileName(Def.DIR_PROJECT + "_" + str + ".txt").addFixStatement(fix).setHeaderDimension("Accounts"));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
