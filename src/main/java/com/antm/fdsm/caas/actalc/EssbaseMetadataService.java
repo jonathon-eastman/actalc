@@ -35,7 +35,6 @@ public class EssbaseMetadataService {
 				EssbaseCube cube = metaBsoCube.copyToNewApplication(Def.CALC_NAME).getCube(Def.META_NAME_BSO).rename(Def.CALC_NAME).get();
 				EssbaseOutline metaOtl = cube.getOutline();
 				metaOtl.beginBatchOutlineEdit();
-				metaOtl.beginBatchOutlineEdit();
 				metaOtl.deleteMember("Alt Company Hierarchies");
 				metaOtl.deleteMember("Unconsolidated Companies");
 				metaOtl.deleteMember("Company Alloc");
