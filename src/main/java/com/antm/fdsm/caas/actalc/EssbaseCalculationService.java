@@ -135,6 +135,7 @@ public class EssbaseCalculationService {
 			ruleFile.aiSourceFile(service.getHome() + "/" + Def.DIR_DRIVERS + "/" + Def.DIR_PROJECT + "_r1.txt")
 			.ignoreFileColumn("Accounts")
 			.ignoreFileColumn("BegBalance")
+			.addVirtualColumn("Scenarios", "Actual")
 			.addVirtualColumn("Accounts", "Driver Detail");
 		});
 	}
@@ -155,6 +156,7 @@ public class EssbaseCalculationService {
 			.addVirtualColumn("Product", "PRDDD")
 			.addVirtualColumn("MBU", "MUDDDD")
 			.addVirtualColumn("Funding Type", "DD")
+			.addVirtualColumn("Scenarios", "Actual")
 			.addVirtualColumn("Accounts", "Driver Summary");
 		});
 	}
