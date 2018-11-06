@@ -22,19 +22,20 @@ public class ServiceFacade {
 		
 		
 		createCalc.get();
+		createRptg.get();
 		extract.get();
 		
 		EssbaseCalculationService calcService = new EssbaseCalculationService(oacService);
 		calcService.clearAllData();
 		CompletableFuture<Void> unallocatedLoad = calcService.loadUnallocated();
-		CompletableFuture<Void> detailRates = calcService.loadCostCenterRatesDetail();
-		CompletableFuture<Void> summaryRates = calcService.loadCostCenterRatesSummary();
+		//CompletableFuture<Void> detailRates = calcService.loadCostCenterRatesDetail();
+		//CompletableFuture<Void> summaryRates = calcService.loadCostCenterRatesSummary();
 		unallocatedLoad.get();
-		detailRates.get();
-		summaryRates.get();
-		calcService.allocate();
-		calcService.exportCube();
-		createRptg.get();
+		//detailRates.get();
+		//summaryRates.get();
+		//calcService.allocate();
+		//calcService.exportCube();
+		//createRptg.get();
 		/*EssbaseReportingService rptgService = new EssbaseReportingService(oacService);
 		rptgService.clearAllData()
 			.loadData();
