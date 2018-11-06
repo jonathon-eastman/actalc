@@ -7,7 +7,6 @@ import com.antm.fdsm.orcl.oac.EssbaseApplication;
 import com.antm.fdsm.orcl.oac.EssbaseCube;
 import com.antm.fdsm.orcl.oac.EssbaseServer;
 import com.antm.fdsm.orcl.oac.otl.ConsolidationAttribute;
-import com.antm.fdsm.orcl.oac.otl.DimensionStorage;
 import com.antm.fdsm.orcl.oac.otl.EssbaseOutline;
 import com.antm.fdsm.orcl.oac.otl.RestructureOption;
 import com.antm.fdsm.orcl.utils.Singleton;
@@ -33,25 +32,9 @@ public class EssbaseMetadataService {
 				if (calcBsoApp.exists()) {
 					calcBsoApp.delete().get();
 				}
-				metaBsoCube.copyToNewApplication(Def.CALC_NAME).getCube(Def.META_NAME_BSO).rename(Def.CALC_NAME).get();
-			} catch (InterruptedException | ExecutionException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return null;
-		});
-		return cf;
-	}
-
-	public CompletableFuture<Void> createReportingCube() {
-		CompletableFuture<Void> cf = CompletableFuture.supplyAsync(() -> {
-			EssbaseApplication rptgApp = server.getApplication(service, Def.RPTG_NAME);
-			try {
-				if (rptgApp.exists()) {
-					rptgApp.delete().get();
-				}
-				EssbaseCube cube = metaAsoCube.copyToNewApplication(Def.RPTG_NAME).getCube(Def.META_NAME_ASO).rename(Def.RPTG_NAME).get();
+				EssbaseCube cube = metaBsoCube.copyToNewApplication(Def.CALC_NAME).getCube(Def.META_NAME_BSO).rename(Def.CALC_NAME).get();
 				EssbaseOutline metaOtl = cube.getOutline();
+				metaOtl.beginBatchOutlineEdit();
 				metaOtl.beginBatchOutlineEdit();
 				metaOtl.deleteMember("Alt Company Hierarchies");
 				metaOtl.deleteMember("Unconsolidated Companies");
@@ -121,6 +104,38 @@ public class EssbaseMetadataService {
 						.previousSibling("QI Alloc Exp")
 						.consolidation(ConsolidationAttribute.INGORE)
 					);*/
+				metaOtl.finishBatchOutlineEdit(RestructureOption.NO_DATA);
+			} catch (InterruptedException | ExecutionException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		});
+		return cf;
+	}
+
+	public CompletableFuture<Void> createReportingCube() {
+		CompletableFuture<Void> cf = CompletableFuture.supplyAsync(() -> {
+			EssbaseApplication rptgApp = server.getApplication(service, Def.RPTG_NAME);
+			try {
+				if (rptgApp.exists()) {
+					rptgApp.delete().get();
+				}
+				EssbaseCube cube = metaAsoCube.copyToNewApplication(Def.RPTG_NAME).getCube(Def.META_NAME_ASO).rename(Def.RPTG_NAME).get();
+				EssbaseOutline metaOtl = cube.getOutline();
+				metaOtl.beginBatchOutlineEdit();
+				metaOtl.addMember(mbr -> mbr
+					.name("QI Alloc Exp")
+					.parent("Accounts")
+					.previousSibling("Drivers")
+					.consolidation(ConsolidationAttribute.INGORE)
+				);
+				metaOtl.addMember(mbr -> mbr
+					.name("CareMore QI Exp")
+					.parent("Accounts")
+					.previousSibling("QI Alloc Exp")
+					.consolidation(ConsolidationAttribute.INGORE)
+				);
 				metaOtl.finishBatchOutlineEdit(RestructureOption.NO_DATA);
 			}
 			catch (InterruptedException | ExecutionException e) {
