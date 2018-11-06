@@ -40,7 +40,7 @@ public class EssbaseMetadataService {
 				metaOtl.deleteMember("Alt Company Hierarchies");
 				metaOtl.deleteMember("Unconsolidated Companies");
 				metaOtl.deleteMember("Company Alloc");
-				//metaOtl.deleteDimension("Time Periods");
+				//
 				/*metaOtl.addDimension( dim -> dim
 					.name("Time Periods blah")
 					.previousSibling("Funding Type")
@@ -135,6 +135,7 @@ public class EssbaseMetadataService {
 					.previousSibling("QI Alloc Exp")
 					.consolidation(ConsolidationAttribute.INGORE)
 				);
+				metaOtl.deleteDimension("Time Periods");
 				metaOtl.finishBatchOutlineEdit(RestructureOption.NO_DATA);
 			}
 			catch (InterruptedException | ExecutionException e) {
