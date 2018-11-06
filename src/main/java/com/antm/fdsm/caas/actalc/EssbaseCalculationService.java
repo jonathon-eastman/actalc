@@ -34,15 +34,20 @@ public class EssbaseCalculationService {
 		List<String> alternateStructures = Arrays.asList("allocate_region1.csc", "allocate_region2.csc", "allocate_region3.csc", "allocate_region4.csc", "allocate_region5.csc", "allocate_region6.csc");
 		JsonArray vars = new JsonArray().add(new JsonObject().put("key", "CURRENT_PERIOD_ACTUAL").put("value", Helpers.translateMonthNumber(Def.CP)));
 		calcCube.setSubstitutionVariables(vars);
-		List<CompletableFuture<Void>> cfList = alternateStructures.stream().parallel().map(str -> calcCube.calculate(str)).collect(Collectors.toList());
-		cfList.parallelStream().forEach(cf -> {
-			try {
-				cf.get();
-			} catch (InterruptedException | ExecutionException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		});
+		int skip = 0;
+		int limit = 3;
+		while (alternateStructures.size()> skip) {
+			List<CompletableFuture<Void>> cfList = alternateStructures.stream().skip(skip).limit(limit).map(str -> calcCube.calculate(str, true)).collect(Collectors.toList());
+			cfList.parallelStream().forEach(cf -> {
+				try {
+					cf.get();
+				} catch (InterruptedException | ExecutionException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			});
+			skip += limit;
+		}
 		return this;
 	}
 
