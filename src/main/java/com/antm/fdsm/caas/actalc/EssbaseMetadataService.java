@@ -7,7 +7,6 @@ import com.antm.fdsm.orcl.oac.EssbaseApplication;
 import com.antm.fdsm.orcl.oac.EssbaseCube;
 import com.antm.fdsm.orcl.oac.EssbaseServer;
 import com.antm.fdsm.orcl.oac.otl.ConsolidationAttribute;
-import com.antm.fdsm.orcl.oac.otl.DataStorage;
 import com.antm.fdsm.orcl.oac.otl.DimensionStorage;
 import com.antm.fdsm.orcl.oac.otl.EssbaseOutline;
 import com.antm.fdsm.orcl.oac.otl.MemberCategory;
@@ -51,15 +50,6 @@ public class EssbaseMetadataService {
 				metaOtl.deleteMember("Brand State");
 				metaOtl.deleteMember("Product Type");
 				metaOtl.deleteMember("CC Function");
-				/*metaOtl.addMember(mbr -> mbr
-					.name("BegBalance")
-					.parent("Time Periods")
-					.consolidation(ConsolidationAttribute.INGORE)
-				);
-				metaOtl.updateDimension(mbr -> mbr
-					.storage(DimensionStorage.SPARSE)
-					.name("Time Periods")
-				);*/
 				metaOtl.addMember(mbr -> mbr
 					.name("Admin Unallocated")
 					.parent("Accounts")
@@ -104,6 +94,7 @@ public class EssbaseMetadataService {
 				);
 				metaOtl.addMember(mbr -> mbr
 					.name("YearTotal")
+					.consolidation(ConsolidationAttribute.INGORE)
 					.parent("Time Periods")
 				);
 				metaOtl.addMember(mbr -> mbr
