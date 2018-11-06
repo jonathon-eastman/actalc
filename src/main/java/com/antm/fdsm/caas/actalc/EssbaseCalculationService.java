@@ -131,8 +131,8 @@ public class EssbaseCalculationService {
 	
 	public CompletableFuture<Void> loadCostCenterRatesDetail() {
 		return calcCube.load((loadFile, ruleFile) -> {
-			loadFile.localPath(service.getHome() + "/" + Def.DIR_REQUIRED + "/" + Def.DIR_PROJECT + "_r1.txt");
-			ruleFile.aiSourceFile(service.getHome() + "/" + Def.DIR_REQUIRED + "/" + Def.DIR_PROJECT + "_r1.txt")
+			loadFile.localPath(service.getHome() + "/" + Def.DIR_DRIVERS + "/" + Def.DIR_PROJECT + "_r1.txt");
+			ruleFile.aiSourceFile(service.getHome() + "/" + Def.DIR_DRIVERS + "/" + Def.DIR_PROJECT + "_r1.txt")
 			.ignoreFileColumn("Accounts")
 			.addVirtualColumn("Accounts", "Driver Detail");
 		});
@@ -140,8 +140,8 @@ public class EssbaseCalculationService {
 	
 	public CompletableFuture<Void> loadCostCenterRatesSummary() {
 		return calcCube.load((loadFile, ruleFile) -> {
-			loadFile.localPath(service.getHome() + "/" + Def.DIR_REQUIRED + "/" + Def.DIR_PROJECT + "_r1.txt");
-			ruleFile.aiSourceFile(service.getHome() + "/" + Def.DIR_REQUIRED + "/" + Def.DIR_PROJECT + "_r1.txt")
+			loadFile.localPath(service.getHome() + "/" + Def.DIR_DRIVERS + "/" + Def.DIR_PROJECT + "_r1.txt");
+			ruleFile.aiSourceFile(service.getHome() + "/" + Def.DIR_DRIVERS + "/" + Def.DIR_PROJECT + "_r1.txt")
 			.ignoreFileColumn("Fixed Pool")
 			.ignoreFileColumn("Company")
 			.ignoreFileColumn("Product")
