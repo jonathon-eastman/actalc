@@ -77,7 +77,7 @@ public class EssbaseMetadataService {
 				metaOtl.deleteMember("Brand State");
 				metaOtl.deleteMember("Product Type");
 				metaOtl.deleteMember("CC Function");
-				metaOtl.addMember(mbr -> mbr
+				/*metaOtl.addMember(mbr -> mbr
 					.name("BegBalance")
 					.parent("Time Periods")
 					.consolidation(ConsolidationAttribute.INGORE)
@@ -120,7 +120,7 @@ public class EssbaseMetadataService {
 						.parent("Accounts")
 						.previousSibling("QI Alloc Exp")
 						.consolidation(ConsolidationAttribute.INGORE)
-					);
+					);*/
 				metaOtl.finishBatchOutlineEdit(RestructureOption.NO_DATA);
 			}
 			catch (InterruptedException | ExecutionException e) {

@@ -14,24 +14,24 @@ public class ServiceFacade {
 		oacService.slackInfo(Def.SLACK_WEBHOOK_APP, ":rocket: starting " + Def.CUBE_NAME + " update[base].");
 
 		final EssbaseMetadataService metaService = new EssbaseMetadataService(oacService);
-		final Actadm2CubeService actadm2 = new Actadm2CubeService(oacService);
-		CompletableFuture<Void> extract = actadm2.extractUnallocated();
-		CompletableFuture<Void> createRptg =  metaService.createReportingCube();
+		//final Actadm2CubeService actadm2 = new Actadm2CubeService(oacService);
+		//CompletableFuture<Void> extract = actadm2.extractUnallocated();
+		//CompletableFuture<Void> createRptg =  metaService.createReportingCube();
 		CompletableFuture<Void> createCalc =  metaService.createCalculatingCube();
 		
 		
 		
 		createCalc.get();
-		createRptg.get();
-		extract.get();
+		//createRptg.get();
+		//extract.get();
 		
-		EssbaseCalculationService calcService = new EssbaseCalculationService(oacService);
+		/*EssbaseCalculationService calcService = new EssbaseCalculationService(oacService);
 		calcService.clearAllData();
 		CompletableFuture<Void> unallocatedLoad = calcService.loadUnallocated();
 		calcService.loadCostCenterRatesDetail().get();
 		CompletableFuture<Void> summaryRates = calcService.loadCostCenterRatesSummary();
 		unallocatedLoad.get();
-		summaryRates.get();
+		summaryRates.get();*/
 		//calcService.allocate();
 		//calcService.exportCube();
 		//createRptg.get();
