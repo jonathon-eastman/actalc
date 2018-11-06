@@ -68,7 +68,7 @@ public class EssbaseMetadataService {
 					.storage(DimensionStorage.SPARSE)
 					.name("Time Periods")
 				);*/
-				metaOtl.addMember(mbr -> mbr
+				/*metaOtl.addMember(mbr -> mbr
 					.name("Admin Unallocated")
 					.parent("Accounts")
 					.previousSibling("Admin Exp Alloc")
@@ -98,11 +98,11 @@ public class EssbaseMetadataService {
 					.consolidation(ConsolidationAttribute.INGORE)
 				);
 				metaOtl.addMember(mbr -> mbr
-						.name("Drivers")
-						.parent("Accounts")
-						.previousSibling("QI Alloc Exp")
-						.consolidation(ConsolidationAttribute.INGORE)
-					);
+					.name("Drivers")
+					.parent("Accounts")
+					.previousSibling("QI Alloc Exp")
+					.consolidation(ConsolidationAttribute.INGORE)
+				);*/
 				metaOtl.finishBatchOutlineEdit(RestructureOption.NO_DATA);
 			} catch (InterruptedException | ExecutionException e) {
 				// TODO Auto-generated catch block
