@@ -38,18 +38,11 @@ public class EssbaseMetadataService {
 				metaOtl.deleteMember("Alt Company Hierarchies");
 				metaOtl.deleteMember("Unconsolidated Companies");
 				metaOtl.deleteMember("Company Alloc");
-				metaOtl.deleteMember("Alternate Time Periods");
-				metaOtl.deleteMember("CM vs PM");
-				metaOtl.deleteMember("CM vs PM Pct");
-				metaOtl.deleteMember("YTD");
-				metaOtl.deleteMember("QTD");
-				metaOtl.deleteMember("CM");
-				metaOtl.deleteMember("PM");
-				metaOtl.deleteMember("FM");
-				metaOtl.deleteMember("PP");
-				metaOtl.deleteMember("CM vs PM");
-				metaOtl.deleteMember("YTD Options");
-				metaOtl.deleteMember("QTD Options");
+				metaOtl.deleteDimension("Time Periods");
+				metaOtl.addMember( mbr -> mbr
+					.name("Time Periods")
+				);
+				
 
 				/*metaOtl.deleteMember("Alt Product Structures");
 				metaOtl.deleteMember("Product Alloc");
