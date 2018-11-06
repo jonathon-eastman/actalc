@@ -53,8 +53,8 @@ public class EssbaseMetadataService {
 				metaOtl.deleteMember("Product Alloc");
 				metaOtl.deleteMember("DOI Product");
 				metaOtl.deleteMember("MBU Alloc");
-				//metaOtl.deleteMember("Drivers");
-				//metaOtl.deleteMember("Scenarios");
+				metaOtl.deleteMember("Drivers");
+				metaOtl.deleteMember("Scenarios");
 				metaOtl.deleteMember("CBE");
 				metaOtl.deleteMember("Brand State");
 				metaOtl.deleteMember("Product Type");
