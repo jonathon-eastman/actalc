@@ -32,32 +32,14 @@ public class ServiceFacade {
 		CompletableFuture<Void> summaryRates = calcService.loadCostCenterRatesSummary();
 		unallocatedLoad.get();
 		summaryRates.get();
-		//calcService.allocate();
-		//calcService.exportCube();
-		//createRptg.get();
-		/*EssbaseReportingService rptgService = new EssbaseReportingService(oacService);
-		rptgService.clearAllData()
-			.loadData();
+		calcService.allocate();
+		calcService.exportCube();
 		
-		createCalc.get();
-
-		Logger.info("calc cube creation completed.");
-		EssbaseCalculationService calcService = new EssbaseCalculationService(oacService);
-		calcService.clearAllData();
-		CompletableFuture<Void> unallocatedLoad = calcService.loadUnallocated();
-		CompletableFuture<Void> driverLoad = calcService.loadDrivers();
-		unallocatedLoad.get();
-		driverLoad.get();
-
-		calcService.allocate()
-			.exportCube()
-			.moveNewExport2Previous();
-
 		createRptg.get();
-
-		rptgService.move2Production()
-			.balance()
-			.associate(dbService);*/
+		EssbaseReportingService rptgService = new EssbaseReportingService(oacService);
+		rptgService.clearAllData()
+			.loadData()
+			.move2Production();
 
 		oacService.slackInfo(Def.SLACK_WEBHOOK_APP, ":checkered_flag: finished " + Def.CUBE_NAME + " update[base].");
 	}
