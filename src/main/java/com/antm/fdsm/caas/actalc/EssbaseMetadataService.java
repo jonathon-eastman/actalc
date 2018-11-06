@@ -7,6 +7,7 @@ import com.antm.fdsm.orcl.oac.EssbaseApplication;
 import com.antm.fdsm.orcl.oac.EssbaseCube;
 import com.antm.fdsm.orcl.oac.EssbaseServer;
 import com.antm.fdsm.orcl.oac.otl.ConsolidationAttribute;
+import com.antm.fdsm.orcl.oac.otl.DataStorage;
 import com.antm.fdsm.orcl.oac.otl.DimensionStorage;
 import com.antm.fdsm.orcl.oac.otl.EssbaseOutline;
 import com.antm.fdsm.orcl.oac.otl.MemberCategory;
@@ -177,6 +178,26 @@ public class EssbaseMetadataService {
 					.parent("Time Periods")
 					.previousSibling("YearTotal")
 					.consolidation(ConsolidationAttribute.INGORE)
+				);
+				metaOtl.updateMember(mbr -> mbr
+					.name("YearTotal")
+					.storage(DataStorage.DYNAMIC)
+				);
+				metaOtl.updateMember(mbr -> mbr
+					.name("Q1")
+					.storage(DataStorage.DYNAMIC)
+				);
+				metaOtl.updateMember(mbr -> mbr
+					.name("Q2")
+					.storage(DataStorage.DYNAMIC)
+				);
+				metaOtl.updateMember(mbr -> mbr
+					.name("Q3")
+					.storage(DataStorage.DYNAMIC)
+				);
+				metaOtl.updateMember(mbr -> mbr
+					.name("Q4")
+					.storage(DataStorage.DYNAMIC)
 				);
 				metaOtl.finishBatchOutlineEdit(RestructureOption.NO_DATA);
 			} catch (InterruptedException | ExecutionException e) {
