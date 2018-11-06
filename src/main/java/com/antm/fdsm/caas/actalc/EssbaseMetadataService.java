@@ -106,17 +106,17 @@ public class EssbaseMetadataService {
 					.name("YearTotal")
 					.parent("Time Periods")
 					//.consolidation(ConsolidationAttribute.INGORE)
-					.storage(DataStorage.DYNAMIC)
+					//.storage(DataStorage.DYNAMIC)
 				);
 				metaOtl.addMember(mbr -> mbr
 					.name("Q1")
 					.parent("YearTotal")
-					.storage(DataStorage.DYNAMIC)
+				//	.storage(DataStorage.DYNAMIC)
 				);
 				metaOtl.addMember(mbr -> mbr
 					.name("Jan")
 					.parent("Q1")
-					.storage(DataStorage.STORE_DATA)
+					//.storage(DataStorage.STORE_DATA)
 				);
 				metaOtl.finishBatchOutlineEdit(RestructureOption.NO_DATA);
 			} catch (InterruptedException | ExecutionException e) {
