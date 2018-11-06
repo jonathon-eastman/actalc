@@ -185,6 +185,7 @@ public class EssbaseMetadataService {
 					.name("BegBalance")
 					.parent("Time Periods")
 					.previousSibling("YearTotal")
+					.consolidation(ConsolidationAttribute.INGORE)
 				);
 				metaOtl.finishBatchOutlineEdit(RestructureOption.NO_DATA);
 			} catch (InterruptedException | ExecutionException e) {
