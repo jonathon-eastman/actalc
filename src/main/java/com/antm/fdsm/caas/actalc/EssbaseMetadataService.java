@@ -41,15 +41,15 @@ public class EssbaseMetadataService {
 				metaOtl.deleteMember("Unconsolidated Companies");
 				metaOtl.deleteMember("Company Alloc");
 				metaOtl.deleteDimension("Time Periods");
-				metaOtl.addDimension( dim -> dim
+				/*metaOtl.addDimension( dim -> dim
 					.name("Time Periods blah")
 					.previousSibling("Funding Type")
 					.category(MemberCategory.TIME)
 					.storage(DimensionStorage.SPARSE)
-				);
+				);*/
 				
 
-				/*metaOtl.deleteMember("Alt Product Structures");
+				metaOtl.deleteMember("Alt Product Structures");
 				metaOtl.deleteMember("Product Alloc");
 				metaOtl.deleteMember("DOI Product");
 				metaOtl.deleteMember("MBU Alloc");
@@ -58,7 +58,7 @@ public class EssbaseMetadataService {
 				metaOtl.deleteMember("CBE");
 				metaOtl.deleteMember("Brand State");
 				metaOtl.deleteMember("Product Type");
-				metaOtl.deleteMember("CC Function");*./
+				metaOtl.deleteMember("CC Function");
 				/*metaOtl.addMember(mbr -> mbr
 					.name("BegBalance")
 					.parent("Time Periods")
@@ -67,7 +67,7 @@ public class EssbaseMetadataService {
 				metaOtl.updateDimension(mbr -> mbr
 					.storage(DimensionStorage.SPARSE)
 					.name("Time Periods")
-				);
+				);*/
 				metaOtl.addMember(mbr -> mbr
 					.name("Admin Unallocated")
 					.parent("Accounts")
@@ -102,7 +102,7 @@ public class EssbaseMetadataService {
 						.parent("Accounts")
 						.previousSibling("QI Alloc Exp")
 						.consolidation(ConsolidationAttribute.INGORE)
-					);*/
+					);
 				metaOtl.finishBatchOutlineEdit(RestructureOption.NO_DATA);
 			} catch (InterruptedException | ExecutionException e) {
 				// TODO Auto-generated catch block
