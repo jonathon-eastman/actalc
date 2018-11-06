@@ -40,6 +40,8 @@ public class EssbaseMetadataService {
 				metaOtl.deleteMember("Unconsolidated Companies");
 				metaOtl.deleteMember("Company Alloc");
 				metaOtl.deleteMember("Alternate Time Periods");
+				metaOtl.deleteMember("CM vs PM");
+				metaOtl.deleteMember("CM vs PM Pct");
 				metaOtl.deleteMember("YTD");
 				metaOtl.deleteMember("QTD");
 				metaOtl.deleteMember("CM");
@@ -49,7 +51,7 @@ public class EssbaseMetadataService {
 				metaOtl.deleteMember("CM vs PM");
 				metaOtl.deleteMember("YTD Options");
 				metaOtl.deleteMember("QTD Options");
-				metaOtl.deleteMember("CM vs PM Pct");
+
 				/*metaOtl.deleteMember("Alt Product Structures");
 				metaOtl.deleteMember("Product Alloc");
 				metaOtl.deleteMember("DOI Product");
