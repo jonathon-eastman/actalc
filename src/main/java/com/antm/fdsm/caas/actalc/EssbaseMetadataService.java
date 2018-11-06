@@ -105,18 +105,86 @@ public class EssbaseMetadataService {
 				metaOtl.addMember(mbr -> mbr
 					.name("YearTotal")
 					.parent("Time Periods")
-					//.consolidation(ConsolidationAttribute.INGORE)
-					//.storage(DataStorage.DYNAMIC)
 				);
 				metaOtl.addMember(mbr -> mbr
 					.name("Q1")
 					.parent("YearTotal")
-				//	.storage(DataStorage.DYNAMIC)
 				);
 				metaOtl.addMember(mbr -> mbr
 					.name("Jan")
 					.parent("Q1")
-					//.storage(DataStorage.STORE_DATA)
+				);
+				metaOtl.addMember(mbr -> mbr
+					.name("Feb")
+					.parent("Q1")
+					.previousSibling("Jan")
+				);
+				metaOtl.addMember(mbr -> mbr
+					.name("Mar")
+					.parent("Q1")
+					.previousSibling("Feb")
+				);
+				metaOtl.addMember(mbr -> mbr
+					.name("Q2")
+					.parent("YearTotal")
+					.previousSibling("Q1")
+				);
+				metaOtl.addMember(mbr -> mbr
+					.name("Apr")
+					.parent("Q2")
+				);
+				metaOtl.addMember(mbr -> mbr
+					.name("May")
+					.parent("Q2")
+					.previousSibling("Apr")
+				);
+				metaOtl.addMember(mbr -> mbr
+					.name("Jun")
+					.parent("Q2")
+					.previousSibling("May")
+				);
+				metaOtl.addMember(mbr -> mbr
+					.name("Q3")
+					.parent("YearTotal")
+					.previousSibling("Q2")
+				);
+				metaOtl.addMember(mbr -> mbr
+					.name("Jul")
+					.parent("Q3")
+				);
+				metaOtl.addMember(mbr -> mbr
+					.name("Aug")
+					.parent("Q3")
+					.previousSibling("Jul")
+				);
+				metaOtl.addMember(mbr -> mbr
+					.name("Sep")
+					.parent("Q3")
+					.previousSibling("Aug")
+				);
+				metaOtl.addMember(mbr -> mbr
+					.name("Q4")
+					.parent("YearTotal")
+					.previousSibling("Q3")
+				);
+				metaOtl.addMember(mbr -> mbr
+					.name("Oct")
+					.parent("Q4")
+				);
+				metaOtl.addMember(mbr -> mbr
+					.name("Nov")
+					.parent("Q4")
+					.previousSibling("Oct")
+				);
+				metaOtl.addMember(mbr -> mbr
+					.name("Dec")
+					.parent("Q4")
+					.previousSibling("Nov")
+				);
+				metaOtl.addMember(mbr -> mbr
+					.name("BegBalance")
+					.parent("Time Periods")
+					.previousSibling("YearTotal")
 				);
 				metaOtl.finishBatchOutlineEdit(RestructureOption.NO_DATA);
 			} catch (InterruptedException | ExecutionException e) {
