@@ -41,6 +41,8 @@ public class EssbaseMetadataService {
 				metaOtl.deleteDimension("Time Periods");
 				metaOtl.addMember( mbr -> mbr
 					.name("Time Periods")
+					.previousSibling("Funding Type")
+					.parent("")
 				);
 				
 
