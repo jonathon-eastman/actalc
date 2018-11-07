@@ -50,14 +50,7 @@ public class EssbaseMetadataService {
 				metaOtl.deleteMember("CBE");
 				metaOtl.deleteMember("Brand State");
 				metaOtl.deleteMember("Product Type");
-				metaOtl.deleteMember("CC Function");
-				metaOtl.addMember(mbr -> mbr
-					.name("Admin Unallocated")
-					.parent("Accounts")
-					.previousSibling("Admin Exp Alloc")
-					.consolidation(ConsolidationAttribute.INGORE)
-				);
-						
+				metaOtl.deleteMember("CC Function");	
 				metaOtl.addMember(mbr -> mbr
 					.name("QI Alloc Exp")
 					.parent("Accounts")
@@ -78,12 +71,6 @@ public class EssbaseMetadataService {
 				metaOtl.addMember(mbr -> mbr
 					.name("Driver Total")
 					.parent("Drivers")
-					.consolidation(ConsolidationAttribute.INGORE)
-				);
-				metaOtl.addMember(mbr -> mbr
-					.name("Drivers")
-					.parent("Accounts")
-					.previousSibling("QI Alloc Exp")
 					.consolidation(ConsolidationAttribute.INGORE)
 				);
 				metaOtl.deleteMember("Time Periods");
