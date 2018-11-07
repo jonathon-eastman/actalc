@@ -68,7 +68,7 @@ public class EssbaseCalculationService {
 		CompletableFuture<AnalyticExportFile> export = null;
 		try {
 			export = cube.export(f -> f
-				.fileName(Def.DIR_PROJECT + "_" + str + ".txt")
+				.fileName(Def.DIR_PROJECT + "_" + str.toLowerCase() + ".txt")
 				.addFixStatement(fix)
 				.setHeaderDimension("Accounts")
 			);
