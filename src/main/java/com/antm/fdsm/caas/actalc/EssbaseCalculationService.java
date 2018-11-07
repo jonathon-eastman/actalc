@@ -131,8 +131,7 @@ public class EssbaseCalculationService {
 					.addVirtualColumn("Company", "GDDDD")
 					.addVirtualColumn("Funding Type", "DD")
 					.addVirtualColumn("Time Periods", Helpers.translateMonthNumber(Def.CP))
-					.addVirtualColumn("Fixed Pool", "F00")
-					.addVirtualColumn("Scenarios", "Actual");
+					.addVirtualColumn("Fixed Pool", "F00");
 				}).get();
 			} catch (InterruptedException | ExecutionException e) {
 				// TODO Auto-generated catch block
