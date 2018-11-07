@@ -31,13 +31,13 @@ public class EssbaseCalculationService {
 	}
 	
 	public EssbaseCalculationService allocate() throws Exception {
-		List<String> alternateStructures = Arrays.asList("allocate_region1.csc", "allocate_region2.csc", "allocate_region3.csc", "allocate_region4.csc", "allocate_region5.csc", "allocate_region6.csc");
+		List<String> allocationScriptsRegion = Arrays.asList("allocate_region1.csc", "allocate_region2.csc", "allocate_region3.csc", "allocate_region4.csc", "allocate_region5.csc", "allocate_region6.csc");
 		JsonArray vars = new JsonArray().add(new JsonObject().put("key", "CURRENT_PERIOD_ACTUAL").put("value", Helpers.translateMonthNumber(Def.CP)));
 		calcCube.setSubstitutionVariables(vars);
 		int skip = 0;
 		int limit = 3;
-		while (alternateStructures.size()> skip) {
-			List<CompletableFuture<Void>> cfList = alternateStructures.stream().skip(skip).limit(limit).map(str -> calcCube.calculate(str, true)).collect(Collectors.toList());
+		while (allocationScriptsRegion.size()> skip) {
+			List<CompletableFuture<Void>> cfList = allocationScriptsRegion.stream().skip(skip).limit(limit).map(str -> calcCube.calculate(str, true)).collect(Collectors.toList());
 			cfList.parallelStream().forEach(cf -> {
 				try {
 					cf.get();
@@ -67,7 +67,11 @@ public class EssbaseCalculationService {
 		String fix = "FIX (@RELATIVE(\"Company\", 0), @RELATIVE(\"Funding Type Total\", 0),@RELATIVE(\"Fixed Pool Total\", 0),@RELATIVE(\"" + str +"\", 0),@RELATIVE(\"Product Total\", 0),@RELATIVE(\"" + str + "\", 0), \"Admin Exp Alloc\", \"" + str + "\", " + Helpers.convertMonthNumber(Def.CP) + ")"; 
 		CompletableFuture<AnalyticExportFile> export = null;
 		try {
-			export = cube.export(f -> f.fileName(Def.DIR_PROJECT + "_" + str + ".txt").addFixStatement(fix).setHeaderDimension("Accounts"));
+			export = cube.export(f -> f
+				.fileName(Def.DIR_PROJECT + "_" + str + ".txt")
+				.addFixStatement(fix)
+				.setHeaderDimension("Accounts")
+			);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
