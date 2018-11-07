@@ -1,5 +1,7 @@
 package com.antm.fdsm.caas.actalc;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import com.antm.fdsm.orcl.oac.EssbaseApplication;
@@ -32,14 +34,24 @@ public class EssbaseReportingService {
 	};
 
 	public EssbaseReportingService loadData() throws InterruptedException, ExecutionException {
-		//int bufferNumber = 1000;
-		//rptgCube.createBuffer(bufferNumber, 0.1).get();
-		/*CompletableFuture<Void> curentPeriodLoad = */rptgCube.loadFilesInDirectory(service.getHome()  + "/"+ Def.DIR_NEW/*, bufferNumber*/).get();
-		/*CompletableFuture<Void> historyLoad = */rptgCube.loadFilesInDirectory(service.getHome() + "/" + Def.DIR_HISTORY/*, bufferNumber*/).get();
-		//curentPeriodLoad.get();
-		//historyLoad.get();
-		//rptgCube.commitBuffer(bufferNumber).get();
+		List<String> alternateStructures = Arrays.asList("Alloc_0", "Alloc_1", "Alloc_2", "Alloc_3", "Alloc_4", "Alloc_5");
+		alternateStructures.stream().forEach( structure -> loadDivAllocFile(rptgCube, service.getHome(),structure));
+		rptgCube.loadFilesInDirectoryBlocking(service.getHome() + "/" + Def.DIR_HISTORY/*, bufferNumber*/);
 		return this;
+	}
+	
+	private static void loadDivAllocFile(EssbaseCube cube, String strHome, String strDiv ) {
+		try {
+			cube.load((loadFile, ruleFile) -> {
+				loadFile.localPath(strHome + "/" + Def.DIR_NEW + "/" + Def.DIR_PROJECT + "_" + strDiv.toLowerCase() + ".txt");
+				ruleFile.aiSourceFile(strHome + "/" + Def.DIR_NEW + "/" + Def.DIR_PROJECT + "_" + strDiv.toLowerCase() + ".txt")
+				.addVirtualColumn("Scenarios", "Actual")
+				.ignoreFileColumn("BegBalance");
+			}).get();
+		} catch (InterruptedException | ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public void loadCurrentPeriodWithPartialClear() {
