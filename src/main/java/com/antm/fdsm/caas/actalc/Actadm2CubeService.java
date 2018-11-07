@@ -31,7 +31,7 @@ public class Actadm2CubeService {
 				MdxOutputFile extract = actadm2.runMdx(mdx, Def.DIR_MDX + "/unallocated_admin.txt").get();
 				extract.applicationName(Def.CALC_NAME)
 					.cubeName(Def.CALC_NAME)
-					.replaceHeader("From Center|Admin Unallocated", 1)
+					.replaceHeader("From Center|Admin Exp Alloc", 1)
 					.returnCloud();
 			} 
 			catch (InterruptedException | ExecutionException e) {
