@@ -43,7 +43,7 @@ public class EssbaseReportingService {
 	private static void loadDivAllocFile(EssbaseCube cube, String strHome, String strDiv ) {
 		try {
 			cube.load((loadFile, ruleFile) -> {
-				loadFile.localPath(strHome + "/" + Def.DIR_NEW + "/" + Def.DIR_PROJECT + "_" + strDiv.toLowerCase() + ".txt");
+				loadFile.localPath(strHome + "/" + Def.DIR_REQUIRED + "/" + Def.DIR_PROJECT + "_" + strDiv.toLowerCase() + ".txt");
 				ruleFile.aiSourceFile(strHome + "/" + Def.DIR_NEW + "/" + Def.DIR_PROJECT + "_" + strDiv.toLowerCase() + ".txt")
 				.addVirtualColumn("Scenarios", "Actual")
 				.ignoreFileColumn("BegBalance");
