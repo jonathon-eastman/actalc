@@ -37,7 +37,6 @@ public class EssbaseReportingService {
 	public EssbaseReportingService loadAlloc() throws InterruptedException, ExecutionException {
 		List<String> alternateStructures = Arrays.asList("Alloc_0", "Alloc_1", "Alloc_2", "Alloc_3", "Alloc_4", "Alloc_5");
 		alternateStructures.stream().forEach( structure -> loadDivAllocFile(rptgCube, service.getHome(),structure));
-		rptgCube.loadFilesInDirectoryBlocking(service.getHome() + "/" + Def.DIR_HISTORY/*, bufferNumber*/);
 		return this;
 	}
 	
@@ -45,8 +44,8 @@ public class EssbaseReportingService {
 		CompletableFuture<EssbaseReportingService> cf = CompletableFuture.supplyAsync(() -> {
 			try {
 				rptgCube.load((loadFile, ruleFile) -> {
-					loadFile.localPath(service.getHome() + "/" + Def.DIR_REQUIRED + "/h_" + Def.DIR_PROJECT + "_ar_" + Def.YR2D + ".txt");
-					ruleFile.aiSourceFile(service.getHome() + "/" + Def.DIR_REQUIRED + "/h_" + Def.DIR_PROJECT + "_ar_" + Def.YR2D + ".txt");
+					loadFile.localPath(service.getHome() + "/" + Def.DIR_CPHISTORY + "/h_" + Def.DIR_PROJECT + "_ar_" + Def.YR2D + ".txt");
+					ruleFile.aiSourceFile(service.getHome() + "/" + Def.DIR_CPHISTORY + "/h_" + Def.DIR_PROJECT + "_ar_" + Def.YR2D + ".txt");
 				}).get();
 			} catch (InterruptedException | ExecutionException e) {
 				// TODO Auto-generated catch block
