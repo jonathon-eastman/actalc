@@ -19,8 +19,6 @@ public class ServiceFacade {
 		CompletableFuture<Void> createRptg =  metaService.createReportingCube();
 		CompletableFuture<Void> createCalc =  metaService.createCalculatingCube();
 		
-		
-		
 		createCalc.get();
 		createRptg.get();
 		extract.get();
@@ -38,7 +36,8 @@ public class ServiceFacade {
 		createRptg.get();
 		EssbaseReportingService rptgService = new EssbaseReportingService(oacService);
 		rptgService.clearAllData()
-			.loadData()
+			.loadAlloc()
+			.loadCurrentPeriodHistory().get()
 			.move2Production();
 
 		oacService.slackInfo(Def.SLACK_WEBHOOK_APP, ":checkered_flag: finished " + Def.CUBE_NAME + " update[base].");
