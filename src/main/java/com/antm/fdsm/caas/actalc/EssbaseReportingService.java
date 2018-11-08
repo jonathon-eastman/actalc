@@ -2,6 +2,7 @@ package com.antm.fdsm.caas.actalc;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
 import com.antm.fdsm.orcl.oac.EssbaseApplication;
@@ -33,18 +34,34 @@ public class EssbaseReportingService {
 		return this ;
 	};
 
-	public EssbaseReportingService loadData() throws InterruptedException, ExecutionException {
+	public EssbaseReportingService loadAlloc() throws InterruptedException, ExecutionException {
 		List<String> alternateStructures = Arrays.asList("Alloc_0", "Alloc_1", "Alloc_2", "Alloc_3", "Alloc_4", "Alloc_5");
 		alternateStructures.stream().forEach( structure -> loadDivAllocFile(rptgCube, service.getHome(),structure));
 		rptgCube.loadFilesInDirectoryBlocking(service.getHome() + "/" + Def.DIR_HISTORY/*, bufferNumber*/);
 		return this;
 	}
 	
+	public CompletableFuture<EssbaseReportingService> loadCurrentPeriodHistory()  {
+		CompletableFuture<EssbaseReportingService> cf = CompletableFuture.supplyAsync(() -> {
+			try {
+				rptgCube.load((loadFile, ruleFile) -> {
+					loadFile.localPath(service.getHome() + "/" + Def.DIR_REQUIRED + "/h_" + Def.DIR_PROJECT + "_ar_" + Def.YR2D + ".txt");
+					ruleFile.aiSourceFile(service.getHome() + "/" + Def.DIR_REQUIRED + "/h_" + Def.DIR_PROJECT + "_ar_" + Def.YR2D + ".txt");
+				}).get();
+			} catch (InterruptedException | ExecutionException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return this;
+		});
+		return cf;
+	}
+
 	private static void loadDivAllocFile(EssbaseCube cube, String strHome, String strDiv ) {
 		try {
 			cube.load((loadFile, ruleFile) -> {
 				loadFile.localPath(strHome + "/" + Def.DIR_REQUIRED + "/" + Def.DIR_PROJECT + "_" + strDiv.toLowerCase() + ".txt");
-				ruleFile.aiSourceFile(strHome + "/" + Def.DIR_NEW + "/" + Def.DIR_PROJECT + "_" + strDiv.toLowerCase() + ".txt")
+				ruleFile.aiSourceFile(strHome + "/" + Def.DIR_REQUIRED + "/" + Def.DIR_PROJECT + "_" + strDiv.toLowerCase() + ".txt")
 				.addVirtualColumn("Scenarios", "Actual")
 				.ignoreFileColumn("BegBalance");
 			}).get();
@@ -52,10 +69,6 @@ public class EssbaseReportingService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
-
-	public void loadCurrentPeriodWithPartialClear() {
-
 	}
 
 	public EssbaseCubeService move2Production() throws InterruptedException, ExecutionException {
