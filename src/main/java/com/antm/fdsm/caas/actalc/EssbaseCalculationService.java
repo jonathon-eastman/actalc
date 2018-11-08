@@ -170,23 +170,6 @@ public class EssbaseCalculationService {
 		});
 	}
 
-	public CompletableFuture<EssbaseCalculationService> loadCurrentPeriodHistory()  {
-		CompletableFuture<EssbaseCalculationService> cf = CompletableFuture.supplyAsync(() -> {
-			Logger.info("loading current period.");
-			try {
-				calcCube.loadFilesInDirectory(service.getHome() + "/" + Def.DIR_CPHISTORY).get();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (ExecutionException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return this;
-		});
-		return cf;
-	}
-
 	public EssbaseCalculationService loadPreviousExport() throws Exception {
 		Logger.info("loading previous period.");
 		calcCube.load((loadFile, ruleFile) -> {
