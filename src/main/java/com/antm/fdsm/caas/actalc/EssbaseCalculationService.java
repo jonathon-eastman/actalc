@@ -58,12 +58,12 @@ public class EssbaseCalculationService {
 
 	public EssbaseCalculationService exportCube() throws Exception {
 		List<String> alternateStructures = Arrays.asList("Alloc_0", "Alloc_1", "Alloc_2", "Alloc_3", "Alloc_4", "Alloc_5");
-		List<CompletableFuture<AnalyticExportFile>> cfList = alternateStructures.stream().parallel().map(str -> exportWithFixStatement(calcCube, str)).collect(Collectors.toList());
+		List<CompletableFuture<AnalyticExportFile>> cfList = alternateStructures.stream().parallel().map(str -> exportWithFixStatement(calcCube, service.getHome(), str)).collect(Collectors.toList());
 		cfList.parallelStream().forEach(cf -> formatExport(service, cf));
 		return this;
 	}
 	
-	private static CompletableFuture<AnalyticExportFile> exportWithFixStatement(EssbaseCube cube, String str ) {
+	private static CompletableFuture<AnalyticExportFile> exportWithFixStatement(EssbaseCube cube,String strHome, String str ) {
 		String fix = "FIX (@RELATIVE(\"Company\", 0), @RELATIVE(\"Funding Type Total\", 0),@RELATIVE(\"Fixed Pool Total\", 0),@RELATIVE(\"" + str +"\", 0),@RELATIVE(\"Product Total\", 0),@RELATIVE(\"" + str + "\", 0), \"Admin Exp Alloc\", \"" + str + "\", " + Helpers.convertMonthNumber(Def.CP) + ")"; 
 		CompletableFuture<AnalyticExportFile> export = null;
 		try {
@@ -108,7 +108,7 @@ public class EssbaseCalculationService {
 			AnalyticExportFile export = cf.get();
 			export.bringLocally(
 				service.getHome() + "/" + Def.DIR_PREVIOUS + "/" + export.fileName,
-				service.getHome() + "/" + Def.DIR_NEW + "/" + export.fileName)
+				service.getHome() + "/" + Def.DIR_REQUIRED + "/" + export.fileName)
 			.pipeify().copy2Backup(service.getHome() + "/" + Def.DIR_BKP);
 			
 			String fn = export.fileName.replace(".txt", "_qi_reclass.txt");
