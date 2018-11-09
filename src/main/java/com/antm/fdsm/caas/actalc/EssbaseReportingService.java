@@ -45,7 +45,8 @@ public class EssbaseReportingService {
 			try {
 				rptgCube.load((loadFile, ruleFile) -> {
 					loadFile.localPath(service.getHome() + "/" + Def.DIR_CPHISTORY + "/h_" + Def.DIR_PROJECT + "_ar_" + Def.YR2D + ".txt");
-					ruleFile.aiSourceFile(service.getHome() + "/" + Def.DIR_CPHISTORY + "/h_" + Def.DIR_PROJECT + "_ar_" + Def.YR2D + ".txt");
+					ruleFile.aiSourceFile(service.getHome() + "/" + Def.DIR_CPHISTORY + "/h_" + Def.DIR_PROJECT + "_ar_" + Def.YR2D + ".txt")
+					.ignoreFileColumn("BegBalance");
 				}).get();
 			} catch (InterruptedException | ExecutionException e) {
 				// TODO Auto-generated catch block
