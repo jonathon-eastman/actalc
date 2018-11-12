@@ -16,6 +16,7 @@ public class Def {
 
 	public final static String SLACK_WEBHOOK_APP = "/services/TBNP5JXQT/BCXHTUREG/UaV6MeFMgY4zhonkus9YlLLp";
 
+
 	public static final String DIR_PROJECT = CUBE_NAME.toLowerCase();
 	public static final String DIR_BALANCE = DIR_PROJECT + "/" +"balance";
 	public static final String DIR_BKP = DIR_PROJECT + "/" +"bkp";
@@ -34,9 +35,9 @@ public class Def {
 	public static final String DIR_INCREMENTAL = DIR_EXPORT + "/" + "incremental";
 	public static final String DIR_REQUIRED = DIR_EXPORT + "/" + "required";
 	public static final String DIR_INPUT = DIR_EXPORT + "/" + "input";
-	public static final List<String> DIRS = Arrays.asList(DIR_PROJECT,DIR_BALANCE,DIR_BKP,DIR_TMP,DIR_DATA,DIR_HISTORY,DIR_CP,DIR_EXPORT,DIR_RELATIONAL,DIR_CPHISTORY,DIR_NEW,DIR_PREVIOUS,DIR_INCREMENTAL, DIR_LAST, DIR_LOG, DIR_MDX, DIR_REQUIRED, DIR_INPUT);
+	public static final String DIR_UNIQUE = DIR_DATA + "/" + "unique";
+	public static final List<String> DIRS = Arrays.asList(DIR_PROJECT,DIR_BALANCE,DIR_BKP,DIR_TMP,DIR_DATA,DIR_HISTORY,DIR_CP,DIR_EXPORT,DIR_RELATIONAL,DIR_CPHISTORY,DIR_NEW,DIR_PREVIOUS,DIR_INCREMENTAL, DIR_LAST, DIR_LOG, DIR_MDX, DIR_REQUIRED, DIR_INPUT, DIR_UNIQUE);
 	public static final Map<String, String> LINKS = new HashMap<String, String>();
-
 	
 	public static final int CP  = 10;
 	public static final int CY  = 2018;
