@@ -10,8 +10,6 @@ import com.antm.fdsm.orcl.oac.EssbaseServer;
 import com.antm.fdsm.orcl.odc.DatabaseService;
 import com.antm.fdsm.orcl.utils.Helpers;
 import com.antm.fdsm.orcl.utils.Singleton;
-
-import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 
 public class EssbaseCubeService {
@@ -36,57 +34,31 @@ public class EssbaseCubeService {
 	}
 
 	public EssbaseCubeService balance() throws InterruptedException, ExecutionException {
-		String mdx = 	"SELECT CROSSJOIN({[Project Total]},CROSSJOIN({[Anthem, Inc. (Cons)]},CROSSJOIN({[Administrative Expenses for Cost Allocations],[Headcount],[FTE],[Hours]},{[Actual]}))) ON AXIS(0),\n" +
+		String mdx = 	"SELECT CROSSJOIN({[From Center Total]},CROSSJOIN({[Fixed Pool Total]},CROSSJOIN({[MBU Total]},CROSSJOIN({[Product Total]},CROSSJOIN({[Funding Type Total]},CROSSJOIN({[Anthem, Inc. (Cons)], [GDDDD]},CROSSJOIN({[Admin Exp Alloc]},{[Actual]}))))))) ON AXIS(0),\n" +
 						"{ [" + Helpers.convertMonthNumber(Def.CP) + "]} ON AXIS(1)\n" +
 						"FROM " + Def.CUBE_NAME + "." + Def.CUBE_NAME;
 		//essbase
 		JsonObject essbaseResults = cube.runMdx(mdx).get();
 		Logger.info("Got essbase results as json [{}].", essbaseResults);
-		double admEssbase = Helpers.ifNumberGetDoubleElseZero(essbaseResults.getJsonObject("slice").getJsonObject("data").getJsonArray("ranges").getJsonObject(0).getJsonArray("values").getString(21));
-		double hctEssbase = Helpers.ifNumberGetDoubleElseZero(essbaseResults.getJsonObject("slice").getJsonObject("data").getJsonArray("ranges").getJsonObject(0).getJsonArray("values").getString(22));
-		double fteEssbase = Helpers.ifNumberGetDoubleElseZero(essbaseResults.getJsonObject("slice").getJsonObject("data").getJsonArray("ranges").getJsonObject(0).getJsonArray("values").getString(23));
-		double hrsEssbase = Helpers.ifNumberGetDoubleElseZero(essbaseResults.getJsonObject("slice").getJsonObject("data").getJsonArray("ranges").getJsonObject(0).getJsonArray("values").getString(24));
-
-		//gl adm
-		double admGl = 0.00;
-		if ( Helpers.fileExists(service.getHome() + "/" + Def.DIR_BALANCE + "/act_adm" + Def.CP + "_" + Def.CY + ".json", service.getFs())) {
-			JsonArray glResultsAdm = Helpers.readJsonArrayFile(service.getHome() + "/" + Def.DIR_BALANCE + "/act_adm" + Def.CP + "_" + Def.CY + ".json", service.getFs());
-			System.out.println("TEST: " + glResultsAdm.encodePrettily());
-			admGl = Helpers.ifNumberGetDoubleElseZero(glResultsAdm.getString(1));
-		}
-
-		//gl hc
-		double hctGl = 0.00;
-		if ( Helpers.fileExists(service.getHome() + "/" + Def.DIR_BALANCE + "/act_hct" + Def.CP + "_" + Def.CY + ".json", service.getFs())) {
-			JsonArray glResultsHct = Helpers.readJsonArrayFile(service.getHome() + "/" + Def.DIR_BALANCE + "/act_hct" + Def.CP + "_" + Def.CY + ".json", service.getFs());
-			hctGl = Helpers.ifNumberGetDoubleElseZero(glResultsHct.getString(1));
-		}
-
-		//gl fte
-		double fteGl = 0.00;
-		if ( Helpers.fileExists(service.getHome() + "/" + Def.DIR_BALANCE + "/act_fte" + Def.CP + "_" + Def.CY + ".json", service.getFs())) {
-			JsonArray glResultsFte = Helpers.readJsonArrayFile(service.getHome() + "/" + Def.DIR_BALANCE + "/act_fte" + Def.CP + "_" + Def.CY + ".json", service.getFs());
-			fteGl = Helpers.ifNumberGetDoubleElseZero(glResultsFte.getString(1));
-		}
-
-		//gl hrs
-		double hrsGl = 0.00;
-		if ( Helpers.fileExists(service.getHome() + "/" + Def.DIR_BALANCE + "/act_hrs" + Def.CP + "_" + Def.CY + ".json", service.getFs())) {
-			JsonArray glResultsHrs = Helpers.readJsonArrayFile(service.getHome() + "/" + Def.DIR_BALANCE + "/act_hrs" + Def.CP + "_" + Def.CY + ".json", service.getFs());
-			hrsGl = Helpers.ifNumberGetDoubleElseZero(glResultsHrs.getString(1));
-		}
-
+		double allocatedAdmin = Helpers.ifNumberGetDoubleElseZero(essbaseResults.getJsonObject("slice").getJsonObject("data").getJsonArray("ranges").getJsonObject(0).getJsonArray("values").getString(25));
+		double unallocatedAdmin = Helpers.ifNumberGetDoubleElseZero(essbaseResults.getJsonObject("slice").getJsonObject("data").getJsonArray("ranges").getJsonObject(0).getJsonArray("values").getString(26));
+		final Actadm2CubeService actadm2 = new Actadm2CubeService(service);
+		double actadm2Admin = actadm2.getTotalUnallocatedAdmin();
 		//variances
-		double varAdm  = admEssbase - admGl;
-		double varHct  = hctEssbase - hctGl;
-		double varFte  = fteEssbase - fteGl;
-		double varHrs  = hrsEssbase - hrsGl;
+		double varActalc  = allocatedAdmin - unallocatedAdmin;
+		double varActadm2  = allocatedAdmin - actadm2Admin;
+		double varActadm2Unallocated  = unallocatedAdmin - actadm2Admin;
+		String nfUnalloc = Helpers.loggerNumberFormat(unallocatedAdmin);
+		String nfAlloc = Helpers.loggerNumberFormat(allocatedAdmin);
+		String nfActadm2 = Helpers.loggerNumberFormat(actadm2Admin);
+		String nfVarActalc = Helpers.loggerNumberFormat(varActalc);
+		String nfVarActadm2 = Helpers.loggerNumberFormat(varActadm2);
+		String nfVarActadm2Unallocated = Helpers.loggerNumberFormat(varActadm2Unallocated);
 
-		Logger.info("\nessbase administrative expenses[{}]\ngl administrative expenses[{}]\n------------------------------------------------------\nvariance[{}]\n", admEssbase, admGl, varAdm);
-		Logger.info("\nessbase headcount[{}]\ngl headcount[{}]\n------------------------------------------------------\nvariance[{}]\n", hctEssbase, hctGl, varHct);
-		Logger.info("\nessbase fte[{}]\ngl fte[{}]\n------------------------------------------------------\nvariance[{}]\n", fteEssbase, fteGl, varFte);
-		Logger.info("\nessbase hours[{}]\ngl hours[{}]\n------------------------------------------------------\nvariance[{}]\n", hrsEssbase, hrsGl, varHrs);
-		if ( (Math.abs(varAdm) + Math.abs(varHct) + Math.abs(varFte) + Math.abs(varHrs) > Def.VARIANCE_TOLERANCE) ){
+		Logger.info("\nactalc allocated admin[{"+ nfAlloc +"}]\ngl actalc unallocated admin[{" + nfUnalloc +"}]\n------------------------------------------------------\nvariance[{" + nfVarActalc + "}]\n", allocatedAdmin, unallocatedAdmin, varActalc);
+		Logger.info("\nactalc allocated admin[{"+ nfAlloc +"}]\ngl actadm2 unallocated admin[{" + nfActadm2 +"}]\n------------------------------------------------------\nvariance[{" + nfVarActadm2 + "}]\n", allocatedAdmin, actadm2Admin, varActadm2);
+		Logger.info("\nactalc unallocated admin[{"+ nfUnalloc +"}]\ngl actadm2 unallocated admin[{" + nfActadm2 +"}]\n------------------------------------------------------\nvariance[{" + nfVarActadm2Unallocated + "}]\n", unallocatedAdmin, actadm2Admin, varActadm2Unallocated);
+		if ( (Math.abs(varActalc) + Math.abs(varActadm2) + Math.abs(varActadm2Unallocated) > Def.VARIANCE_TOLERANCE) ){
 			Logger.info("an imbalance between " + Def.CUBE_NAME + " and the PeopleSoft gl ACTUALS ledger exists.");
 			Singleton.slackErrorDev(Def.SLACK_WEBHOOK_APP, ":sob: an imbalance between " + Def.CUBE_NAME + " and the PeopleSoft gl ACTUALS ledger exists.");
 		}
