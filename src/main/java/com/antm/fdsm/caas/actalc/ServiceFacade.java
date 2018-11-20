@@ -38,7 +38,8 @@ public class ServiceFacade {
 		rptgService.clearAllData()
 			.loadAlloc()
 			.loadCurrentPeriodHistory().get()
-			.move2Production();
+			.move2Production()
+			.balance();
 
 		oacService.slackInfo(Def.SLACK_WEBHOOK_APP, ":checkered_flag: finished " + Def.CUBE_NAME + " update[base].");
 	}
