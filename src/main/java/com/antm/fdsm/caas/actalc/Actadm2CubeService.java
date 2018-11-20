@@ -51,7 +51,7 @@ public class Actadm2CubeService {
 	public double getTotalUnallocatedAdmin() throws InterruptedException, ExecutionException {
 		String mdx = 	"SELECT CROSSJOIN({[Cost Center Total]},CROSSJOIN({[Administrative Expenses for Cost Allocations]},CROSSJOIN({[Project Total]},CROSSJOIN({[Anthem, Inc. (Cons)]},{[Actual]})))) ON AXIS(0),\n" +
 						"{ [" + Helpers.convertMonthNumber(Def.CP) + "]} ON AXIS(1)\n" +
-						"FROM " + Def.CUBE_NAME + "." + Def.CUBE_NAME;
+						"FROM ACTADM2.ACTADM2";
 		//essbase
 		JsonObject essbaseResults = actadm2.runMdx(mdx).get();
 		Logger.info("Got essbase results as json [{}].", essbaseResults);
