@@ -36,7 +36,8 @@ public class Def {
 	public static final String DIR_REQUIRED = DIR_EXPORT + "/" + "required";
 	public static final String DIR_INPUT = DIR_EXPORT + "/" + "input";
 	public static final String DIR_UNIQUE = DIR_DATA + "/" + "unique";
-	public static final List<String> DIRS = Arrays.asList(DIR_PROJECT,DIR_BALANCE,DIR_BKP,DIR_TMP,DIR_DATA,DIR_HISTORY,DIR_CP,DIR_EXPORT,DIR_RELATIONAL,DIR_CPHISTORY,DIR_NEW,DIR_PREVIOUS,DIR_INCREMENTAL, DIR_LAST, DIR_LOG, DIR_MDX, DIR_REQUIRED, DIR_INPUT, DIR_UNIQUE);
+	public static final String DIR_OPTION = DIR_PROJECT + "/" + "option";
+	public static final List<String> DIRS = Arrays.asList(DIR_PROJECT,DIR_BALANCE,DIR_BKP,DIR_TMP,DIR_DATA,DIR_HISTORY,DIR_CP,DIR_EXPORT,DIR_RELATIONAL,DIR_CPHISTORY,DIR_NEW,DIR_PREVIOUS,DIR_INCREMENTAL, DIR_LAST, DIR_LOG, DIR_MDX, DIR_REQUIRED, DIR_INPUT, DIR_UNIQUE, DIR_OPTION);
 	public static final Map<String, String> LINKS = new HashMap<String, String>();
 	
 	public static final int CP  = 10;
