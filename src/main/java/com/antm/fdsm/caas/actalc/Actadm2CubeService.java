@@ -55,7 +55,7 @@ public class Actadm2CubeService {
 		//essbase
 		JsonObject essbaseResults = actadm2.runMdx(mdx).get();
 		Logger.info("Got essbase results as json [{}].", essbaseResults);
-		double admEssbase = Helpers.ifNumberGetDoubleElseZero(essbaseResults.getJsonObject("slice").getJsonObject("data").getJsonArray("ranges").getJsonObject(0).getJsonArray("values").getString(12));
+		double admEssbase = Helpers.ifNumberGetDoubleElseZero(essbaseResults.getJsonObject("slice").getJsonObject("data").getJsonArray("ranges").getJsonObject(0).getJsonArray("values").getString(11));
 
 		return admEssbase;
 	}
