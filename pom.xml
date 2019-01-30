@@ -27,24 +27,24 @@
     <dependency>
     	<groupId>com.antm.fdsm.orcl</groupId>
     	<artifactId>odc</artifactId>
-    	<version>0.5.6</version>
+    	<version>0.5.8</version>
     </dependency>
     <dependency>
     	<groupId>com.antm.fdsm.orcl</groupId>
     	<artifactId>oac</artifactId>
-    	<version>0.8.10</version>
+    	<version>0.8.13</version>
     </dependency>
     <dependency>
     	<groupId>com.antm.fdsm.orcl</groupId>
     	<artifactId>utils</artifactId>
-    	<version>0.5.5</version>
+    	<version>0.6.1</version>
     </dependency>
   </dependencies>
   <parent>
   	<groupId>com.antm</groupId>
   	<artifactId>fdsm</artifactId>
-  	<version>0.0.2</version>
+  	<version>0.0.3</version>
   	<relativePath>../</relativePath>
   </parent>
-  <version>0.0.11</version>
+  <version>0.0.12</version>
 </project>
