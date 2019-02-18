@@ -40,11 +40,11 @@ public class Def {
 	public static final List<String> DIRS = Arrays.asList(DIR_PROJECT,DIR_BALANCE,DIR_BKP,DIR_TMP,DIR_DATA,DIR_HISTORY,DIR_CP,DIR_EXPORT,DIR_RELATIONAL,DIR_CPHISTORY,DIR_NEW,DIR_PREVIOUS,DIR_INCREMENTAL, DIR_LAST, DIR_LOG, DIR_MDX, DIR_REQUIRED, DIR_INPUT, DIR_UNIQUE, DIR_OPTION);
 	public static final Map<String, String> LINKS = new HashMap<String, String>();
 	
-	public static final int CP  = 12;
-	public static final int CY  = 2018;
-	public static final int YR2D = 18;
-	public static final int YR2DS1 = 17;
-	public static final int YR2DS2 = 16;
+	public static final int CP  = 2;
+	public static final int CY  = 2019;
+	public static final int YR2D = 19;
+	public static final int YR2DS1 = 18;
+	public static final int YR2DS2 = 17;
 	
 	static {
 		LINKS.put("/wh/h_" + CUBE_NAME_SOURCE.toLowerCase() + "_ar_" + YR2DS1 + ".txt", DIR_HISTORY);
