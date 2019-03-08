@@ -32,19 +32,19 @@
     <dependency>
     	<groupId>com.antm.fdsm.orcl</groupId>
     	<artifactId>oac</artifactId>
-    	<version>0.8.15</version>
+    	<version>0.8.17</version>
     </dependency>
     <dependency>
     	<groupId>com.antm.fdsm.orcl</groupId>
     	<artifactId>utils</artifactId>
-    	<version>0.6.14</version>
+    	<version>0.6.15</version>
     </dependency>
   </dependencies>
   <parent>
   	<groupId>com.antm</groupId>
   	<artifactId>fdsm</artifactId>
-  	<version>0.0.3</version>
+  	<version>0.0.4</version>
   	<relativePath>../</relativePath>
   </parent>
-  <version>0.0.13</version>
+  <version>0.0.14</version>
 </project>
