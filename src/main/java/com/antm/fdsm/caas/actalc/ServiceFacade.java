@@ -1,17 +1,19 @@
 package com.antm.fdsm.caas.actalc;
 
 import java.util.concurrent.CompletableFuture;
+import com.antm.fdsm.orcl.odc.services.OracleService;
+import com.antm.fdsm.orcl.oac.services.EssbaseAnalyticsService;
+import com.antm.fdsm.orcl.utils.GlobalCom;
 
-import com.antm.fdsm.orcl.utils.Singleton;
 
 public class ServiceFacade {
 
-	public static void archive(Singleton oacService, Singleton dbService) {
+	public static void archive(EssbaseAnalyticsService oacService, OracleService dbService) {
 		//EssbaseCubeService svc = new EssbaseCubeService(oacService).associate(dbService);
 	}
 
-	public static void base(Singleton oacService, Singleton dbService) throws Exception {
-		oacService.slackInfo(Def.SLACK_WEBHOOK_APP, ":rocket: starting " + Def.CUBE_NAME + " update[base].");
+	public static void base(EssbaseAnalyticsService oacService, OracleService dbService) throws Exception {
+		GlobalCom.slackInfo(Def.SLACK_WEBHOOK_APP, ":rocket: starting " + Def.CUBE_NAME + " update[base].");
 
 		final EssbaseMetadataService metaService = new EssbaseMetadataService(oacService);
 		final Actadm2CubeService actadm2 = new Actadm2CubeService(oacService);
@@ -41,11 +43,11 @@ public class ServiceFacade {
 			.move2Production()
 			.balance();
 
-		oacService.slackInfo(Def.SLACK_WEBHOOK_APP, ":checkered_flag: finished " + Def.CUBE_NAME + " update[base].");
+		GlobalCom.slackInfo(Def.SLACK_WEBHOOK_APP, ":checkered_flag: finished " + Def.CUBE_NAME + " update[base].");
 	}
 
-	public static void incremental(Singleton oacService, Singleton dbService) throws Exception {
-		oacService.slackInfo(Def.SLACK_WEBHOOK_APP, ":rocket: starting " + Def.CUBE_NAME + " update[incremental].");
+	public static void incremental(EssbaseAnalyticsService oacService, OracleService dbService) throws Exception {
+		GlobalCom.slackInfo(Def.SLACK_WEBHOOK_APP, ":rocket: starting " + Def.CUBE_NAME + " update[incremental].");
 		/*RelationalDatabaseService relationalService = new RelationalDatabaseService(dbService);
 		relationalService.extractPSGLCurrentMonth();
 		EssbaseCalculationService calcService = new EssbaseCalculationService(oacService);
@@ -61,7 +63,7 @@ public class ServiceFacade {
 		cubeService.loadIncrementalSlice().balance();
 
 		//update time here.*/
-		oacService.slackInfo(Def.SLACK_WEBHOOK_APP, ":checkered_flag: finished " + Def.CUBE_NAME + " update[incremental].");
+		GlobalCom.slackInfo(Def.SLACK_WEBHOOK_APP, ":checkered_flag: finished " + Def.CUBE_NAME + " update[incremental].");
 	}
 
 	public void transitionPlan() {

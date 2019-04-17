@@ -1,22 +1,29 @@
 package com.antm.fdsm.caas.actalc;
 
 import org.pmw.tinylog.Logger;
+import com.antm.fdsm.orcl.odc.services.HYPUSR;
+import com.antm.fdsm.orcl.odc.services.OracleOptions;
+import com.antm.fdsm.orcl.odc.services.OracleService;
+import com.antm.fdsm.orcl.oac.services.EssbaseAnalyticsOptions;
+import com.antm.fdsm.orcl.oac.services.EssbaseAnalyticsService;
+import com.antm.fdsm.orcl.oac.services.OACACT;
+import com.antm.fdsm.orcl.utils.GlobalOptions;
 
-import com.antm.fdsm.orcl.utils.Singleton;
 import io.vertx.core.AbstractVerticle;
 
 public class Start extends AbstractVerticle {
 
-	private final static Singleton oacActService = Singleton.OACDEV02.setDirs(Def.DIRS).setLinks(Def.LINKS).setSlackApp(Def.SLACK_WEBHOOK_APP).setApp(Def.CUBE_NAME).print();
-	private final static Singleton dbHypusrService = Singleton.HYPUSR.setDirs(Def.DIRS).setSlackApp(Def.SLACK_WEBHOOK_APP).print();
+	private final static EssbaseAnalyticsService essbase = OACACT.configure(new EssbaseAnalyticsOptions().setName(Def.PROJECT_NAME).setHome(GlobalOptions.HOME).setSlack(Def.SLACK_WEBHOOK_APP).setLinks(Def.LINKS));
+	private final static OracleService hypusr = HYPUSR.configure(new OracleOptions().setName(Def.PROJECT_NAME).setHome(GlobalOptions.HOME));
 
+	
 	public static void main(String[] args) {
 		try {
 			if( args[0].equals("1")) {
-				ServiceFacade.base(oacActService,dbHypusrService);
+				ServiceFacade.base(essbase,hypusr);
 			}
 			else if ( args[0].equals("2")) {
-				ServiceFacade.incremental(oacActService,dbHypusrService);
+				ServiceFacade.incremental(essbase,hypusr);
 			}
 			System.exit(0);
 		}

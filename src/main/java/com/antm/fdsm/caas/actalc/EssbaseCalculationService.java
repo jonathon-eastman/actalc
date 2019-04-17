@@ -5,26 +5,24 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
-
 import org.pmw.tinylog.Logger;
-
 import com.antm.fdsm.orcl.oac.AnalyticExportFile;
 import com.antm.fdsm.orcl.oac.EssbaseCube;
 import com.antm.fdsm.orcl.oac.EssbaseServer;
 import com.antm.fdsm.orcl.oac.LoadRule;
+import com.antm.fdsm.orcl.utils.GlobalOptions;
 import com.antm.fdsm.orcl.utils.Helpers;
-import com.antm.fdsm.orcl.utils.Singleton;
-
+import com.antm.fdsm.orcl.oac.services.EssbaseAnalyticsService;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 
 public class EssbaseCalculationService {
 
-	private Singleton service;
+	private EssbaseAnalyticsService service;
 	private EssbaseServer server;
 	private EssbaseCube calcCube;
 
-	public EssbaseCalculationService(Singleton oacServiceSingleton) {
+	public EssbaseCalculationService(EssbaseAnalyticsService oacServiceSingleton) {
 		service = oacServiceSingleton;
 		server = new EssbaseServer(service);
 		calcCube = server.getApplication(service, Def.CALC_NAME).getCube(Def.CALC_NAME);
@@ -58,7 +56,7 @@ public class EssbaseCalculationService {
 
 	public EssbaseCalculationService exportCube() throws Exception {
 		List<String> alternateStructures = Arrays.asList("Alloc_0", "Alloc_1", "Alloc_2", "Alloc_3", "Alloc_4", "Alloc_5");
-		List<CompletableFuture<AnalyticExportFile>> cfList = alternateStructures.stream().parallel().map(str -> exportWithFixStatement(calcCube, service.getHome(), str)).collect(Collectors.toList());
+		List<CompletableFuture<AnalyticExportFile>> cfList = alternateStructures.stream().parallel().map(str -> exportWithFixStatement(calcCube, GlobalOptions.HOME, str)).collect(Collectors.toList());
 		cfList.parallelStream().forEach(cf -> formatExport(service, cf));
 		return this;
 	}
@@ -68,7 +66,7 @@ public class EssbaseCalculationService {
 		CompletableFuture<AnalyticExportFile> export = null;
 		try {
 			export = cube.export(f -> f
-				.fileName(Def.DIR_PROJECT + "_" + str.toLowerCase() + ".txt")
+				.fileName(Def.PROJECT_NAME + "_" + str.toLowerCase() + ".txt")
 				.addFixStatement(fix)
 				.setHeaderDimension("Accounts")
 			);
@@ -79,7 +77,7 @@ public class EssbaseCalculationService {
 		return export;
 	}
 
-	private static void formatExport(Singleton service, CompletableFuture<AnalyticExportFile> cf) {
+	private static void formatExport(EssbaseAnalyticsService service, CompletableFuture<AnalyticExportFile> cf) {
 		try {
 			List<String> ccs = Arrays.asList(  "4801900000", "4810000100", "4810001100", "4810001800", "4810002300", "4810010600", "4810010800",                              
 					"4810015100", "4810020100", "4810025100", "4810100000", "4810110000", "4810120000", "4810410000",                              
@@ -107,12 +105,12 @@ public class EssbaseCalculationService {
 					"6331403400" );
 			AnalyticExportFile export = cf.get();
 			export.bringLocally(
-				service.getHome() + "/" + Def.DIR_PREVIOUS + "/" + export.fileName,
-				service.getHome() + "/" + Def.DIR_REQUIRED + "/" + export.fileName)
-			.pipeify().copy2Backup(service.getHome() + "/" + Def.DIR_BKP);
+				Def.ESSBASE_PREVIOUS + "/" + export.fileName,
+				Def.EXPORT + "/required/" + export.fileName)
+			.pipeify().copy2Backup(Def.BKP);
 			
 			String fn = export.fileName.replace(".txt", "_qi_reclass.txt");
-			export.intersect(ccs, service.getHome() + "/" + Def.DIR_REQUIRED + "/" + fn);
+			export.intersect(ccs, Def.EXPORT + "/required/" + fn);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -124,8 +122,8 @@ public class EssbaseCalculationService {
 			Logger.info("loading current period.");
 			try {
 				calcCube.load((loadFile, ruleFile) -> {
-					loadFile.localPath(service.getHome() + "/" + Def.DIR_MDX + "/unallocated_admin.txt");
-					ruleFile.aiSourceFile(service.getHome() + "/" + Def.DIR_MDX + "/unallocated_admin.txt")
+					loadFile.localPath(Def.DATA + "/mdx" + "/unallocated_admin.txt");
+					ruleFile.aiSourceFile(Def.DATA + "/mdx" + "/unallocated_admin.txt")
 					.addVirtualColumn("MBU", "MUDDDD")
 					.addVirtualColumn("Product", "PRDDD")
 					.addVirtualColumn("Company", "GDDDD")
@@ -144,8 +142,8 @@ public class EssbaseCalculationService {
 	
 	public CompletableFuture<Void> loadCostCenterRatesDetail() {
 		return calcCube.load((loadFile, ruleFile) -> {
-			loadFile.localPath(service.getHome() + "/" + Def.DIR_INPUT + "/" + Def.DIR_PROJECT + "_r1.txt");
-			ruleFile.aiSourceFile(service.getHome() + "/" + Def.DIR_INPUT + "/" + Def.DIR_PROJECT + "_r1.txt")
+			loadFile.localPath(Def.IN + "/" + Def.PROJECT_NAME + "_r1.txt");
+			ruleFile.aiSourceFile(Def.IN + "/" + Def.PROJECT_NAME + "_r1.txt")
 			.ignoreFileColumn("Accounts")
 			.addVirtualColumn("Accounts", "Driver Detail");
 		});
@@ -153,8 +151,8 @@ public class EssbaseCalculationService {
 	
 	public CompletableFuture<Void> loadCostCenterRatesSummary() {
 		return calcCube.load((loadFile, ruleFile) -> {
-			loadFile.localPath(service.getHome() + "/" + Def.DIR_INPUT + "/" + Def.DIR_PROJECT + "_r1.txt");
-			ruleFile.aiSourceFile(service.getHome() + "/" + Def.DIR_INPUT + "/" + Def.DIR_PROJECT + "_r1.txt")
+			loadFile.localPath(Def.IN + "/" + Def.PROJECT_NAME + "_r1.txt");
+			ruleFile.aiSourceFile(Def.IN + "/" + Def.PROJECT_NAME + "_r1.txt")
 			.ignoreFileColumn("Fixed Pool")
 			.ignoreFileColumn("Company")
 			.ignoreFileColumn("Product")
@@ -173,8 +171,8 @@ public class EssbaseCalculationService {
 	public EssbaseCalculationService loadPreviousExport() throws Exception {
 		Logger.info("loading previous period.");
 		calcCube.load((loadFile, ruleFile) -> {
-			loadFile.localPath(service.getHome() + "/" + Def.DIR_PREVIOUS + "/" + Def.DIR_PROJECT + ".txt").isFileLocal(true);
-			ruleFile.aiSourceFile(service.getHome() + "/" + Def.DIR_PREVIOUS + "/" + Def.DIR_PROJECT + ".txt")
+			loadFile.localPath(Def.ESSBASE_PREVIOUS + "/" + Def.PROJECT_NAME + ".txt").isFileLocal(true);
+			ruleFile.aiSourceFile(Def.ESSBASE_PREVIOUS + "/" + Def.PROJECT_NAME + ".txt")
 				.setValuesOperator(LoadRule.ValuesOperator.SUBTRACT);
 		}).get();
 		return this;
@@ -182,9 +180,9 @@ public class EssbaseCalculationService {
 
 	public EssbaseCalculationService moveNewExport2Previous() { 
 		Helpers.moveLocalFile(
-			service.getHome() + "/" + Def.DIR_NEW + "/" + Def.DIR_PROJECT + ".txt",
-			service.getHome() + "/" + Def.DIR_PREVIOUS + "/" + Def.DIR_PROJECT + ".txt",
-			service.getFs()
+				Def.EXPORT + "/new/" + Def.PROJECT_NAME + ".txt",
+			Def.ESSBASE_PREVIOUS + "/" + Def.PROJECT_NAME + ".txt",
+			GlobalOptions.VERTX_FS
 		);
 		return this;
 	}
