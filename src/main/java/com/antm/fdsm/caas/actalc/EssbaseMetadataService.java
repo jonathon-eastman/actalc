@@ -12,16 +12,16 @@ import com.antm.fdsm.orcl.oac.otl.DimensionStorage;
 import com.antm.fdsm.orcl.oac.otl.EssbaseOutline;
 import com.antm.fdsm.orcl.oac.otl.MemberCategory;
 import com.antm.fdsm.orcl.oac.otl.RestructureOption;
-import com.antm.fdsm.orcl.utils.Singleton;
+import com.antm.fdsm.orcl.oac.services.EssbaseAnalyticsService;
 
 public class EssbaseMetadataService {
 
-	private Singleton service;
+	private EssbaseAnalyticsService service;
 	private EssbaseServer server;
 	private EssbaseCube metaBsoCube;
 	private EssbaseCube metaAsoCube;
 
-	public EssbaseMetadataService(Singleton oacServiceSingleton) {
+	public EssbaseMetadataService(EssbaseAnalyticsService oacServiceSingleton) {
 		service = oacServiceSingleton;
 		server = new EssbaseServer(service);
 		metaBsoCube = server.getApplication(service, Def.META_NAME_BSO).getCube(Def.META_NAME_BSO);
@@ -35,7 +35,7 @@ public class EssbaseMetadataService {
 				if (calcBsoApp.exists()) {
 					calcBsoApp.delete().get();
 				}
-				EssbaseCube cube = metaBsoCube.copyToNewApplication(Def.CALC_NAME).getCube(Def.META_NAME_BSO).rename(Def.CALC_NAME).get();
+				EssbaseCube cube = metaBsoCube.copyToNewApplication(Def.CALC_NAME).get();
 				EssbaseOutline metaOtl = cube.getOutline();
 				metaOtl.beginBatchOutlineEdit();
 				metaOtl.deleteMember("Alt Company Hierarchies");
@@ -207,7 +207,7 @@ public class EssbaseMetadataService {
 				if (rptgApp.exists()) {
 					rptgApp.delete().get();
 				}
-				EssbaseCube cube = metaAsoCube.copyToNewApplication(Def.RPTG_NAME).getCube(Def.META_NAME_ASO).rename(Def.RPTG_NAME).get();
+				EssbaseCube cube = metaAsoCube.copyToNewApplication(Def.RPTG_NAME).get();
 				EssbaseOutline metaOtl = cube.getOutline();
 				metaOtl.beginBatchOutlineEdit();
 				metaOtl.addMember(mbr -> mbr
