@@ -1,32 +1,32 @@
 package com.antm.fdsm.caas.actalc;
 
 import java.util.concurrent.ExecutionException;
-
 import org.pmw.tinylog.Logger;
-
 import com.antm.fdsm.orcl.oac.EssbaseApplication;
 import com.antm.fdsm.orcl.oac.EssbaseCube;
 import com.antm.fdsm.orcl.oac.EssbaseServer;
 import com.antm.fdsm.orcl.odc.DatabaseService;
 import com.antm.fdsm.orcl.utils.Helpers;
-import com.antm.fdsm.orcl.utils.Singleton;
+import com.antm.fdsm.orcl.oac.services.EssbaseAnalyticsService;
+import com.antm.fdsm.orcl.odc.services.OracleService;
 import io.vertx.core.json.JsonObject;
+import com.antm.fdsm.orcl.utils.GlobalCom;
 
 public class EssbaseCubeService {
 
-	private Singleton service;
+	private EssbaseAnalyticsService service;
 	private EssbaseServer server;
 	private EssbaseApplication app;
 	private EssbaseCube cube;
 
-	public EssbaseCubeService(Singleton oacServiceSingleton) {
+	public EssbaseCubeService(EssbaseAnalyticsService oacServiceSingleton) {
 		service = oacServiceSingleton;
 		server = new EssbaseServer(service);
 		app = server.getApplication(service, Def.CUBE_NAME);
 		cube = app.getCube(Def.CUBE_NAME);
 	}
 
-	public EssbaseCubeService associate(Singleton dbService) throws InterruptedException, ExecutionException {
+	public EssbaseCubeService associate(OracleService dbService) throws InterruptedException, ExecutionException {
 		DatabaseService hypusr = new DatabaseService(dbService);
 		app.associateApplicationPermissions(hypusr);
 		cube.associateFilterPermissions(hypusr).get();
@@ -38,7 +38,7 @@ public class EssbaseCubeService {
 						"{ [" + Helpers.convertMonthNumber(Def.CP) + "]} ON AXIS(1)\n" +
 						"FROM " + Def.CUBE_NAME + "." + Def.CUBE_NAME;
 		//essbase
-		JsonObject essbaseResults = cube.runMdx(mdx).get();
+		JsonObject essbaseResults = cube.runMdxGrid(mdx).get();
 		Logger.info("Got essbase results as json [{}].", essbaseResults);
 		double allocatedAdmin = Helpers.ifNumberGetDoubleElseZero(essbaseResults.getJsonObject("slice").getJsonObject("data").getJsonArray("ranges").getJsonObject(0).getJsonArray("values").getString(25));
 		double unallocatedAdmin = Helpers.ifNumberGetDoubleElseZero(essbaseResults.getJsonObject("slice").getJsonObject("data").getJsonArray("ranges").getJsonObject(0).getJsonArray("values").getString(26));
@@ -60,24 +60,26 @@ public class EssbaseCubeService {
 		Logger.info("\nactalc unallocated admin[{"+ nfUnalloc +"}]\ngl actadm2 unallocated admin[{" + nfActadm2 +"}]\n------------------------------------------------------\nvariance[{" + nfVarActadm2Unallocated + "}]\n", unallocatedAdmin, actadm2Admin, varActadm2Unallocated);
 		if ( (Math.abs(varActalc) + Math.abs(varActadm2) + Math.abs(varActadm2Unallocated) > Def.VARIANCE_TOLERANCE) ){
 			Logger.info("an imbalance between " + Def.CUBE_NAME + " and the PeopleSoft gl ACTUALS ledger exists.");
-			Singleton.slackErrorDev(Def.SLACK_WEBHOOK_APP, ":sob: an imbalance between " + Def.CUBE_NAME + " and the PeopleSoft gl ACTUALS ledger exists.");
+			GlobalCom.slackErrorDev(Def.SLACK_WEBHOOK_APP, ":sob: an imbalance between " + Def.CUBE_NAME + " and the PeopleSoft gl ACTUALS ledger exists.");
 		}
 		else {
 			Logger.info(Def.CUBE_NAME + " balances to the PeopleSoft gl ACTUALS ledger");
-			service.slackBalance(Def.SLACK_WEBHOOK_APP, ":stuck_out_tongue_winking_eye: " + Def.CUBE_NAME + " balances to the PeopleSoft gl ACTUALS ledger");
+			GlobalCom.slackBalance(Def.SLACK_WEBHOOK_APP, ":stuck_out_tongue_winking_eye: " + Def.CUBE_NAME + " balances to the PeopleSoft gl ACTUALS ledger");
 		}
 
 		return this;
 	}
 
+	
 	public EssbaseCubeService loadIncrementalSlice() throws InterruptedException, ExecutionException {
-		cube.createBuffer(1000, 0.99).get();
+		int BUFFER_NUMBER_4SLICE = 1000;
+		cube.createBuffer(BUFFER_NUMBER_4SLICE, 20).get();
 		cube.load2Buffer((loadFile, ruleFile) -> {
-			loadFile.localPath(service.getHome() + "/" + Def.DIR_INCREMENTAL + "/" + Def.DIR_PROJECT + ".txt");
-			ruleFile.aiSourceFile(service.getHome() + "/" + Def.DIR_INCREMENTAL + "/" + Def.DIR_PROJECT + ".txt").applyBufferNumber(1000);
-		}).get();
-		cube.addBufferAsSlice(1000).get();
+			loadFile.localPath(Def.ESSBASE_INCREMENTAL + "/" + Def.PROJECT_NAME + ".txt");
+			ruleFile.aiSourceFile(Def.ESSBASE_INCREMENTAL + "/" + Def.PROJECT_NAME + ".txt").applyBufferNumber(1000);
+		}, BUFFER_NUMBER_4SLICE).get();
+		cube.slice(1000).get();
 		return this;
-	}
-
+	}	
+	
 }
