@@ -22,8 +22,7 @@ public class Start extends AbstractVerticle {
 			if( args[0].equals("1")) {
 				ServiceFacade.base(essbase,hypusr);
 			}
-			else if ( args[0].equals("2")) {
-				ServiceFacade.incremental(essbase,hypusr);
+				ServiceFacade.incremental(essbase,hypusr);{
 			}
 			System.exit(0);
 		}

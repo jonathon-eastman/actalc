@@ -16,6 +16,7 @@ public class ServiceFacade {
 		GlobalCom.slackInfo(Def.SLACK_WEBHOOK_APP, ":rocket: starting " + Def.CUBE_NAME + " update[base].");
 
 		final EssbaseMetadataService metaService = new EssbaseMetadataService(oacService);
+
 		final Actadm2CubeService actadm2 = new Actadm2CubeService(oacService);
 		CompletableFuture<Void> extract = actadm2.extractUnallocated();
 		CompletableFuture<Void> createRptg =  metaService.createReportingCube();
@@ -48,6 +49,7 @@ public class ServiceFacade {
 
 	public static void incremental(EssbaseAnalyticsService oacService, OracleService dbService) throws Exception {
 		GlobalCom.slackInfo(Def.SLACK_WEBHOOK_APP, ":rocket: starting " + Def.CUBE_NAME + " update[incremental].");
+
 		/*RelationalDatabaseService relationalService = new RelationalDatabaseService(dbService);
 		relationalService.extractPSGLCurrentMonth();
 		EssbaseCalculationService calcService = new EssbaseCalculationService(oacService);
