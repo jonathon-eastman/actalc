@@ -77,7 +77,8 @@ public class EssbaseMetadataService {
 					.name("Time Periods")
 					.previousSibling("Funding Type")
 					.category(MemberCategory.TIME)
-					.storage(DimensionStorage.SPARSE)
+					.dimensionStorage(DimensionStorage.SPARSE)
+					
 				);
 				metaOtl.addMember(mbr -> mbr
 					.name("YearTotal")

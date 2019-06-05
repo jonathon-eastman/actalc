@@ -183,7 +183,7 @@ public class EssbaseCalculationService {
 
 	public EssbaseCalculationService moveNewExport2Previous() { 
 		Helpers.moveLocalFile(
-				Def.EXPORT + "/new/" + Def.PROJECT_NAME + ".txt",
+			Def.EXPORT + "/new/" + Def.PROJECT_NAME + ".txt",
 			Def.ESSBASE_PREVIOUS + "/" + Def.PROJECT_NAME + ".txt",
 			GlobalOptions.VERTX_FS
 		);
