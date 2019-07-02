@@ -3,13 +3,13 @@
   <parent>
     <artifactId>fdsm</artifactId>
     <groupId>com.antm</groupId>
-    <version>0.0.2</version>
+    <version>0.0.5</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.antm.fdsm.caas</groupId>
-  <artifactId>actadm2</artifactId>
-  <name>actadm2</name>
-  <version>0.0.9</version>
+  <artifactId>actalc</artifactId>
+  <name>cost allocations</name>
+  <version>0.0.17</version>
   <url>http://maven.apache.org</url>
   <dependencies>
     <dependency>
@@ -20,9 +20,10 @@
     </dependency>
   </dependencies>
   <properties>
-    <shade.main.class>com.antm.fdsm.caas.actadm2.Start</shade.main.class>
-    <maven.compiler.source>1.8</maven.compiler.source>
+    <java.version>1.8</java.version>
+    <shade.main.class>com.antm.fdsm.caas.actalc.Start</shade.main.class>
+    <maven.compiler.source>${java.version}</maven.compiler.source>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.target>1.8</maven.compiler.target>
+    <maven.compiler.target>${java.version}</maven.compiler.target>
   </properties>
 </project>

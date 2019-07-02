@@ -29,7 +29,7 @@ public class Actadm2CubeService {
 								"CROSSJOIN({[" + Helpers.convertMonthNumber(Def.CP) + "]}, {[Project Total]})))) ON AXIS(0), " + 
 								"NON EMPTY Descendants([Cost Center].[Cost Center Total], [Cost Center].levels(0)) DIMENSION PROPERTIES [Cost Center].[MEMBER_UNIQUE_NAME] on AXIS(1) " + 
 								"FROM ACTADM2.ACTADM2";
-				MdxOutputFile extract = actadm2.runMdx(mdx, Def.DATA + "/mdx" + "/unallocated_admin.txt").get();
+				MdxOutputFile extract = actadm2.runMdxGrid(mdx, Def.DATA + "/mdx" + "/unallocated_admin.txt").get();
 				extract.applicationName(Def.CALC_NAME)
 					.cubeName(Def.CALC_NAME)
 					.replaceHeader("From Center|Admin Exp Alloc", 1)
