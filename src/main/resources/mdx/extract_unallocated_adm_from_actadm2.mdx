@@ -1,3 +1,3 @@
-SELECT CROSSJOIN({[Administrative Expenses for Cost Allocations], [Headcount]}, CROSSJOIN({[Actual]}, CROSSJOIN({[Anthem, Inc. (Cons)]}, CROSSJOIN({[Aug]}, {[Project Total]})))) ON AXIS(0),
+SELECT CROSSJOIN({[Administrative Expenses for Cost Allocations], [Headcount]}, CROSSJOIN({[Actual]}, CROSSJOIN({[Anthem, Inc. (Cons)]}, CROSSJOIN({[<<CURRENT_PERIOD_ACTUAL>>]}, {[Project Total]})))) ON AXIS(0),
 NON EMPTY Descendants([Cost Center].[Cost Center Total], [Cost Center].levels(0)) DIMENSION PROPERTIES [Cost Center].[MEMBER_UNIQUE_NAME] on AXIS(1)
 FROM ACTADM2.ACTADM2
