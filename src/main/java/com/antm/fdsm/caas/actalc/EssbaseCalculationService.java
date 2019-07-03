@@ -125,8 +125,8 @@ public class EssbaseCalculationService {
 			Logger.info("loading current period.");
 			try {
 				calcCube.load((loadFile, ruleFile) -> {
-					loadFile.localPath(Def.DATA + "/mdx" + "/unallocated_admin.txt");
-					ruleFile.aiSourceFile(Def.DATA + "/mdx" + "/unallocated_admin.txt")
+					loadFile.localPath(Def.TMP + "/unallocated_admin.txt");
+					ruleFile.aiSourceFile(Def.TMP + "/unallocated_admin.txt")
 					.addVirtualColumn("MBU", "MUDDDD")
 					.addVirtualColumn("Product", "PRDDD")
 					.addVirtualColumn("Company", "GDDDD")
