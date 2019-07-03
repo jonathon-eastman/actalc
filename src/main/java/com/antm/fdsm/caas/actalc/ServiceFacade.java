@@ -35,6 +35,7 @@ public class ServiceFacade {
 		summaryRates.get();
 		calcService.allocate();
 		calcService.exportCube();
+		calcService.exportCubeYTD();
 		
 		createRptg.get();
 		EssbaseReportingService rptgService = new EssbaseReportingService(oacService);
