@@ -65,7 +65,7 @@ public class EssbaseCalculationService {
 	}
 	
 	private static CompletableFuture<AnalyticExportFile> exportWithFixStatement(EssbaseCube cube,String strHome, String str ) {
-		String fix = "FIX (@RELATIVE(\"Company\", 0), @RELATIVE(\"Funding Type Total\", 0),@RELATIVE(\"Fixed Pool Total\", 0),@RELATIVE(\"" + str +"\", 0),@RELATIVE(\"Product Total\", 0),@RELATIVE(\"" + str + "\", 0), \"Admin Exp Alloc\", \"" + str + "\", " + Helpers.convertMonthNumber(Def.CP) + ")"; 
+		String fix = "FIX (@RELATIVE(\"Company\", 0), @RELATIVE(\"Funding Type Total\", 0),@RELATIVE(\"Fixed Pool Total\", 0),@RELATIVE(\"" + str +"\", 0),@RELATIVE(\"Product Total\", 0),@RELATIVE(\"" + str + "\", 0), \"Admin Exp Alloc\", \"" + str + "\", Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec)"; 
 		CompletableFuture<AnalyticExportFile> export = null;
 		try {
 			export = cube.export(f -> f
@@ -80,39 +80,6 @@ public class EssbaseCalculationService {
 		return export;
 	}
 
-	
-	
-	public EssbaseCalculationService exportCubeYTD() throws Exception {
-		List<String> alternateStructures = Arrays.asList("Alloc_YTD_0", "Alloc_YTD_1", "Alloc_YTD_2", "Alloc_YTD_3", "Alloc_YTD_4", "Alloc_YTD_5");
-		List<CompletableFuture<AnalyticExportFile>> cfList = alternateStructures.stream().parallel().map(str -> exportWithYTDFixStatement(calcCube, GlobalOptions.HOME, str)).collect(Collectors.toList());
-		cfList.parallelStream().forEach(cf -> formatExport(service, cf));
-		return this;
-	}
-	
-	private static CompletableFuture<AnalyticExportFile> exportWithYTDFixStatement(EssbaseCube cube,String strHome, String str ) {
-		String fix = "FIX (@RELATIVE(\"Company\", 0), @RELATIVE(\"Funding Type Total\", 0),@RELATIVE(\"Fixed Pool Total\", 0),@RELATIVE(\"" + str +"\", 0),@RELATIVE(\"Product Total\", 0),@RELATIVE(\"" + str + "\", 0), \"Admin Exp Alloc\", \"" + str + "\", Jan:Dec)"; 
-		CompletableFuture<AnalyticExportFile> export = null;
-		try {
-			export = cube.export(f -> f
-				.fileName(Def.PROJECT_NAME + "_" + str.toLowerCase() + ".txt")
-				.addFixStatement(fix)
-				.setHeaderDimension("Accounts")
-			);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return export;
-	}	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	private static void formatExport(EssbaseAnalyticsService service, CompletableFuture<AnalyticExportFile> cf) {
