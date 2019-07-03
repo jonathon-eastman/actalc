@@ -90,7 +90,7 @@ public class EssbaseCalculationService {
 	}
 	
 	private static CompletableFuture<AnalyticExportFile> exportWithYTDFixStatement(EssbaseCube cube,String strHome, String str ) {
-		String fix = "FIX ( Jan:Dec, @RELATIVE(\"Company\", 0), @RELATIVE(\"Funding Type Total\", 0),@RELATIVE(\"Fixed Pool Total\", 0),@RELATIVE(\"" + str +"\", 0),@RELATIVE(\"Product Total\", 0),@RELATIVE(\"" + str + "\", 0), \"Admin Exp Alloc\", \"" + str + "\")"; 
+		String fix = "FIX (@RELATIVE(\"Company\", 0), @RELATIVE(\"Funding Type Total\", 0),@RELATIVE(\"Fixed Pool Total\", 0),@RELATIVE(\"" + str +"\", 0),@RELATIVE(\"Product Total\", 0),@RELATIVE(\"" + str + "\", 0), \"Admin Exp Alloc\", \"" + str + "\", Jan:Dec)"; 
 		CompletableFuture<AnalyticExportFile> export = null;
 		try {
 			export = cube.export(f -> f
