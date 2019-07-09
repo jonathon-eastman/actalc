@@ -41,7 +41,6 @@ public class ServiceFacade {
 		rptgService.clearAllData()
 			.loadAlloc()
 			.loadCurrentPeriodHistory().get()
-			.exportActallc4Regalc()
 			.move2Production()
 			.balance();
 
