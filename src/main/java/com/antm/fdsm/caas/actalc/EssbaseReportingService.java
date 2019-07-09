@@ -4,11 +4,15 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
+
+
+import com.antm.fdsm.orcl.oac.AnalyticExportFile;
 import com.antm.fdsm.orcl.oac.EssbaseApplication;
 import com.antm.fdsm.orcl.oac.EssbaseCube;
 import com.antm.fdsm.orcl.oac.EssbaseServer;
 import com.antm.fdsm.orcl.oac.services.EssbaseAnalyticsService;
 import com.antm.fdsm.orcl.utils.GlobalOptions;
+import com.antm.fdsm.orcl.utils.Helpers;
 
 
 public class EssbaseReportingService {
@@ -89,4 +93,14 @@ public class EssbaseReportingService {
 
 	}
 
+	public EssbaseReportingService exportActallc4Regalc() throws Exception {	
+		AnalyticExportFile export = rptgCube.export(f -> f.fileName("par_actallc_4regalc.txt")).get();
+		export.bringLocally(
+				Def.EXPORT+ "/required/" + "par_actallc_4regalc.txt",
+				Def.EXPORT+ "/new/" + "par_actallc_4regalc.txt"
+		).pipeify().copy2Backup(Def.BKP);
+		return this;	
+	}
+	
+	
 }
