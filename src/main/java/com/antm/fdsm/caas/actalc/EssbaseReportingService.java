@@ -44,6 +44,12 @@ public class EssbaseReportingService {
 		return this;
 	}
 	
+	public EssbaseReportingService loadQiAlloc() throws InterruptedException, ExecutionException {
+		List<String> alternateStructures = Arrays.asList("Alloc_0_qi_reclass", "Alloc_1_qi_reclass", "Alloc_2_qi_reclass", "Alloc_3_qi_reclass", "Alloc_4_qi_reclass", "Alloc_5_qi_reclass");
+		alternateStructures.stream().forEach( structure -> loadDivAllocFile(rptgCube, GlobalOptions.HOME,structure));
+		return this;
+	}
+	
 	public CompletableFuture<EssbaseReportingService> loadCurrentPeriodHistory()  {
 		CompletableFuture<EssbaseReportingService> cf = CompletableFuture.supplyAsync(() -> {
 			try {

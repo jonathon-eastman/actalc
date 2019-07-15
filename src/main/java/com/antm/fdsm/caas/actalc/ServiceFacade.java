@@ -40,6 +40,7 @@ public class ServiceFacade {
 		EssbaseReportingService rptgService = new EssbaseReportingService(oacService);
 		rptgService.clearAllData()
 			.loadAlloc()
+			.loadQiAlloc()
 			.loadCurrentPeriodHistory().get()
 			.move2Production()
 			.balance();
