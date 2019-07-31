@@ -222,6 +222,18 @@ public class EssbaseMetadataService {
 					.previousSibling("QI Alloc Exp")
 					.consolidation(ConsolidationAttribute.INGORE)
 				);
+				metaOtl.addMember(mbr -> mbr
+					.name("DBG QI Exp")
+					.parent("Accounts")
+					.previousSibling("CareMore QI Exp")
+					.consolidation(ConsolidationAttribute.INGORE)
+				);
+				metaOtl.addMember(mbr -> mbr
+					.name("Contingent Vendor Fees")
+					.parent("Accounts")
+					.previousSibling("DBG QI Exp")
+					.consolidation(ConsolidationAttribute.INGORE)
+				);								
 				metaOtl.finishBatchOutlineEdit(RestructureOption.NO_DATA);
 			}
 			catch (InterruptedException | ExecutionException e) {
