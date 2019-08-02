@@ -33,7 +33,7 @@ public class EssbaseCalculationService {
 	}
 	
 	public EssbaseCalculationService allocate() throws Exception {
-		List<String> allocationScriptsRegion = Arrays.asList("allocate_region1.csc", "allocate_region2.csc", "allocate_region3.csc", "allocate_region4.csc", "allocate_region5.csc", "allocate_region6.csc");
+		List<String> allocationScriptsRegion = Arrays.asList("allocate_region1.csc", "allocate_region2.csc", "allocate_region3.csc", "allocate_region4.csc", "allocate_region5.csc", "allocate_region6.csc", "allocate_DBG.csc");
 		JsonArray vars = new JsonArray().add(new JsonObject().put("key", "CURRENT_PERIOD_ACTUAL").put("value", Helpers.translateMonthNumber(Def.CP)));
 		calcCube.setSubstitutionVariables(vars);
 		int skip = 0;
