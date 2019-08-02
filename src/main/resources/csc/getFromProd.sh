@@ -14,6 +14,6 @@ csc_files=( $csc_files )
 for csc_file in ${csc_files[*]}
 do
   mod_csc_file=${csc_file}.mod
-  perl -p -e 's/&cur_per_a/<<CURRENT_PERIOD_ACTUAL>>/gi' <$csc_file > $mod_csc_file
+   sed "s/&cur_per_a/<<CURRENT_PERIOD_ACTUAL>>/gi" $csc_file > $mod_csc_file
   mv $mod_csc_file $csc_file
 done
