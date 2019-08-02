@@ -35,12 +35,14 @@ public class ServiceFacade {
 		summaryRates.get();
 		calcService.allocate();
 		calcService.exportCube();
+		calcService.exportCubeDBG();
 		
 		createRptg.get();
 		EssbaseReportingService rptgService = new EssbaseReportingService(oacService);
 		rptgService.clearAllData()
 			.loadAlloc()
 			.loadQiAlloc()
+			.loadDBGAlloc()
 			.loadCurrentPeriodHistory().get()
 			.move2Production()
 			.balance();

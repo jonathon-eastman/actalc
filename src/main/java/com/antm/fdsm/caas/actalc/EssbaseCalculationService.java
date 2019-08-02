@@ -80,7 +80,32 @@ public class EssbaseCalculationService {
 		}
 		return export;
 	}
-
+	public EssbaseCalculationService exportCubeDBG() throws Exception {
+		List<String> alternateStructures = Arrays.asList("Alloc_DBG");
+		List<CompletableFuture<AnalyticExportFile>> cfList = alternateStructures.stream().parallel().map(str -> exportDBGWithFixStatement(calcCube, GlobalOptions.HOME, str)).collect(Collectors.toList());
+		cfList.parallelStream().forEach(cf -> formatExport(service, cf));
+		return this;
+	}
+	
+	private static CompletableFuture<AnalyticExportFile> exportDBGWithFixStatement(EssbaseCube cube,String strHome, String str ) {
+		String fix = "FIX (@RELATIVE(\"WellPoint, Inc. (Cons)\", 0), @RELATIVE(\"Funding Type Total\", 0),@RELATIVE(\"Fixed Pool Total\", 0), @RELATIVE(\"Product Total\", 0),@RELATIVE(\"Diversified Business Group\", 0), \"Admin Exp Alloc\", Helpers.translateMonthNumber(Def.CP) + )"; 
+		CompletableFuture<AnalyticExportFile> export = null;
+		try {
+			export = cube.export(f -> f
+				.fileName(Def.PROJECT_NAME + "_" + str.toLowerCase() + ".txt")
+				.addFixStatement(fix)
+				.setHeaderDimension("Accounts")
+			);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return export;
+	}
+	
+	
+	
+	
 	
 	
 	private static void formatExport(EssbaseAnalyticsService service, CompletableFuture<AnalyticExportFile> cf) {

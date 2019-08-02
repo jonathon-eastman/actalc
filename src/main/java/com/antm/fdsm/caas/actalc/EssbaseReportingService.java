@@ -39,13 +39,19 @@ public class EssbaseReportingService {
 	};
 	
 	public EssbaseReportingService loadAlloc() throws InterruptedException, ExecutionException {
-		List<String> alternateStructures = Arrays.asList("Alloc_0", "Alloc_1", "Alloc_2", "Alloc_3", "Alloc_4", "Alloc_5", "Alloc_DBG");
+		List<String> alternateStructures = Arrays.asList("Alloc_0", "Alloc_1", "Alloc_2", "Alloc_3", "Alloc_4", "Alloc_5");
 		alternateStructures.stream().forEach( structure -> loadDivAllocFile(rptgCube, GlobalOptions.HOME,structure));
 		return this;
 	}
 	
 	public EssbaseReportingService loadQiAlloc() throws InterruptedException, ExecutionException {
 		List<String> alternateStructures = Arrays.asList("Alloc_0_qi_reclass", "Alloc_1_qi_reclass", "Alloc_2_qi_reclass", "Alloc_3_qi_reclass", "Alloc_4_qi_reclass", "Alloc_5_qi_reclass");
+		alternateStructures.stream().forEach( structure -> loadDivAllocFile(rptgCube, GlobalOptions.HOME,structure));
+		return this;
+	}
+
+	public EssbaseReportingService loadDBGAlloc() throws InterruptedException, ExecutionException {
+		List<String> alternateStructures = Arrays.asList("Alloc_DBG");
 		alternateStructures.stream().forEach( structure -> loadDivAllocFile(rptgCube, GlobalOptions.HOME,structure));
 		return this;
 	}
