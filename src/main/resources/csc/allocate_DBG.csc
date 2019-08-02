@@ -12,6 +12,6 @@ SET CALCTASKDIMS 1;
 FIX (@RELATIVE("WellPoint, Inc. (Cons)", 0), @RELATIVE("Funding Type Total", 0),@RELATIVE("Fixed Pool Total", 0),
       @RELATIVE("Product Total", 0),@RELATIVE("Diversified Business Group", 0),"Admin Exp Alloc", <<CURRENT_PERIOD_ACTUAL>>)
 
-
+	DATAEXPORT "File" " " "/js/actalc/data/src/essbase/export/required/actalc_alloc_DBG.txt" "#Mi";
 
 ENDFIX

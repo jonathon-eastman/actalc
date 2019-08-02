@@ -39,7 +39,7 @@ public class EssbaseReportingService {
 	};
 	
 	public EssbaseReportingService loadAlloc() throws InterruptedException, ExecutionException {
-		List<String> alternateStructures = Arrays.asList("Alloc_0", "Alloc_1", "Alloc_2", "Alloc_3", "Alloc_4", "Alloc_5");
+		List<String> alternateStructures = Arrays.asList("Alloc_0", "Alloc_1", "Alloc_2", "Alloc_3", "Alloc_4", "Alloc_5", "Alloc_DBG");
 		alternateStructures.stream().forEach( structure -> loadDivAllocFile(rptgCube, GlobalOptions.HOME,structure));
 		return this;
 	}
