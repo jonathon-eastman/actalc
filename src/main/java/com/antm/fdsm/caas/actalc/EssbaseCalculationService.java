@@ -144,11 +144,8 @@ public class EssbaseCalculationService {
 				Def.EXPORT + "/required/" + export.fileName)
 			.pipeify().copy2Backup(Def.BKP);
 			
-			String fn1 = export.fileName.replace(".txt", "_NoCM.txt");
-			export.difference(ccs, Def.EXPORT + "/required/" + fn1);
-			
 			String fn = export.fileName.replace(".txt", "_qi_reclass.txt");
-			export.intersect(ccs, Def.EXPORT + "/required/" + fn);
+			export.intersect(ccs, Def.EXPORT + "/required/" + fn).replaceInHeader("Admin Exp Alloc", "CareMore QI Exp");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
