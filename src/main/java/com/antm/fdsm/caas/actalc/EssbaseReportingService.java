@@ -62,9 +62,9 @@ public class EssbaseReportingService {
 			rptgCube.load((loadFile, ruleFile) -> {
 				loadFile.localPath(Def.IN + "/history/h_actalc_ar_" + (Def.YR2D-2) + ".txt");
 				ruleFile.aiSourceFile(Def.IN + "/history/h_actalc_ar_" + (Def.YR2D-2) + ".txt")
-				.ignoreFileColumn("Accounts")
-				.addVirtualColumn("Segments", "SumProduct Default")
-				.ignoreFileColumn("Fixed Pool")
+//				.ignoreFileColumn("Accounts")
+//				.addVirtualColumn("Segments", "SumProduct Default")
+//				.ignoreFileColumn("Fixed Pool")
 				.ignoreFileColumn("BegBalance")
 				;
 			}).get();
@@ -72,9 +72,9 @@ public class EssbaseReportingService {
 			rptgCube.load((loadFile, ruleFile) -> {
 				loadFile.localPath(Def.IN + "/history/h_actalc_ar_" + (Def.YR2D-1) + ".txt");
 				ruleFile.aiSourceFile(Def.IN + "/history/h_actalc_ar_" + (Def.YR2D-1) + ".txt")
-				.ignoreFileColumn("Accounts")
-				.addVirtualColumn("Segments", "SumProduct Default")
-				.ignoreFileColumn("Fixed Pool")
+//				.ignoreFileColumn("Accounts")
+//				.addVirtualColumn("Segments", "SumProduct Default")
+//				.ignoreFileColumn("Fixed Pool")
 				.ignoreFileColumn("BegBalance")
 				;
 			}).get();			
@@ -120,22 +120,22 @@ public class EssbaseReportingService {
 				rptgCube.load((loadFile, ruleFile) -> {
 					loadFile.localPath(Def.CPHISTORY + "/h_actalc_wp_" + (Def.YR2D) + ".txt");
 					ruleFile.aiSourceFile(Def.CPHISTORY + "/h_actalc_wp_" + (Def.YR2D) + ".txt")
-					.ignoreFileColumn("Accounts")
-					.addVirtualColumn("Segments", "SumProduct Default")
-					.ignoreFileColumn("Fixed Pool")
+//					.ignoreFileColumn("Accounts")
+//					.addVirtualColumn("Segments", "SumProduct Default")
+//					.ignoreFileColumn("Fixed Pool")
 					.ignoreFileColumn("BegBalance")
 					;
 				}).get();
 	
-				rptgCube.load((loadFile, ruleFile) -> {
-					loadFile.localPath(Def.CPHISTORY + "/h_99DBG_QI_ar_" + (Def.YR2D) + ".txt");
-					ruleFile.aiSourceFile(Def.CPHISTORY + "/h_99DBG_QI_ar_" + (Def.YR2D) + ".txt")
-					.ignoreFileColumn("Accounts")
-					.addVirtualColumn("Segments", "SumProduct Default")
-					.ignoreFileColumn("Fixed Pool")
-					.ignoreFileColumn("BegBalance")
-					;
-				}).get();				
+//				rptgCube.load((loadFile, ruleFile) -> {
+//					loadFile.localPath(Def.CPHISTORY + "/h_99DBG_QI_ar_" + (Def.YR2D) + ".txt");
+//					ruleFile.aiSourceFile(Def.CPHISTORY + "/h_99DBG_QI_ar_" + (Def.YR2D) + ".txt")
+//					.ignoreFileColumn("Accounts")
+//					.addVirtualColumn("Segments", "SumProduct Default")
+//					.ignoreFileColumn("Fixed Pool")
+//					.ignoreFileColumn("BegBalance")
+//					;
+//				}).get();				
 				
 			
 			} catch (InterruptedException | ExecutionException e) {
