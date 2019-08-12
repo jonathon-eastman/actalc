@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
+import java.util.stream.Collectors;
+
 import com.antm.fdsm.orcl.oac.AnalyticExportFile;
 import com.antm.fdsm.orcl.oac.EssbaseApplication;
 import com.antm.fdsm.orcl.oac.EssbaseCube;
@@ -177,7 +179,7 @@ public class EssbaseReportingService {
 	public void updateTime() {
 
 	}
-
+	
 	public EssbaseReportingService exportActallc4Regalc() throws Exception {
 		String fix = "FIX ( Jan:Dec, @RELATIVE(\"Company\",0),@REMOVE(@RELATIVE(\"Accounts\", 0), \"Admin Exp Alloc\" ))";
 		AnalyticExportFile export = rptgCube.export(f -> f
@@ -185,7 +187,7 @@ public class EssbaseReportingService {
 				.addFixStatement(fix))
 				.get();
 		export.bringLocally(
-				Def.EXPORT+ "/required/" + "par_actallc_4regalc.txt",
+				Def.EXPORT + "/required/" + "par_actallc_4regalc.txt",
 				Def.EXPORT+ "/new/" + "par_actallc_4regalc.txt"
 		).pipeify().copy2Backup(Def.BKP);
 		return this;	

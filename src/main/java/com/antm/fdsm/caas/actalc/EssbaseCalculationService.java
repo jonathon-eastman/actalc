@@ -66,7 +66,7 @@ public class EssbaseCalculationService {
 	}
 	
 	private static CompletableFuture<AnalyticExportFile> exportWithFixStatement(EssbaseCube cube,String strHome, String str ) {
-		String fix = "FIX (@RELATIVE(\"Company\", 0), @RELATIVE(\"Funding Type Total\", 0),@RELATIVE(\"Fixed Pool Total\", 0),@RELATIVE(\"" + str +"\", 0),@RELATIVE(\"Product Total\", 0),@RELATIVE(\"" + str + "\", 0), \"Admin Exp Alloc\", \"" + str + "\", " + Helpers.translateMonthNumber(Def.CP) + ")"; 
+		String fix = "FIX (@RELATIVE(\"Company\", 0), @RELATIVE(\"Funding Type Total\", 0),@RELATIVE(\"Fixed Pool Total\", 0),@RELATIVE(\"" + str +"\", 0),@RELATIVE(\"Product Total\", 0),@RELATIVE(\"" + str + "\", 0), \"Admin Exp Alloc\", \"" + str + "\", " + "Jan:" + Helpers.translateMonthNumber(Def.CP) + ")"; 
 		CompletableFuture<AnalyticExportFile> export = null;
 		try {
 			export = cube.export(f -> f
