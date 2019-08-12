@@ -44,6 +44,7 @@ public class ServiceFacade {
 			.loadQiAlloc()
 			.loadDBGAlloc()
 			.loadCurrentPeriodHistory().get()
+			.loadHistory()
 			.move2Production()
 			.balance();
 

@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
-
 import com.antm.fdsm.orcl.oac.AnalyticExportFile;
 import com.antm.fdsm.orcl.oac.EssbaseApplication;
 import com.antm.fdsm.orcl.oac.EssbaseCube;
@@ -56,6 +55,59 @@ public class EssbaseReportingService {
 		return this;
 	}
 	
+
+	public EssbaseReportingService loadHistory()  {
+		try {
+			
+			rptgCube.load((loadFile, ruleFile) -> {
+				loadFile.localPath(Def.IN + "/history/h_actalc_ar_" + (Def.YR2D-2) + ".txt");
+				ruleFile.aiSourceFile(Def.IN + "/history/h_actalc_ar_" + (Def.YR2D-2) + ".txt")
+				.ignoreFileColumn("Accounts")
+				.addVirtualColumn("Segments", "SumProduct Default")
+				.ignoreFileColumn("Fixed Pool")
+				.ignoreFileColumn("BegBalance")
+				;
+			}).get();
+	
+			rptgCube.load((loadFile, ruleFile) -> {
+				loadFile.localPath(Def.IN + "/history/h_actalc_ar_" + (Def.YR2D-1) + ".txt");
+				ruleFile.aiSourceFile(Def.IN + "/history/h_actalc_ar_" + (Def.YR2D-1) + ".txt")
+				.ignoreFileColumn("Accounts")
+				.addVirtualColumn("Segments", "SumProduct Default")
+				.ignoreFileColumn("Fixed Pool")
+				.ignoreFileColumn("BegBalance")
+				;
+			}).get();			
+			
+//			rptgCube.load((loadFile, ruleFile) -> {
+//				loadFile.localPath(Def.IN + "/history/h_actalcqi_ar_" + (Def.YR2D-1) + ".txt");
+//				ruleFile.aiSourceFile(Def.IN + "/history/h_actalcqi_ar_" + (Def.YR2D-1) + ".txt")
+//				.ignoreFileColumn("Accounts")
+//				.addVirtualColumn("Segments", "SumProduct Default")
+//				.ignoreFileColumn("Fixed Pool")
+//				.ignoreFileColumn("BegBalance")
+//				;
+//			}).get();			
+//
+//			rptgCube.load((loadFile, ruleFile) -> {
+//				loadFile.localPath(Def.IN + "/history/h_actalcqi_ar_" + (Def.YR2D-1) + "_1.txt");
+//				ruleFile.aiSourceFile(Def.IN + "/history/h_actalcqi_ar_" + (Def.YR2D-1) + "_1.txt")
+//				.ignoreFileColumn("Accounts")
+//				.addVirtualColumn("Segments", "SumProduct Default")
+//				.ignoreFileColumn("Fixed Pool")
+//				.ignoreFileColumn("BegBalance")
+//				;
+//			}).get();			
+			
+			
+		} catch (InterruptedException | ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return this;
+	}	
+	
+	
 	public CompletableFuture<EssbaseReportingService> loadCurrentPeriodHistory()  {
 		CompletableFuture<EssbaseReportingService> cf = CompletableFuture.supplyAsync(() -> {
 			try {
@@ -64,6 +116,28 @@ public class EssbaseReportingService {
 					ruleFile.aiSourceFile(Def.CPHISTORY + "/h_" + Def.PROJECT_NAME + "_ar_" + Def.YR2D + ".txt")
 					.ignoreFileColumn("BegBalance");
 				}).get();
+			
+				rptgCube.load((loadFile, ruleFile) -> {
+					loadFile.localPath(Def.CPHISTORY + "/h_actalc_wp_" + (Def.YR2D) + ".txt");
+					ruleFile.aiSourceFile(Def.CPHISTORY + "/h_actalc_wp_" + (Def.YR2D) + ".txt")
+					.ignoreFileColumn("Accounts")
+					.addVirtualColumn("Segments", "SumProduct Default")
+					.ignoreFileColumn("Fixed Pool")
+					.ignoreFileColumn("BegBalance")
+					;
+				}).get();
+	
+				rptgCube.load((loadFile, ruleFile) -> {
+					loadFile.localPath(Def.CPHISTORY + "/h_99DBG_QI_ar_" + (Def.YR2D) + ".txt");
+					ruleFile.aiSourceFile(Def.CPHISTORY + "/h_99DBG_QI_ar_" + (Def.YR2D) + ".txt")
+					.ignoreFileColumn("Accounts")
+					.addVirtualColumn("Segments", "SumProduct Default")
+					.ignoreFileColumn("Fixed Pool")
+					.ignoreFileColumn("BegBalance")
+					;
+				}).get();				
+				
+			
 			} catch (InterruptedException | ExecutionException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
