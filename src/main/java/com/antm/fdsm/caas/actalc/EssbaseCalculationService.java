@@ -213,48 +213,6 @@ public class EssbaseCalculationService {
 		return this;
 	}
 
-	public EssbaseCalculationService loadHistory()  {
-		try {
-			
-			calcCube.load((loadFile, ruleFile) -> {
-				loadFile.localPath(Def.IN + "/history/h_actalc_ar_" + (Def.YR2D-2) + ".txt");
-				ruleFile.aiSourceFile(Def.IN + "/history/h_actalc_ar_" + (Def.YR2D-2) + ".txt")
-//				.ignoreFileColumn("Accounts")
-//				.addVirtualColumn("Segments", "SumProduct Default")
-//				.ignoreFileColumn("Fixed Pool")
-				.ignoreFileColumn("BegBalance")
-				;
-			}).get();
-	
-			calcCube.load((loadFile, ruleFile) -> {
-				loadFile.localPath(Def.IN + "/history/h_actalc_wp_" + (Def.YR2D) + ".txt");
-				ruleFile.aiSourceFile(Def.IN + "/history/h_actalc_wp_" + (Def.YR2D) + ".txt")
-//				.ignoreFileColumn("Accounts")
-//				.addVirtualColumn("Segments", "SumProduct Default")
-//				.ignoreFileColumn("Fixed Pool")
-				.ignoreFileColumn("BegBalance")
-				;
-			}).get();			
-			
-			calcCube.load((loadFile, ruleFile) -> {
-				loadFile.localPath(Def.CPHISTORY + "/h_actalc_ar_" + (Def.YR2D) + ".txt");
-				ruleFile.aiSourceFile(Def.CPHISTORY + "/h_actalc_ar_" + (Def.YR2D) + ".txt")
-//				.ignoreFileColumn("Accounts")
-//				.addVirtualColumn("Segments", "SumProduct Default")
-//				.ignoreFileColumn("Fixed Pool")
-				.ignoreFileColumn("BegBalance")
-				;
-			}).get();					
-			
-			
-		} catch (InterruptedException | ExecutionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return this;
-	}	
-	
-	
 	
 	public EssbaseCalculationService moveNewExport2Previous() { 
 		Helpers.moveLocalFile(

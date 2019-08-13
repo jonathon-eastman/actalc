@@ -34,7 +34,6 @@ public class ServiceFacade {
 		unallocatedLoad.get();
 		summaryRates.get();
 		calcService.allocate();
-		calcService.loadHistory();
 		calcService.exportCube();
 		calcService.exportCubeDBG();
 		
