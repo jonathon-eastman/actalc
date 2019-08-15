@@ -82,8 +82,8 @@ public class EssbaseReportingService {
 			}).get();			
 
 			rptgCube.load((loadFile, ruleFile) -> {
-				loadFile.localPath(Def.CPHISTORY + "/h_actalc_wp_" + (Def.YR2D) + ".txt");
-				ruleFile.aiSourceFile(Def.CPHISTORY + "/h_actalc_wp_" + (Def.YR2D) + ".txt")
+				loadFile.localPath(Def.IN + "/history/h_actalc_wp_" + (Def.YR2D) + ".txt");
+				ruleFile.aiSourceFile(Def.IN + "/history/h_actalc_wp_" + (Def.YR2D) + ".txt")
 //				.ignoreFileColumn("Accounts")
 //				.addVirtualColumn("Segments", "SumProduct Default")
 //				.ignoreFileColumn("Fixed Pool")
