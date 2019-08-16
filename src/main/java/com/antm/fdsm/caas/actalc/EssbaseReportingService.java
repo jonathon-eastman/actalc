@@ -47,13 +47,13 @@ public class EssbaseReportingService {
 	
 	public EssbaseReportingService loadQiAlloc() throws InterruptedException, ExecutionException {
 		List<String> alternateStructures = Arrays.asList("Alloc_0_qi_reclass", "Alloc_1_qi_reclass", "Alloc_2_qi_reclass", "Alloc_3_qi_reclass", "Alloc_4_qi_reclass", "Alloc_5_qi_reclass");
-		alternateStructures.stream().forEach( structure -> loadDivAllocFile(rptgCube, GlobalOptions.HOME,structure));
+		alternateStructures.stream().forEach( structure -> loadQiDivAllocFile(rptgCube, GlobalOptions.HOME,structure));
 		return this;
 	}
 
 	public EssbaseReportingService loadDBGAlloc() throws InterruptedException, ExecutionException {
 		List<String> alternateStructures = Arrays.asList("Alloc_DBG");
-		alternateStructures.stream().forEach( structure -> loadDivAllocFile(rptgCube, GlobalOptions.HOME,structure));
+		alternateStructures.stream().forEach( structure -> loadDBGDivAllocFile(rptgCube, GlobalOptions.HOME,structure));
 		return this;
 	}
 	
@@ -120,6 +120,34 @@ public class EssbaseReportingService {
 	}
 
 	private static void loadDivAllocFile(EssbaseCube cube, String strHome, String strDiv ) {
+		try {
+			cube.load((loadFile, ruleFile) -> {
+				loadFile.localPath(Def.EXPORT + "/required/" + Def.PROJECT_NAME + "_" + strDiv.toLowerCase() + ".txt");
+				ruleFile.aiSourceFile(Def.EXPORT + "/required/" + Def.PROJECT_NAME + "_" + strDiv.toLowerCase() + ".txt")
+				.addVirtualColumn("Scenarios", "Actual")
+				.ignoreFileColumn("BegBalance");
+			}).get();
+		} catch (InterruptedException | ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	private static void loadQiDivAllocFile(EssbaseCube cube, String strHome, String strDiv ) {
+		try {
+			cube.load((loadFile, ruleFile) -> {
+				loadFile.localPath(Def.EXPORT + "/required/" + Def.PROJECT_NAME + "_" + strDiv.toLowerCase() + ".txt");
+				ruleFile.aiSourceFile(Def.EXPORT + "/required/" + Def.PROJECT_NAME + "_" + strDiv.toLowerCase() + ".txt")
+				.addVirtualColumn("Scenarios", "Actual")
+				.ignoreFileColumn("BegBalance");
+			}).get();
+		} catch (InterruptedException | ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	private static void loadDBGDivAllocFile(EssbaseCube cube, String strHome, String strDiv ) {
 		try {
 			cube.load((loadFile, ruleFile) -> {
 				loadFile.localPath(Def.EXPORT + "/required/" + Def.PROJECT_NAME + "_" + strDiv.toLowerCase() + ".txt");
