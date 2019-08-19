@@ -46,8 +46,9 @@ public class ServiceFacade {
 			.loadCurrentPeriodHistory().get()
 			.loadHistory()
 			.move2Production()
-			.balance();
-
+			.balance()
+			;
+		
 		GlobalCom.slackInfo(Def.SLACK_WEBHOOK_APP, ":checkered_flag: finished " + Def.CUBE_NAME + " update[base].");
 	}
 
