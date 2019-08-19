@@ -135,9 +135,9 @@ public class EssbaseCalculationService {
 	
 	private static CompletableFuture<AnalyticExportFile> exportDBGWithFixStatement(EssbaseCube cube,String strHome, String str ) {
 		String fix = "FIX (@RELATIVE(\"WellPoint, Inc. (Cons)\", 0), @RELATIVE(\"Funding Type Total\", 0),@RELATIVE(\"Fixed Pool Total\", 0),@RELATIVE(\"" + str +"\", 0),@RELATIVE(\"Product Total\", 0),@RELATIVE(\"" + str +"\", 0),@RELATIVE(\"Diversified Business Group\", 0),@RELATIVE(\"" + str + "\", 0), \"Admin Exp Alloc\", \"" + str + "\", " + Helpers.translateMonthNumber(Def.CP) + ")"; 
-		CompletableFuture<AnalyticExportFile> export = null;
+		CompletableFuture<AnalyticExportFile> export1 = null;
 		try {
-			export = cube.export(f -> f
+			export1 = cube.export(f -> f
 				.fileName(Def.PROJECT_NAME + "_" + str.toLowerCase() + ".txt")
 				.addFixStatement(fix)
 				.setHeaderDimension("Accounts")
@@ -146,7 +146,7 @@ public class EssbaseCalculationService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return export;
+		return export1;
 	}
 	
 	private static void formatDBGExport(EssbaseAnalyticsService service, CompletableFuture<AnalyticExportFile> cf) {
