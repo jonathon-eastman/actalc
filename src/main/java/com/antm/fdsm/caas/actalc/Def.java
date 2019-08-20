@@ -54,7 +54,7 @@ public class Def {
 //	public final static int CY  = 2019;
 	public final static int CP  = Helpers.readJsonObjectFile(GlobalOptions.HOME + "/" + GlobalPaths.CURRENT + "/act.json", GlobalOptions.VERTX_FS).getInteger("cp");
 	public final static int CY  = Helpers.readJsonObjectFile(GlobalOptions.HOME + "/" + GlobalPaths.CURRENT + "/act.json", GlobalOptions.VERTX_FS).getInteger("cy");
-	public static final int YR2D = Def.CP -2000;
+	public static final int YR2D = Def.CY -2000;
 	
 
 	
