@@ -13,45 +13,45 @@ public class ServiceFacade {
 	}
 
 	public static void base(EssbaseAnalyticsService oacService, OracleService dbService) throws Exception {
-//		GlobalCom.slackInfo(Def.SLACK_WEBHOOK_APP, ":rocket: starting " + Def.CUBE_NAME + " update[base].");
+		GlobalCom.slackInfo(Def.SLACK_WEBHOOK_APP, ":rocket: starting " + Def.CUBE_NAME + " update[base].");
 
 		final EssbaseMetadataService metaService = new EssbaseMetadataService(oacService);
 
-//		final Actadm2CubeService actadm2 = new Actadm2CubeService(oacService);
-//		CompletableFuture<Void> extract = actadm2.extractUnallocated();
+		final Actadm2CubeService actadm2 = new Actadm2CubeService(oacService);
+		CompletableFuture<Void> extract = actadm2.extractUnallocated();
 		CompletableFuture<Void> createRptg =  metaService.createReportingCube();
-//		CompletableFuture<Void> createCalc =  metaService.createCalculatingCube();
+		CompletableFuture<Void> createCalc =  metaService.createCalculatingCube();
 		
-//		createCalc.get();
-//		createRptg.get();
-//		extract.get();
+		createCalc.get();
+		createRptg.get();
+		extract.get();
 		
 		EssbaseCalculationService calcService = new EssbaseCalculationService(oacService);
-//		calcService.clearAllData();
-//		CompletableFuture<Void> unallocatedLoad = calcService.loadUnallocated();
-//		calcService.loadCostCenterRatesDetail().get();
-//		CompletableFuture<Void> summaryRates = calcService.loadCostCenterRatesSummary();
-//		unallocatedLoad.get();
-//		summaryRates.get();
-		calcService.pipeifyQiAlloc();
-//		calcService.allocate();
-//		calcService.exportCube();
-//		calcService.exportCubeDBG();
+		calcService.clearAllData();
+		CompletableFuture<Void> unallocatedLoad = calcService.loadUnallocated();
+		calcService.loadCostCenterRatesDetail().get();
+		CompletableFuture<Void> summaryRates = calcService.loadCostCenterRatesSummary();
+		unallocatedLoad.get();
+		summaryRates.get();
+//		calcService.pipeifyQiAlloc();
+		calcService.allocate();
+		calcService.exportCube();
+		calcService.exportCubeDBG();
 		
 		createRptg.get();
 		EssbaseReportingService rptgService = new EssbaseReportingService(oacService);
 		rptgService.clearAllData()
-//			.loadAlloc()
-//			.loadCaremoreQiAlloc()
-//			.loadDBGAlloc()
-			.loadQiAlloc()
-//			.loadCurrentPeriodHistory().get()
-//			.loadHistory()
-//			.move2Production()
-//			.balance()
+			.loadAlloc()
+			.loadCaremoreQiAlloc()
+			.loadDBGAlloc()
+//			.loadQiAlloc()
+			.loadCurrentPeriodHistory().get()
+			.loadHistory()
+			.move2Production()
+			.balance()
 		;
 		
-//		GlobalCom.slackInfo(Def.SLACK_WEBHOOK_APP, ":checkered_flag: finished " + Def.CUBE_NAME + " update[base].");
+		GlobalCom.slackInfo(Def.SLACK_WEBHOOK_APP, ":checkered_flag: finished " + Def.CUBE_NAME + " update[base].");
 	}
 
 	public static void incremental(EssbaseAnalyticsService oacService, OracleService dbService) throws Exception {
