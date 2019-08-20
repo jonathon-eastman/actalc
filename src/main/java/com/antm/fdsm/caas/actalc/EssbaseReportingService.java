@@ -53,15 +53,15 @@ public class EssbaseReportingService {
 
 	public EssbaseReportingService loadDBGAlloc() throws InterruptedException, ExecutionException {
 	
-try {
+		try {
 			
 			rptgCube.load((loadFile, ruleFile) -> {
 				loadFile.localPath(Def.EXPORT + "/required/actalc_alloc_dbg.txt");
-				ruleFile.aiSourceFile(Def.EXPORT + "/required/actalc_alloc_dbg.txt")
-				.ignoreFileColumn("Admin Exp Alloc")
+				ruleFile.aiSourceFile(Def.EXPORT + "/required/actalc_alloc_dbg.txt").
+//				.ignoreFileColumn("Admin Exp Alloc")
 //				.addVirtualColumn("Segments", "SumProduct Default")
 //				.ignoreFileColumn("Fixed Pool")
-				.addVirtualColumn("Accounts", "QI Alloc Exp")
+//				.addVirtualColumn("Accounts", "QI Alloc Exp")
 				.ignoreFileColumn("BegBalance")
 				;
 			}).get();

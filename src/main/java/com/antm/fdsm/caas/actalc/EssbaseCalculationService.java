@@ -155,6 +155,7 @@ public class EssbaseCalculationService {
 				.fileName(Def.PROJECT_NAME + "_" + str.toLowerCase() + ".txt")
 				.addFixStatement(fix)
 				.setHeaderDimension("Accounts")
+				.replaceInHeader("Admin Exp Alloc", "DBG QI Exp")
 			);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -167,11 +168,9 @@ public class EssbaseCalculationService {
 		try {
 
 			AnalyticExportFile exportdbg = cf.get();
-			exportdbg.bringLocally(
-				Def.ESSBASE_PREVIOUS + "/" + exportdbg.fileName,
-				Def.EXPORT + "/required/" + exportdbg.fileName)
-			.replaceInHeader("Admin Exp Alloc", "DBG QI Exp")
-			.pipeify().copy2Backup(Def.BKP);
+			exportdbg.bringLocally(Def.EXPORT + "/required/" + exportdbg.fileName)
+			.pipeify()
+			.copy2Backup(Def.BKP);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
