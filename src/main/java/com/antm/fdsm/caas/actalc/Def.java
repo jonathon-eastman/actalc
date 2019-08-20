@@ -50,10 +50,10 @@ public class Def {
 	public final static String CPHISTORY =GlobalOptions.HOME + "/" + PROJECT_NAME + "/" + GlobalPaths.CPHISTORY;
 	public final static String OUT = GlobalOptions.HOME + "/" + PROJECT_NAME + "/" + GlobalPaths.OUT;
 	public final static String FTPOUT = GlobalOptions.HOME + "/" + PROJECT_NAME + "/" + GlobalPaths.FTPOUT;
-	public final static int CP  = 7;
-	public final static int CY  = 2019;
-//	public final static int CP  = Helpers.readJsonObjectFile(GlobalOptions.HOME + "/" + GlobalPaths.CURRENT + "/act.json", GlobalOptions.VERTX_FS).getInteger("cp");
-//	public final static int CY  = Helpers.readJsonObjectFile(GlobalOptions.HOME + "/" + GlobalPaths.CURRENT + "/act.json", GlobalOptions.VERTX_FS).getInteger("cy");
+//	public final static int CP  = 7;
+//	public final static int CY  = 2019;
+	public final static int CP  = Helpers.readJsonObjectFile(GlobalOptions.HOME + "/" + GlobalPaths.CURRENT + "/act.json", GlobalOptions.VERTX_FS).getInteger("cp");
+	public final static int CY  = Helpers.readJsonObjectFile(GlobalOptions.HOME + "/" + GlobalPaths.CURRENT + "/act.json", GlobalOptions.VERTX_FS).getInteger("cy");
 	public static final int YR2D = 19;
 	
 
