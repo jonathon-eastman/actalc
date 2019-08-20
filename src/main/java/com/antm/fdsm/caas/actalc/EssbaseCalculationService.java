@@ -155,8 +155,8 @@ public class EssbaseCalculationService {
 		try {
 
 			AnalyticExportFile exportdbg = cf.get();
-			exportdbg.bringLocally(Def.EXPORT + "/required/" + exportdbg.fileName)
-			.replaceInHeader("Admin Exp Alloc", "DBG QI Exp")
+			exportdbg.bringLocally(Def.EXPORT + "/required/" + exportdbg.fileName);
+			exportdbg.replaceInHeader("Admin Exp Alloc", "DBG QI Exp")
 			.pipeify()
 			.copy2Backup(Def.BKP);
 		} catch (Exception e) {
