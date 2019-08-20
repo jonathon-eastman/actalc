@@ -45,7 +45,7 @@ public class EssbaseReportingService {
 		return this;
 	}
 	
-	public EssbaseReportingService loadQiAlloc() throws InterruptedException, ExecutionException {
+	public EssbaseReportingService loadCaremoreQiAlloc() throws InterruptedException, ExecutionException {
 		List<String> alternateStructures = Arrays.asList("Alloc_0_qi_reclass", "Alloc_1_qi_reclass", "Alloc_2_qi_reclass", "Alloc_3_qi_reclass", "Alloc_4_qi_reclass", "Alloc_5_qi_reclass");
 		alternateStructures.stream().forEach( structure -> loadQiDivAllocFile(rptgCube, GlobalOptions.HOME,structure));
 		return this;
@@ -57,7 +57,29 @@ public class EssbaseReportingService {
 		return this;
 	}
 	
-
+	
+	public EssbaseReportingService loadQiAlloc() {
+		try {
+			
+			rptgCube.load((loadFile, ruleFile) -> {
+				loadFile.localPath(Def.IN + "/par_pstqi2_4actalc.txt");
+				ruleFile.aiSourceFile(Def.IN + "/par_pstqi2_4actalc.txt")
+				.ignoreFileColumn("Accounts")
+//				.addVirtualColumn("Segments", "SumProduct Default")
+//				.ignoreFileColumn("Fixed Pool")
+				.addVirtualColumn("Accounts", "QI Alloc Exp")
+				.ignoreFileColumn("BegBalance")
+				;
+			}).get();
+	
+		} catch (InterruptedException | ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return this;
+	}	
+	
+	
 	public EssbaseReportingService loadHistory()  {
 		try {
 			

@@ -126,6 +126,19 @@ public class EssbaseCalculationService {
 	}
 
 	
+	
+	public EssbaseCalculationService pipeifyQiAlloc() throws Exception {
+//		Helpers.copyFile(
+//				GlobalOptions.HOME + "/wh/" + "par_pstqi2_4actalc.txt",
+//				Def.IN + "/" + Def.PROJECT_NAME + "qi_alloc.txt",
+//				GlobalOptions.VERTX_FS
+//			);
+		AnalyticExportFile QiAlloc = new AnalyticExportFile();
+		QiAlloc.path(GlobalOptions.HOME + "/wh/" + "par_pstqi2_4actalc.txt").copy(Def.IN + "/qi_alloc.txt").pipeify();
+		return this;
+	}
+
+	
 	public EssbaseCalculationService exportCubeDBG() throws Exception {
 		List<String> alternateStructures = Arrays.asList("Alloc_DBG");
 		List<CompletableFuture<AnalyticExportFile>> cfList = alternateStructures.stream().parallel().map(str -> exportDBGWithFixStatement(calcCube, GlobalOptions.HOME, str)).collect(Collectors.toList());
@@ -153,10 +166,11 @@ public class EssbaseCalculationService {
 	private static void formatDBGExport(EssbaseAnalyticsService service, CompletableFuture<AnalyticExportFile> cf) {
 		try {
 
-			AnalyticExportFile export = cf.get();
-			export.bringLocally(
-				Def.ESSBASE_PREVIOUS + "/" + export.fileName,
-				Def.EXPORT + "/required/" + export.fileName)
+			AnalyticExportFile exportdbg = cf.get();
+			exportdbg.bringLocally(
+				Def.ESSBASE_PREVIOUS + "/" + exportdbg.fileName,
+				Def.EXPORT + "/required/" + exportdbg.fileName)
+			.replaceInHeader("Admin Exp Alloc", "DBG QI Exp")
 			.pipeify().copy2Backup(Def.BKP);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
