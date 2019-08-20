@@ -40,14 +40,14 @@ public class ServiceFacade {
 		createRptg.get();
 		EssbaseReportingService rptgService = new EssbaseReportingService(oacService);
 		rptgService.clearAllData()
-//			.loadAlloc()
-//			.loadCaremoreQiAlloc()
+			.loadAlloc()
+			.loadCaremoreQiAlloc()
 			.loadDBGAlloc()
 //			.loadQiAlloc()
-//			.loadCurrentPeriodHistory().get()
-//			.loadHistory()
-//			.move2Production()
-//			.balance()
+			.loadCurrentPeriodHistory().get()
+			.loadHistory()
+			.move2Production()
+			.balance()
 		;
 		
 		GlobalCom.slackInfo(Def.SLACK_WEBHOOK_APP, ":checkered_flag: finished " + Def.CUBE_NAME + " update[base].");
