@@ -125,18 +125,6 @@ public class EssbaseCalculationService {
 		}
 	}
 
-	
-	
-	public EssbaseCalculationService pipeifyQiAlloc() throws Exception {
-//		Helpers.copyFile(
-//				GlobalOptions.HOME + "/wh/" + "par_pstqi2_4actalc.txt",
-//				Def.IN + "/" + Def.PROJECT_NAME + "qi_alloc.txt",
-//				GlobalOptions.VERTX_FS
-//			);
-		AnalyticExportFile QiAlloc = new AnalyticExportFile();
-		QiAlloc.path(GlobalOptions.HOME + "/wh/" + "par_pstqi2_4actalc.txt").copy(Def.IN + "/qi_alloc.txt").pipeify();
-		return this;
-	}
 
 	
 	public EssbaseCalculationService exportCubeDBG() throws Exception {
@@ -154,8 +142,8 @@ public class EssbaseCalculationService {
 			exportdbg = cube.export(f -> f
 				.fileName(Def.PROJECT_NAME + "_" + str.toLowerCase() + ".txt")
 				.addFixStatement(fix)
-				.setHeaderDimension("Accounts")
 				.replaceInHeader("Admin Exp Alloc", "DBG QI Exp")
+				//.setHeaderDimension("Accounts")
 			);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
