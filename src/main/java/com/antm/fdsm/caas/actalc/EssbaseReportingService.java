@@ -62,7 +62,7 @@ public class EssbaseReportingService {
 //				.addVirtualColumn("Segments", "SumProduct Default")
 //				.ignoreFileColumn("Fixed Pool")
 //				.addVirtualColumn("Accounts", "QI Alloc Exp")
-				.ignoreFileColumn("BegBalance")
+//				.ignoreFileColumn("BegBalance")
 				;
 			}).get();
 	

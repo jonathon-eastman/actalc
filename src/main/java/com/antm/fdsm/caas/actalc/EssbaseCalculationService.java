@@ -142,7 +142,6 @@ public class EssbaseCalculationService {
 			exportdbg = cube.export(f -> f
 				.fileName(Def.PROJECT_NAME + "_" + str.toLowerCase() + ".txt")
 				.addFixStatement(fix)
-				.replaceInHeader("Admin Exp Alloc", "DBG QI Exp")
 				//.setHeaderDimension("Accounts")
 			);
 		} catch (Exception e) {
@@ -157,6 +156,7 @@ public class EssbaseCalculationService {
 
 			AnalyticExportFile exportdbg = cf.get();
 			exportdbg.bringLocally(Def.EXPORT + "/required/" + exportdbg.fileName)
+			.replaceInHeader("Admin Exp Alloc", "DBG QI Exp")
 			.pipeify()
 			.copy2Backup(Def.BKP);
 		} catch (Exception e) {
