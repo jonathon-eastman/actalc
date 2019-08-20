@@ -57,7 +57,7 @@ public class EssbaseReportingService {
 			
 			rptgCube.load((loadFile, ruleFile) -> {
 				loadFile.localPath(Def.EXPORT + "/required/actalc_alloc_dbg.txt");
-				ruleFile.aiSourceFile(Def.EXPORT + "/required/actalc_alloc_dbg.txt").
+				ruleFile.aiSourceFile(Def.EXPORT + "/required/actalc_alloc_dbg.txt")
 //				.ignoreFileColumn("Admin Exp Alloc")
 //				.addVirtualColumn("Segments", "SumProduct Default")
 //				.ignoreFileColumn("Fixed Pool")
