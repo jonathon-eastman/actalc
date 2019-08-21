@@ -142,7 +142,7 @@ public class EssbaseCalculationService {
 			exportdbg = cube.export(f -> f
 				.fileName(Def.PROJECT_NAME + "_" + str.toLowerCase() + ".txt")
 				.addFixStatement(fix)
-				.setHeaderDimension("Time Periods")
+				.setHeaderDimension("Accounts")
 			);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
