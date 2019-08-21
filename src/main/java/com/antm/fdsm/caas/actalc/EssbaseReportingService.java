@@ -176,7 +176,7 @@ public class EssbaseReportingService {
 			cube.load((loadFile, ruleFile) -> {
 				loadFile.localPath(Def.EXPORT + "/required/" + Def.PROJECT_NAME + "_" + strDiv.toLowerCase() + ".txt");
 				ruleFile.aiSourceFile(Def.EXPORT + "/required/" + Def.PROJECT_NAME + "_" + strDiv.toLowerCase() + ".txt")
-				.addVirtualColumn("Scenarios", "Actual")
+				.addVirtualColumn("Scenarios", "Actual")			
 				.addDataFields("DBG QI Exp");
 				//.ignoreFileColumn("BegBalance");
 			}).get();
