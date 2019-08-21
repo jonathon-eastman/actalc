@@ -51,34 +51,30 @@ public class EssbaseReportingService {
 		return this;
 	}
 
-//	public EssbaseReportingService loadDBGAlloc() throws InterruptedException, ExecutionException {
-//	
-//		try {
-//			
-//			rptgCube.load((loadFile, ruleFile) -> {
-//				loadFile.localPath(Def.EXPORT + "/required/actalc_alloc_dbg.txt");
-//				ruleFile.aiSourceFile(Def.EXPORT + "/required/actalc_alloc_dbg.txt")
-//				.ignoreFileColumn("Admin Exp Alloc")
-//				.addVirtualColumn("Segments", "SumProduct Default")
-//				.ignoreFileColumn("Fixed Pool")
-//				.addVirtualColumn("Accounts", "QI Alloc Exp")
-//				.ignoreFileColumn("BegBalance")
-//				;
-//			}).get();
-//	
-//		} catch (InterruptedException | ExecutionException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		return this;	
-//		
-//	}
-	
 	public EssbaseReportingService loadDBGAlloc() throws InterruptedException, ExecutionException {
-		List<String> alternateStructures = Arrays.asList("Alloc_DBG");
-		alternateStructures.stream().forEach( structure -> loadDBGDivAllocFile(rptgCube, GlobalOptions.HOME,structure));
-		return this;
+	
+		try {
+			
+			rptgCube.load((loadFile, ruleFile) -> {
+				loadFile.localPath(Def.EXPORT + "/required/actalc_alloc_dbg.txt");
+				ruleFile.aiSourceFile(Def.EXPORT + "/required/actalc_alloc_dbg.txt")
+				.addVirtualColumn("Scenarios", "Actual")
+				;
+			}).get();
+	
+		} catch (InterruptedException | ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return this;	
+		
 	}
+	
+//	public EssbaseReportingService loadDBGAlloc() throws InterruptedException, ExecutionException {
+//		List<String> alternateStructures = Arrays.asList("Alloc_DBG");
+//		alternateStructures.stream().forEach( structure -> loadDBGDivAllocFile(rptgCube, GlobalOptions.HOME,structure));
+//		return this;
+//	}
 	
 	
 	public EssbaseReportingService loadQiAlloc() {
