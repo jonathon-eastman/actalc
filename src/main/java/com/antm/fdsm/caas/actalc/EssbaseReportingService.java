@@ -46,35 +46,17 @@ public class EssbaseReportingService {
 	}
 	
 	public EssbaseReportingService loadCaremoreQiAlloc() throws InterruptedException, ExecutionException {
-		List<String> alternateStructures = Arrays.asList("Alloc_0_qi_reclass", "Alloc_1_qi_reclass", "Alloc_2_qi_reclass", "Alloc_3_qi_reclass", "Alloc_4_qi_reclass", "Alloc_5_qi_reclass");
-		alternateStructures.stream().forEach( structure -> loadQiDivAllocFile(rptgCube, GlobalOptions.HOME,structure));
+		List<String> alternateStructuresqi = Arrays.asList("Alloc_0_qi_reclass", "Alloc_1_qi_reclass", "Alloc_2_qi_reclass", "Alloc_3_qi_reclass", "Alloc_4_qi_reclass", "Alloc_5_qi_reclass");
+		alternateStructuresqi.stream().forEach( structureqi -> loadQiDivAllocFile(rptgCube, GlobalOptions.HOME,structureqi));
 		return this;
 	}
 
+	
 	public EssbaseReportingService loadDBGAlloc() throws InterruptedException, ExecutionException {
-	
-		try {
-			
-			rptgCube.load((loadFile, ruleFile) -> {
-				loadFile.localPath(Def.EXPORT + "/required/actalc_alloc_dbg.txt");
-				ruleFile.aiSourceFile(Def.EXPORT + "/required/actalc_alloc_dbg.txt")
-				.addVirtualColumn("Scenarios", "Actual")
-				;
-			}).get();
-	
-		} catch (InterruptedException | ExecutionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return this;	
-		
+		List<String> alternateStructuresdbg = Arrays.asList("Alloc_DBG");
+		alternateStructuresdbg.stream().forEach( structuredbg -> loadDBGDivAllocFile(rptgCube, GlobalOptions.HOME,structuredbg));
+		return this;
 	}
-	
-//	public EssbaseReportingService loadDBGAlloc() throws InterruptedException, ExecutionException {
-//		List<String> alternateStructures = Arrays.asList("Alloc_DBG");
-//		alternateStructures.stream().forEach( structure -> loadDBGDivAllocFile(rptgCube, GlobalOptions.HOME,structure));
-//		return this;
-//	}
 	
 	
 	public EssbaseReportingService loadQiAlloc() {
@@ -193,8 +175,8 @@ public class EssbaseReportingService {
 			cube.load((loadFile, ruleFile) -> {
 				loadFile.localPath(Def.EXPORT + "/required/" + Def.PROJECT_NAME + "_" + strDiv.toLowerCase() + ".txt");
 				ruleFile.aiSourceFile(Def.EXPORT + "/required/" + Def.PROJECT_NAME + "_" + strDiv.toLowerCase() + ".txt")
-				.addVirtualColumn("Scenarios", "Actual")
-				.ignoreFileColumn("BegBalance");
+				.addVirtualColumn("Scenarios", "Actual");
+				//.ignoreFileColumn("BegBalance");
 			}).get();
 		} catch (InterruptedException | ExecutionException e) {
 			// TODO Auto-generated catch block

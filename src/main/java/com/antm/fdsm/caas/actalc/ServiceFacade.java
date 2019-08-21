@@ -43,7 +43,7 @@ public class ServiceFacade {
 			.loadAlloc()
 			.loadCaremoreQiAlloc()
 			.loadDBGAlloc()
-//			.loadQiAlloc()
+////			.loadQiAlloc()
 			.loadCurrentPeriodHistory().get()
 			.loadHistory()
 			.move2Production()
