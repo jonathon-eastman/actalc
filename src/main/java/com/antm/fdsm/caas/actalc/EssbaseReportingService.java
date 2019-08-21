@@ -162,8 +162,8 @@ public class EssbaseReportingService {
 				loadFile.localPath(Def.EXPORT + "/required/" + Def.PROJECT_NAME + "_" + strDiv.toLowerCase() + ".txt");
 				ruleFile.aiSourceFile(Def.EXPORT + "/required/" + Def.PROJECT_NAME + "_" + strDiv.toLowerCase() + ".txt")
 				.addVirtualColumn("Scenarios", "Actual")
-				.ignoreFileColumn("BegBalance")
-				.addDataFields("CareMore QI Exp");
+				.ignoreFileColumn("BegBalance");
+//				.addDataFields("CareMore QI Exp");
 			}).get();
 		} catch (InterruptedException | ExecutionException e) {
 			// TODO Auto-generated catch block
@@ -176,8 +176,8 @@ public class EssbaseReportingService {
 			cube.load((loadFile, ruleFile) -> {
 				loadFile.localPath(Def.EXPORT + "/required/" + Def.PROJECT_NAME + "_" + strDiv.toLowerCase() + ".txt");
 				ruleFile.aiSourceFile(Def.EXPORT + "/required/" + Def.PROJECT_NAME + "_" + strDiv.toLowerCase() + ".txt")
-				.addVirtualColumn("Scenarios", "Actual")			
-				.addDataFields("DBG QI Exp");
+				.addVirtualColumn("Scenarios", "Actual");			
+//				.addDataFields("DBG QI Exp");
 				//.ignoreFileColumn("BegBalance");
 			}).get();
 		} catch (InterruptedException | ExecutionException e) {
