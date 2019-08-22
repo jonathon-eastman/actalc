@@ -59,7 +59,7 @@ public class EssbaseReportingService {
 	}
 	
 	
-	public EssbaseReportingService loadQiAlloc() {
+	public EssbaseReportingService loadPSTQIAlloc() {
 		try {
 			
 			rptgCube.load((loadFile, ruleFile) -> {

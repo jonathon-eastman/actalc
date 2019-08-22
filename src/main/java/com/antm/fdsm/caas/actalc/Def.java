@@ -69,6 +69,7 @@ public class Def {
 		LINKS.put(GlobalOptions.HOME + "/wh/h_" + CUBE_NAME_SOURCE.toLowerCase() + "_af48_" + (CY - 2000) + ".txt", HISTORY);
 		LINKS.put(GlobalOptions.HOME + "/wh/h_" + CUBE_NAME_SOURCE.toLowerCase() + "_wp_" + (CY - 2000) + ".txt", HISTORY);
 		LINKS.put("/js/" + GlobalPaths.CURRENT + "/" + "act.json", CURRENT);
+		LINKS.put(GlobalOptions.HOME + "/wh/cbd/par_pstqi2_4actalc.txt", IN);
 	};
 	
 }
