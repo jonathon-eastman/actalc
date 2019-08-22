@@ -66,8 +66,7 @@ public class EssbaseReportingService {
 				loadFile.localPath(Def.IN + "/par_pstqi2_4actalc.txt");
 				ruleFile.aiSourceFile(Def.IN + "/par_pstqi2_4actalc.txt")
 				.ignoreFileColumn("Quality Improvement")
-//				.addVirtualColumn("Segments", "SumProduct Default")
-//				.ignoreFileColumn("Fixed Pool")
+				.addVirtualColumn("Fixed Pool", "F00")
 				.addVirtualColumn("Accounts", "QI Alloc Exp")
 				.ignoreFileColumn("BegBalance")
 				;
