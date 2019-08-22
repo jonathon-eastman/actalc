@@ -51,12 +51,31 @@ public class EssbaseReportingService {
 		return this;
 	}
 
+	public EssbaseReportingService loadDBGAlloc() {
+		try {
+			
+			rptgCube.load((loadFile, ruleFile) -> {
+				loadFile.localPath(Def.IN + "/h_actalc_99DBG_QI_ar_19.txt");
+				ruleFile.aiSourceFile(Def.IN + "/h_actalc_99DBG_QI_ar_19.txt")
+				.addVirtualColumn("Scenarios", "Actual")
+				;
+			}).get();
 	
-	public EssbaseReportingService loadDBGAlloc() throws InterruptedException, ExecutionException {
-		List<String> alternateStructuresdbg = Arrays.asList("Alloc_DBG");
-		alternateStructuresdbg.stream().forEach( structuredbg -> loadDBGDivAllocFile(rptgCube, GlobalOptions.HOME,structuredbg));
+		} catch (InterruptedException | ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return this;
 	}
+	
+	
+	
+	
+//	public EssbaseReportingService loadDBGAlloc() throws InterruptedException, ExecutionException {
+//		List<String> alternateStructuresdbg = Arrays.asList("Alloc_DBG");
+//		alternateStructuresdbg.stream().forEach( structuredbg -> loadDBGDivAllocFile(rptgCube, GlobalOptions.HOME,structuredbg));
+//		return this;
+//	}
 	
 	
 	public EssbaseReportingService loadPSTQIAlloc() {
@@ -170,20 +189,20 @@ public class EssbaseReportingService {
 		}
 	}
 	
-	private static void loadDBGDivAllocFile(EssbaseCube cube, String strHome, String strDiv ) {
-		try {
-			cube.load((loadFile, ruleFile) -> {
-				loadFile.localPath(Def.EXPORT + "/required/" + Def.PROJECT_NAME + "_" + strDiv.toLowerCase() + ".txt");
-				ruleFile.aiSourceFile(Def.EXPORT + "/required/" + Def.PROJECT_NAME + "_" + strDiv.toLowerCase() + ".txt")
-				.addVirtualColumn("Scenarios", "Actual");			
-//				.addDataFields("DBG QI Exp");
-				//.ignoreFileColumn("BegBalance");
-			}).get();
-		} catch (InterruptedException | ExecutionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+//	private static void loadDBGDivAllocFile(EssbaseCube cube, String strHome, String strDiv ) {
+//		try {
+//			cube.load((loadFile, ruleFile) -> {
+//				loadFile.localPath(Def.EXPORT + "/required/" + Def.PROJECT_NAME + "_" + strDiv.toLowerCase() + ".txt");
+//				ruleFile.aiSourceFile(Def.EXPORT + "/required/" + Def.PROJECT_NAME + "_" + strDiv.toLowerCase() + ".txt")
+//				.addVirtualColumn("Scenarios", "Actual");			
+////				.addDataFields("DBG QI Exp");
+//				//.ignoreFileColumn("BegBalance");
+//			}).get();
+//		} catch (InterruptedException | ExecutionException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//	}
 
 	public EssbaseCubeService move2Production() throws InterruptedException, ExecutionException {
 		rptgApp.ifAppExistsThenDelete(Def.CUBE_NAME).get();
