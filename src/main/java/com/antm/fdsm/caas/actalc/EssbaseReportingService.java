@@ -65,7 +65,7 @@ public class EssbaseReportingService {
 			rptgCube.load((loadFile, ruleFile) -> {
 				loadFile.localPath(Def.IN + "/par_pstqi2_4actalc.txt");
 				ruleFile.aiSourceFile(Def.IN + "/par_pstqi2_4actalc.txt")
-				.ignoreFileColumn("Accounts")
+				.ignoreFileColumn("Quality Improvement")
 //				.addVirtualColumn("Segments", "SumProduct Default")
 //				.ignoreFileColumn("Fixed Pool")
 				.addVirtualColumn("Accounts", "QI Alloc Exp")
