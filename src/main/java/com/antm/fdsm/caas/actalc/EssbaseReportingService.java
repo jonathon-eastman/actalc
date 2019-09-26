@@ -77,8 +77,24 @@ public class EssbaseReportingService {
 //		return this;
 //	}
 	
-	
+//new version file comes from cloud actqi
 	public EssbaseReportingService loadPSTQIAlloc() {
+		try {
+			
+			rptgCube.load((loadFile, ruleFile) -> {
+				loadFile.localPath(Def.IN + "actqi_4actalc.txt");
+				ruleFile.aiSourceFile(Def.IN + "actqi_4actalc.txt")
+				.ignoreFileColumn("Quality Improvement")
+				.addVirtualColumn("Fixed Pool", "F00")
+				.addVirtualColumn("Accounts", "QI Alloc Exp")
+				.ignoreFileColumn("BegBalance")
+				;
+			}).get();
+	
+	
+	
+//old version comes from on prem file	
+/*	public EssbaseReportingService loadPSTQIAlloc() {
 		try {
 			
 			rptgCube.load((loadFile, ruleFile) -> {
@@ -90,7 +106,7 @@ public class EssbaseReportingService {
 				.ignoreFileColumn("BegBalance")
 				;
 			}).get();
-	
+*/	
 		} catch (InterruptedException | ExecutionException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
