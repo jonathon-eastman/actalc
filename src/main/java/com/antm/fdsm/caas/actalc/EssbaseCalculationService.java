@@ -58,6 +58,64 @@ public class EssbaseCalculationService {
 		return this;
 	}
 
+	public EssbaseCalculationService exportCubeHC() throws Exception {
+		List<String> alternateStructures = Arrays.asList("4regdvr");
+		List<CompletableFuture<AnalyticExportFile>> cfList = alternateStructures.stream().parallel().map(str -> exportHCWithFixStatement(calcCube, GlobalOptions.HOME, str)).collect(Collectors.toList());
+		cfList.parallelStream().forEach(cf -> formatHCExport(service, cf));
+		return this;
+	}
+	
+	private static CompletableFuture<AnalyticExportFile> exportHCWithFixStatement(EssbaseCube cube,String strHome, String str ) {
+		/*String fix = "FIX (@RELATIVE(\"WellPoint, Inc. (Cons)\", 0), @RELATIVE(\"Funding Type Total\", 0),@RELATIVE(\"Fixed Pool Total\", 0),@RELATIVE(\"" + str +"\", 0),@RELATIVE(\"Product Total\", 0),@RELATIVE(\"" + str +"\", 0),@RELATIVE(\"Diversified Business Group\", 0),@RELATIVE(\"" + str + "\", 0), \"Admin Exp Alloc\", \"" + str + "\", " + Helpers.translateMonthNumber(Def.CP) + ")"; */
+		String fix = "FIX (@RELATIVE(\"WellPoint, Inc. (Cons)\", 0), @RELATIVE(\"Funding Type Total\", 0),@RELATIVE(\"Fixed Pool Total\", 0), @RELATIVE(\"Product Total\", 0),@RELATIVE(\"Diversified Business Group\", 0),\"Headcount Alloc\", " + Helpers.translateMonthNumber(Def.CP) + ")";
+		CompletableFuture<AnalyticExportFile> exportHC = null;
+		try {
+			exportHC = cube.export(f -> f
+				.fileName(Def.PROJECT_NAME + "_" + str.toLowerCase() + ".txt")
+				.addFixStatement(fix)
+				.setHeaderDimension("Accounts")
+			);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return exportHC;
+	}
+	
+	private static void formatHCExport(EssbaseAnalyticsService service, CompletableFuture<AnalyticExportFile> cf) {
+		try {
+
+			AnalyticExportFile exportHC = cf.get();
+			exportHC.bringLocally(Def.EXPORT + "/required/" + exportHC.fileName);
+			System.out.println(exportHC.localRepresentation); 
+			exportHC.pipeify()
+			//.replaceInHeader("Admin Exp Alloc", "DBG QI Exp")		
+			.copy2Backup(Def.BKP);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	
+//	private static CompletableFuture<AnalyticExportFile> exportHCWithFixStatement(EssbaseCube cube,String strHome, String str ) {
+//		String fix = "FIX (@RELATIVE(\"Company\", 0), @RELATIVE(\"Funding Type Total\", 0),@RELATIVE(\"Fixed Pool Total\", 0),@RELATIVE(\"" + str +"\", 0),@RELATIVE(\"Product Total\", 0),@RELATIVE(\"" + str + "\", 0), \"Headcount Alloc\", \"" + str + "\", " + Helpers.translateMonthNumber(Def.CP) + ")"; 
+//		CompletableFuture<AnalyticExportFile> exportHC = null;
+//		try {
+//			exportHC = cube.export(f -> f
+//				.fileName(Def.PROJECT_NAME + "_4regdvr_" + str.toLowerCase() + ".txt")
+//				.addFixStatement(fix)
+//				.setHeaderDimension("Accounts")
+//			);
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		return exportHC;
+//	}
+	
+	
+	
 	public EssbaseCalculationService exportCube() throws Exception {
 		List<String> alternateStructures = Arrays.asList("Alloc_0", "Alloc_1", "Alloc_2", "Alloc_3", "Alloc_4", "Alloc_5");
 		List<CompletableFuture<AnalyticExportFile>> cfList = alternateStructures.stream().parallel().map(str -> exportWithFixStatement(calcCube, GlobalOptions.HOME, str)).collect(Collectors.toList());
