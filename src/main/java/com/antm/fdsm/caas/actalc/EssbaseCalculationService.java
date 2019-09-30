@@ -66,8 +66,8 @@ public class EssbaseCalculationService {
 	}
 	
 	private static CompletableFuture<AnalyticExportFile> exportHCWithFixStatement(EssbaseCube cube,String strHome, String str ) {
-		/*String fix = "FIX (@RELATIVE(\"WellPoint, Inc. (Cons)\", 0), @RELATIVE(\"Funding Type Total\", 0),@RELATIVE(\"Fixed Pool Total\", 0),@RELATIVE(\"" + str +"\", 0),@RELATIVE(\"Product Total\", 0),@RELATIVE(\"" + str +"\", 0),@RELATIVE(\"Diversified Business Group\", 0),@RELATIVE(\"" + str + "\", 0), \"Admin Exp Alloc\", \"" + str + "\", " + Helpers.translateMonthNumber(Def.CP) + ")"; */
-		String fix = "FIX (@RELATIVE(\"WellPoint, Inc. (Cons)\", 0), @RELATIVE(\"Funding Type Total\", 0),@RELATIVE(\"Fixed Pool Total\", 0), @RELATIVE(\"Product Total\", 0),@RELATIVE(\"Diversified Business Group\", 0),\"Headcount Alloc\", " + Helpers.translateMonthNumber(Def.CP) + ")";
+		
+		String fix = "FIX (@RELATIVE(\"Company\", 0), @RELATIVE(\"Funding Type Total\", 0),@RELATIVE(\"Fixed Pool Total\", 0), @RELATIVE(\"Product Total\", 0), \"Headcount Alloc\", " + Helpers.translateMonthNumber(Def.CP) + ")"; 		
 		CompletableFuture<AnalyticExportFile> exportHC = null;
 		try {
 			exportHC = cube.export(f -> f
@@ -96,24 +96,6 @@ public class EssbaseCalculationService {
 			e.printStackTrace();
 		}
 	}
-
-	
-//	private static CompletableFuture<AnalyticExportFile> exportHCWithFixStatement(EssbaseCube cube,String strHome, String str ) {
-//		String fix = "FIX (@RELATIVE(\"Company\", 0), @RELATIVE(\"Funding Type Total\", 0),@RELATIVE(\"Fixed Pool Total\", 0),@RELATIVE(\"" + str +"\", 0),@RELATIVE(\"Product Total\", 0),@RELATIVE(\"" + str + "\", 0), \"Headcount Alloc\", \"" + str + "\", " + Helpers.translateMonthNumber(Def.CP) + ")"; 
-//		CompletableFuture<AnalyticExportFile> exportHC = null;
-//		try {
-//			exportHC = cube.export(f -> f
-//				.fileName(Def.PROJECT_NAME + "_4regdvr_" + str.toLowerCase() + ".txt")
-//				.addFixStatement(fix)
-//				.setHeaderDimension("Accounts")
-//			);
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		return exportHC;
-//	}
-	
 	
 	
 	public EssbaseCalculationService exportCube() throws Exception {
