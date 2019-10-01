@@ -36,14 +36,12 @@ public class ServiceFacade {
 		calcService.allocate();
 		calcService.exportCube();
 		
-//not currently working - need for regdvr
-////	calcService.exportCubeHC();
-
 ////	calcService.exportCubeDBG();
 //this export works, but doesn't produce correct data
 		
 		EssbaseReportingService rptgService = new EssbaseReportingService(oacService);
-		rptgService.clearAllData()
+		rptgService
+			.clearAllData()
 			.loadAlloc()
 			.loadCaremoreQiAlloc()
 			.loadDBGAlloc()
