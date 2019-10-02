@@ -52,6 +52,7 @@ public class EssbaseReportingService {
 				loadFile.localPath(Def.IN + "/tstalc_headcount_alloc_h1.txt");
 				ruleFile.aiSourceFile(Def.IN + "/tstalc_headcount_alloc_h1.txt")
 				.addVirtualColumn("Scenarios", "Actual")
+				.ignoreFileColumn("BegBalance")
 				;
 			}).get();
 	
