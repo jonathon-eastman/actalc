@@ -46,37 +46,8 @@ public class EssbaseReportingService {
 	}
 	
 	
-	
+
 	public EssbaseReportingService loadHC() {
-		try {
-			
-			rptgCube.load((loadFile, ruleFile) -> {
-				loadFile.localPath(Def.IN + "/tstalc_headcount_alloc_d1.txt");
-				ruleFile.aiSourceFile(Def.IN + "/tstalc_headcount_alloc_d1.txt")
-				.addVirtualColumn("Scenarios", "Actual")
-				.ignoreFileColumn("BegBalance")
-				;
-			}).get();
-			
-			rptgCube.load((loadFile, ruleFile) -> {
-				loadFile.localPath(Def.IN + "/tstalc_headcount_alloc_d2.txt");
-				ruleFile.aiSourceFile(Def.IN + "/tstalc_headcount_alloc_d2.txt")
-				.addVirtualColumn("Scenarios", "Actual")
-				.ignoreFileColumn("BegBalance")
-				;
-			}).get();
-	
-		} catch (InterruptedException | ExecutionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return this;
-	}
-	
-	
-	
-	
-/*	public EssbaseReportingService loadHC() {
 		try {
 			
 			rptgCube.load((loadFile, ruleFile) -> {
@@ -93,7 +64,7 @@ public class EssbaseReportingService {
 		}
 		return this;
 	}
-*/	
+	
 	public EssbaseReportingService loadCaremoreQiAlloc() throws InterruptedException, ExecutionException {
 		List<String> alternateStructuresqi = Arrays.asList("Alloc_0_qi_reclass", "Alloc_1_qi_reclass", "Alloc_2_qi_reclass", "Alloc_3_qi_reclass", "Alloc_4_qi_reclass", "Alloc_5_qi_reclass");
 		alternateStructuresqi.stream().forEach( structureqi -> loadQiDivAllocFile(rptgCube, GlobalOptions.HOME,structureqi));
