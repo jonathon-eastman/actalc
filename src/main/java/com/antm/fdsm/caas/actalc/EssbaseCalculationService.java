@@ -59,7 +59,7 @@ public class EssbaseCalculationService {
 	}
 
 	public EssbaseCalculationService exportCubeHC() throws Exception {
-		List<String> alternateStructures = Arrays.asList("4regdvr");
+		List<String> alternateStructures = Arrays.asList("regdvr_alloc_0", "regdvr_alloc_1", "regdvr_alloc_2", "regdvr_alloc_3", "regdvr_alloc_4", "regdvr_alloc_5");
 		List<CompletableFuture<AnalyticExportFile>> cfList = alternateStructures.stream().parallel().map(str -> exportHCWithFixStatement(calcCube, GlobalOptions.HOME, str)).collect(Collectors.toList());
 		cfList.parallelStream().forEach(cf -> formatHCExport(service, cf));
 		return this;
@@ -67,7 +67,7 @@ public class EssbaseCalculationService {
 	
 	private static CompletableFuture<AnalyticExportFile> exportHCWithFixStatement(EssbaseCube cube,String strHome, String str ) {
 		
-		String fix = "FIX (@RELATIVE(\"Company\", 0), @RELATIVE(\"Funding Type Total\", 0),@RELATIVE(\"Fixed Pool Total\", 0), @RELATIVE(\"Product Total\", 0), \"Headcount Alloc\", " + Helpers.translateMonthNumber(Def.CP) + ")"; 		
+		String fix = "FIX (@RELATIVE(\"Company\", 0), @RELATIVE(\"Funding Type Total\", 0),@RELATIVE(\"Fixed Pool Total\", 0),@RELATIVE(\"" + str +"\", 0),@RELATIVE(\"Product Total\", 0),@RELATIVE(\"" + str + "\", 0), \"Admin Exp Alloc\", \"" + str + "\", " + Helpers.translateMonthNumber(Def.CP) + ")";  		
 		CompletableFuture<AnalyticExportFile> exportHC = null;
 		try {
 			exportHC = cube.export(f -> f
