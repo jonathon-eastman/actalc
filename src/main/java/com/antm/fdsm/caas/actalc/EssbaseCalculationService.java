@@ -232,13 +232,22 @@ public class EssbaseCalculationService {
 	
 	public CompletableFuture<Void> loadCostCenterRatesDetail() {
 		return calcCube.load((loadFile, ruleFile) -> {
-			loadFile.localPath(Def.IN + "/" + Def.PROJECT_NAME + "_r1.txt");
-			ruleFile.aiSourceFile(Def.IN + "/" + Def.PROJECT_NAME + "_r1.txt")
+			loadFile.localPath(Def.IN + "/" + "tstalc_headcount_alloc_h1.txt");
+			ruleFile.aiSourceFile(Def.IN + "/" + "tstalc_headcount_alloc_h1.txt")
 			.ignoreFileColumn("Accounts")
 			.addVirtualColumn("Accounts", "Driver Detail");
 		});
 	}
 	
+	public CompletableFuture<Void> loadHeadcountAllocation() {
+		return calcCube.load((loadFile, ruleFile) -> {
+			loadFile.localPath(Def.IN + "/" + Def.PROJECT_NAME + "_r1.txt");
+			ruleFile.aiSourceFile(Def.IN + "/" + Def.PROJECT_NAME + "_r1.txt")
+			.addVirtualColumn("Scenarios", "Actual");
+		});
+	}
+	
+
 	public CompletableFuture<Void> loadCostCenterRatesSummary() {
 		return calcCube.load((loadFile, ruleFile) -> {
 			loadFile.localPath(Def.IN + "/" + Def.PROJECT_NAME + "_r1.txt");
