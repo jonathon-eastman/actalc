@@ -103,7 +103,7 @@ public class EssbaseReportingService {
 			
 			rptgCube.load((loadFile, ruleFile) -> {
 				loadFile.localPath(Def.IN + "actqi_4actalc.txt");
-				ruleFile.aiSourceFile(Def.IN + "actqi_4actalc.txt")
+				ruleFile.aiSourceFile(Def.IN + "/actqi_4actalc.txt")
 				.ignoreFileColumn("Quality Improvement")
 				.addVirtualColumn("Fixed Pool", "F00")
 				.addVirtualColumn("Accounts", "QI Alloc Exp")
