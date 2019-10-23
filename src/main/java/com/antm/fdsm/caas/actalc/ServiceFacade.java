@@ -38,7 +38,6 @@ public class ServiceFacade {
 		headcountLoad.get();
 		calcService.allocate();
 		calcService.exportCube();
-		calcService.exportCubeHC();
 		
 ////	calcService.exportCubeDBG();
 //this export works, but doesn't produce correct data
