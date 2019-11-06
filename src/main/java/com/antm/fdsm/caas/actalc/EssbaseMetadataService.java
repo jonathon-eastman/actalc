@@ -191,6 +191,11 @@ public class EssbaseMetadataService {
 					.storage(DataStorage.LABEL_ONLY)
 				);
 				metaOtl.finishBatchOutlineEdit(RestructureOption.NO_DATA);
+				
+				metaOtl.beginBatchOutlineEdit();
+				metaOtl.moveMember("Accounts", "", "Funding Type");
+				metaOtl.finishBatchOutlineEdit(RestructureOption.NO_DATA);
+				
 			} catch (InterruptedException | ExecutionException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
