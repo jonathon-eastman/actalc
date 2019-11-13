@@ -46,9 +46,9 @@ public class ServiceFacade {
 		rptgService
 			.clearAllData()
 			.loadAlloc()
-			.loadHC()
-			.loadCaremoreQiAlloc()
-			.loadDBGAlloc()
+//			.loadHC()
+//			.loadCaremoreQiAlloc()
+//			.loadDBGAlloc()
 //			.loadPSTQIAlloc()
 			.loadCurrentPeriodHistory().get()
 			.loadHistory()
