@@ -50,8 +50,8 @@ public class ServiceFacade {
 //			.loadCaremoreQiAlloc()
 //			.loadDBGAlloc()
 //			.loadPSTQIAlloc()
-			.loadCurrentPeriodHistory().get()
-			.loadHistory()
+//			.loadCurrentPeriodHistory().get()
+//			.loadHistory()
 			.move2Production()
 			.balance()
 		;
