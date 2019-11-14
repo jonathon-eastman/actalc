@@ -30,11 +30,11 @@ public class ServiceFacade {
 		CompletableFuture<Void> unallocatedLoad = calcService.loadUnallocated();
 		CompletableFuture<Void> detailRates = calcService.loadCostCenterRatesDetail();
 		CompletableFuture<Void> summaryRates = calcService.loadCostCenterRatesSummary();
-		CompletableFuture<Void> headcountLoad = calcService.loadHeadcountAllocation();
+//		CompletableFuture<Void> headcountLoad = calcService.loadHeadcountAllocation();
 		unallocatedLoad.get();
 		summaryRates.get();
 		detailRates.get();
-		headcountLoad.get();
+//		headcountLoad.get();
 		calcService.allocate();
 		calcService.exportCube();
 		

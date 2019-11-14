@@ -196,8 +196,6 @@ public class EssbaseCalculationService {
 			loadFile.localPath(Def.IN + "/" + "tstalc_headcount_alloc_h1.txt");
 			ruleFile.aiSourceFile(Def.IN + "/" + "tstalc_headcount_alloc_h1.txt")
 			.addVirtualColumn("Scenarios", "Actual");
-			//.ignoreFileColumn("Accounts")
-			//.addVirtualColumn("Accounts", "Driver Detail");
 		});
 	}
 	
@@ -205,7 +203,6 @@ public class EssbaseCalculationService {
 		return calcCube.load((loadFile, ruleFile) -> {
 			loadFile.localPath(Def.IN + "/" + Def.PROJECT_NAME + "_r1.txt");
 			ruleFile.aiSourceFile(Def.IN + "/" + Def.PROJECT_NAME + "_r1.txt")
-			//.addVirtualColumn("Scenarios", "Actual");
 			.ignoreFileColumn("Accounts")
 			.addVirtualColumn("Accounts", "Driver Detail");
 		});
