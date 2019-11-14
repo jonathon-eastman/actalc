@@ -45,28 +45,6 @@ public class Actadm2CubeService {
 		return cf;
 	}
 	
-	public CompletableFuture<Void> extractUnallocatedHC()  {
-		CompletableFuture<Void> cf = CompletableFuture.supplyAsync(() -> {
-			try {
-				String mdx = 	"SELECT CROSSJOIN({[Headcount]}, CROSSJOIN({[Actual]}, CROSSJOIN({[Anthem, Inc. (Cons)]}, " + 
-								"CROSSJOIN({[" + Helpers.convertMonthNumber(Def.CP) + "]}, {[Project Total]})))) ON AXIS(0), " + 
-								"NON EMPTY Descendants([Cost Center].[Cost Center Total], [Cost Center].levels(0)) DIMENSION PROPERTIES [Cost Center].[MEMBER_UNIQUE_NAME] on AXIS(1) " + 
-								"FROM ACTADM2.ACTADM2";
-				MdxOutputFile extract = actadm2.runMdxGrid(mdx, "unallocated_adminHC.txt").get();
-				extract.applicationName(Def.CALC_NAME)
-					.cubeName(Def.CALC_NAME)
-					.replaceHeader("From Center|Headcount", 1)
-					.returnCloud();
-			} 
-			catch (InterruptedException | ExecutionException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-			return null;
-		});
-		return cf;
-	}
 	
 	public double getTotalUnallocatedAdmin() throws InterruptedException, ExecutionException {
 		String mdx = 	"SELECT CROSSJOIN({[Cost Center Total]},CROSSJOIN({[Administrative Expenses for Cost Allocations]},CROSSJOIN({[Project Total]},CROSSJOIN({[Anthem, Inc. (Cons)]},{[Actual]})))) ON AXIS(0),\n" +

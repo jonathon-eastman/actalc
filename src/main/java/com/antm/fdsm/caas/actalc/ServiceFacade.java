@@ -15,49 +15,47 @@ public class ServiceFacade {
 	public static void base(EssbaseAnalyticsService oacService, OracleService dbService) throws Exception {
 		GlobalCom.slackInfo(Def.SLACK_WEBHOOK_APP, ":rocket: starting " + Def.CUBE_NAME + " update[base].");
 
-//		final EssbaseMetadataService metaService = new EssbaseMetadataService(oacService);
+		final EssbaseMetadataService metaService = new EssbaseMetadataService(oacService);
 
 		final Actadm2CubeService actadm2 = new Actadm2CubeService(oacService);
 		CompletableFuture<Void> extract = actadm2.extractUnallocated();
-		CompletableFuture<Void> extractHC = actadm2.extractUnallocatedHC();
-		//		CompletableFuture<Void> createRptg =  metaService.createReportingCube();
-//		CompletableFuture<Void> createCalc =  metaService.createCalculatingCube();
+		CompletableFuture<Void> createRptg =  metaService.createReportingCube();
+		CompletableFuture<Void> createCalc =  metaService.createCalculatingCube();
 		
-//		createCalc.get();
-//		createRptg.get();
+		createCalc.get();
+		createRptg.get();
 		extract.get();
-		extractHC.get();
-//		EssbaseCalculationService calcService = new EssbaseCalculationService(oacService);
-//		calcService.clearAllData();
-//		CompletableFuture<Void> unallocatedLoad = calcService.loadUnallocated();
-//		CompletableFuture<Void> detailRates = calcService.loadCostCenterRatesDetail();
-//		CompletableFuture<Void> summaryRates = calcService.loadCostCenterRatesSummary();
-////		CompletableFuture<Void> headcountLoad = calcService.loadHeadcountAllocation();
-//		unallocatedLoad.get();
-//		summaryRates.get();
-//		detailRates.get();
-//		headcountLoad.get();
-//		calcService.allocate();
-//		calcService.exportCube();
+		EssbaseCalculationService calcService = new EssbaseCalculationService(oacService);
+		calcService.clearAllData();
+		CompletableFuture<Void> unallocatedLoad = calcService.loadUnallocated();
+		CompletableFuture<Void> detailRates = calcService.loadCostCenterRatesDetail();
+		CompletableFuture<Void> summaryRates = calcService.loadCostCenterRatesSummary();
+		CompletableFuture<Void> headcountLoad = calcService.loadHeadcountAllocation();
+		unallocatedLoad.get();
+		summaryRates.get();
+		detailRates.get();
+		headcountLoad.get();
+		calcService.allocate();
+		calcService.exportCube();
 		
-////	calcService.exportCubeDBG();
+//	calcService.exportCubeDBG();
 //this export works, but doesn't produce correct data
 		
-//		EssbaseReportingService rptgService = new EssbaseReportingService(oacService);
-//		rptgService
-//			.clearAllData()
-//			.loadAlloc()
-//			.loadHC()
-//			.loadCaremoreQiAlloc()
-////			.loadDBGAlloc()
-//			.loadPSTQIAlloc()
-//			.loadCurrentPeriodHistory().get()
-//			.loadHistory()
-//			.move2Production()
-//			.balance()
-//		;
+		EssbaseReportingService rptgService = new EssbaseReportingService(oacService);
+		rptgService
+			.clearAllData()
+			.loadAlloc()
+			.loadHC()
+			.loadCaremoreQiAlloc()
+//			.loadDBGAlloc()
+			.loadPSTQIAlloc()
+			.loadCurrentPeriodHistory().get()
+			.loadHistory()
+			.move2Production()
+			.balance()
+		;
 		
-//		GlobalCom.slackInfo(Def.SLACK_WEBHOOK_APP, ":checkered_flag: finished " + Def.CUBE_NAME + " update[base].");
+		GlobalCom.slackInfo(Def.SLACK_WEBHOOK_APP, ":checkered_flag: finished " + Def.CUBE_NAME + " update[base].");
 	}
 
 	public static void incremental(EssbaseAnalyticsService oacService, OracleService dbService) throws Exception {
