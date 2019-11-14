@@ -33,7 +33,7 @@ public class EssbaseCalculationService {
 	}
 	
 	public EssbaseCalculationService allocate() throws Exception {
-		List<String> allocationScriptsRegion = Arrays.asList("allocate_region1.csc", "allocate_region2.csc", "allocate_region3.csc", "allocate_region4.csc", "allocate_region5.csc", "allocate_region6.csc", "allocate_DBG.csc");
+		List<String> allocationScriptsRegion = Arrays.asList("allocate_region1.csc", "allocate_region2.csc", "allocate_region3.csc", "allocate_region4.csc", "allocate_region5.csc", "allocate_region6.csc"/*, "allocate_DBG.csc"*/);
 		JsonArray vars = new JsonArray().add(new JsonObject().put("key", "CURRENT_PERIOD_ACTUAL").put("value", Helpers.translateMonthNumber(Def.CP)));
 		calcCube.setSubstitutionVariables(vars);
 		int skip = 0;
@@ -191,7 +191,7 @@ public class EssbaseCalculationService {
 		return cf;
 	}
 	
-	public CompletableFuture<Void> loadCostCenterRatesDetail() {
+	public CompletableFuture<Void> loadHeadcountAllocation() {
 		return calcCube.load((loadFile, ruleFile) -> {
 			loadFile.localPath(Def.IN + "/" + "tstalc_headcount_alloc_h1.txt");
 			ruleFile.aiSourceFile(Def.IN + "/" + "tstalc_headcount_alloc_h1.txt")
@@ -200,7 +200,7 @@ public class EssbaseCalculationService {
 		});
 	}
 	
-	public CompletableFuture<Void> loadHeadcountAllocation() {
+	public CompletableFuture<Void> loadCostCenterRatesDetail() {
 		return calcCube.load((loadFile, ruleFile) -> {
 			loadFile.localPath(Def.IN + "/" + Def.PROJECT_NAME + "_r1.txt");
 			ruleFile.aiSourceFile(Def.IN + "/" + Def.PROJECT_NAME + "_r1.txt")

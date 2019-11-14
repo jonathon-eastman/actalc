@@ -31,11 +31,11 @@ public class ServiceFacade {
 		CompletableFuture<Void> unallocatedLoad = calcService.loadUnallocated();
 		CompletableFuture<Void> detailRates = calcService.loadCostCenterRatesDetail();
 		CompletableFuture<Void> summaryRates = calcService.loadCostCenterRatesSummary();
-		CompletableFuture<Void> headcountLoad = calcService.loadHeadcountAllocation();
+//		CompletableFuture<Void> headcountLoad = calcService.loadHeadcountAllocation();
 		unallocatedLoad.get();
 		summaryRates.get();
 		detailRates.get();
-		headcountLoad.get();
+//		headcountLoad.get();
 		calcService.allocate();
 		calcService.exportCube();
 		
@@ -46,12 +46,12 @@ public class ServiceFacade {
 		rptgService
 			.clearAllData()
 			.loadAlloc()
-//			.loadHC()
-//			.loadCaremoreQiAlloc()
+			.loadHC()
+			.loadCaremoreQiAlloc()
 //			.loadDBGAlloc()
-//			.loadPSTQIAlloc()
-//			.loadCurrentPeriodHistory().get()
-//			.loadHistory()
+			.loadPSTQIAlloc()
+			.loadCurrentPeriodHistory().get()
+			.loadHistory()
 			.move2Production()
 			.balance()
 		;
