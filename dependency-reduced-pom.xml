@@ -9,7 +9,7 @@
   <groupId>com.antm.fdsm.caas</groupId>
   <artifactId>actalc</artifactId>
   <name>cost allocations</name>
-  <version>0.0.17</version>
+  <version>1.0.0</version>
   <url>http://maven.apache.org</url>
   <dependencies>
     <dependency>
