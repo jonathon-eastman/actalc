@@ -40,6 +40,8 @@ public class Def {
 	public final static String SQL_PREVIOUS = GlobalOptions.HOME + "/" + PROJECT_NAME + "/" + GlobalPaths.SQL_PREVIOUS;
 	public final static String ESSBASE = GlobalOptions.HOME + "/" + PROJECT_NAME + "/" + GlobalPaths.ESSBASE;
 	public final static String EXPORT = GlobalOptions.HOME + "/" + PROJECT_NAME + "/" + GlobalPaths.EXPORT;
+	public final static String NEW = GlobalOptions.HOME + "/" + PROJECT_NAME + "/" + GlobalPaths.EXPORT + "/new";
+	public final static String REQ = GlobalOptions.HOME + "/" + PROJECT_NAME + "/" + GlobalPaths.EXPORT + "/required";
 	public final static String ESSBASE_LATEST = GlobalOptions.HOME + "/" + PROJECT_NAME + "/" + GlobalPaths.ESSBASE_LATEST;
 	public final static String ESSBASE_PREVIOUS = GlobalOptions.HOME + "/" + PROJECT_NAME + "/" + GlobalPaths.ESSBASE_PREVIOUS;
 	public final static String ESSBASE_INCREMENTAL = GlobalOptions.HOME + "/" + PROJECT_NAME + "/" + GlobalPaths.ESSBASE_INCREMENTAL;
@@ -70,7 +72,14 @@ public class Def {
 		LINKS.put(GlobalOptions.HOME + "/wh/h_" + CUBE_NAME_SOURCE.toLowerCase() + "_wp_" + (CY - 2000) + ".txt", HISTORY);
 		LINKS.put("/js/" + GlobalPaths.CURRENT + "/" + "act.json", CURRENT);
 		LINKS.put(GlobalOptions.HOME + "/wh/cbd/par_pstqi2_4actalc.txt", IN);
-		LINKS.put(GlobalOptions.HOME + "/wh/h_actalc_99DBG_QI_ar_" + YR2D + ".txt", IN);
+		LINKS.put(GlobalOptions.HOME + "/js/tstalc/data/src/essbase/export/required/actalc_r1.txt", IN);
+		LINKS.put(GlobalOptions.HOME + "/js/actdvr/data/exchange/out/actdvr_sys_drivers.txt", IN);
+		LINKS.put(GlobalOptions.HOME + "/js/actdvr/data/exchange/out/actdvr_weighted_driver.txt", IN);
+		LINKS.put(GlobalOptions.HOME + "/js/actqi/data/src/essbase/export/new/actqi_4actalc.txt", IN);
+		LINKS.put(GlobalOptions.HOME + "/js/tstalc/data/src/essbase/export/required/tstalc_headcount_alloc_d1.txt", IN);
+		LINKS.put(GlobalOptions.HOME + "/js/tstalc/data/src/essbase/export/required/tstalc_headcount_alloc_d2.txt", IN);
+		LINKS.put(GlobalOptions.HOME + "/js/tstalc/data/src/essbase/export/required/tstalc_headcount_alloc_h1.txt", IN);
+		
 	};
 	
 }
