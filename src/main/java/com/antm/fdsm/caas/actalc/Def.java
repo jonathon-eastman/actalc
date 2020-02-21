@@ -72,13 +72,13 @@ public class Def {
 		LINKS.put(GlobalOptions.HOME + "/wh/h_" + CUBE_NAME_SOURCE.toLowerCase() + "_wp_" + (CY - 2000) + ".txt", HISTORY);
 		LINKS.put("/js/" + GlobalPaths.CURRENT + "/" + "act.json", CURRENT);
 		LINKS.put(GlobalOptions.HOME + "/wh/cbd/par_pstqi2_4actalc.txt", IN);
-		LINKS.put(GlobalOptions.HOME + "/js/tstalc/data/src/essbase/export/required/actalc_r1.txt", IN);
-		LINKS.put(GlobalOptions.HOME + "/js/actdvr/data/exchange/out/actdvr_sys_drivers.txt", IN);
-		LINKS.put(GlobalOptions.HOME + "/js/actdvr/data/exchange/out/actdvr_weighted_driver.txt", IN);
-		LINKS.put(GlobalOptions.HOME + "/js/actqi/data/src/essbase/export/new/actqi_4actalc.txt", IN);
-		LINKS.put(GlobalOptions.HOME + "/js/tstalc/data/src/essbase/export/required/tstalc_headcount_alloc_d1.txt", IN);
-		LINKS.put(GlobalOptions.HOME + "/js/tstalc/data/src/essbase/export/required/tstalc_headcount_alloc_d2.txt", IN);
-		LINKS.put(GlobalOptions.HOME + "/js/tstalc/data/src/essbase/export/required/tstalc_headcount_alloc_h1.txt", IN);
+		LINKS.put(GlobalOptions.HOME + "/tstalc/data/src/essbase/export/required/actalc_r1.txt", IN);
+		LINKS.put(GlobalOptions.HOME + "/actdvr/data/exchange/out/actdvr_sys_drivers.txt", IN);
+		LINKS.put(GlobalOptions.HOME + "/actdvr/data/exchange/out/actdvr_weighted_driver.txt", IN);
+		LINKS.put(GlobalOptions.HOME + "/actqi/data/src/essbase/export/new/actqi_4actalc.txt", IN);
+		LINKS.put(GlobalOptions.HOME + "/tstalc/data/src/essbase/export/required/tstalc_headcount_alloc_d1.txt", IN);
+		LINKS.put(GlobalOptions.HOME + "/tstalc/data/src/essbase/export/required/tstalc_headcount_alloc_d2.txt", IN);
+		LINKS.put(GlobalOptions.HOME + "/tstalc/data/src/essbase/export/required/tstalc_headcount_alloc_h1.txt", IN);
 		
 	};
 	
