@@ -13,18 +13,18 @@ public class ServiceFacade {
 	}
 
 	public static void base(EssbaseAnalyticsService oacService, OracleService dbService) throws Exception {
-		GlobalCom.slackInfo(Def.SLACK_WEBHOOK_APP, ":rocket: starting " + Def.CUBE_NAME + " update[base].");
+//		GlobalCom.slackInfo(Def.SLACK_WEBHOOK_APP, ":rocket: starting " + Def.CUBE_NAME + " update[base].");
 
 		final EssbaseMetadataService metaService = new EssbaseMetadataService(oacService);
 
-		final Actadm2CubeService actadm2 = new Actadm2CubeService(oacService);
-		CompletableFuture<Void> extract = actadm2.extractUnallocated();
+//		final Actadm2CubeService actadm2 = new Actadm2CubeService(oacService);
+//		CompletableFuture<Void> extract = actadm2.extractUnallocated();
 		CompletableFuture<Void> createRptg =  metaService.createReportingCube();
 		CompletableFuture<Void> createCalc =  metaService.createCalculatingCube();
 		
 		createCalc.get();
 		createRptg.get();
-		extract.get();
+//		extract.get();
 		EssbaseCalculationService calcService = new EssbaseCalculationService(oacService);
 		calcService.clearAllData();
 		CompletableFuture<Void> unallocatedLoad = calcService.loadUnallocated();
@@ -55,7 +55,7 @@ public class ServiceFacade {
 			.balance()
 		;
 		
-		GlobalCom.slackInfo(Def.SLACK_WEBHOOK_APP, ":checkered_flag: finished " + Def.CUBE_NAME + " update[base].");
+//		GlobalCom.slackInfo(Def.SLACK_WEBHOOK_APP, ":checkered_flag: finished " + Def.CUBE_NAME + " update[base].");
 	}
 
 	public static void incremental(EssbaseAnalyticsService oacService, OracleService dbService) throws Exception {
