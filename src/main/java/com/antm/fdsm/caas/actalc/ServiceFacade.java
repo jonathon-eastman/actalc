@@ -17,14 +17,14 @@ public class ServiceFacade {
 
 		final EssbaseMetadataService metaService = new EssbaseMetadataService(oacService);
 
-//		final Actadm2CubeService actadm2 = new Actadm2CubeService(oacService);
-//		CompletableFuture<Void> extract = actadm2.extractUnallocated();
+		final Actadm2CubeService actadm2 = new Actadm2CubeService(oacService);
+		CompletableFuture<Void> extract = actadm2.extractUnallocated();
 		CompletableFuture<Void> createRptg =  metaService.createReportingCube();
 		CompletableFuture<Void> createCalc =  metaService.createCalculatingCube();
 		
 		createCalc.get();
 		createRptg.get();
-//		extract.get();
+		extract.get();
 		EssbaseCalculationService calcService = new EssbaseCalculationService(oacService);
 		calcService.clearAllData();
 		CompletableFuture<Void> unallocatedLoad = calcService.loadUnallocated();
