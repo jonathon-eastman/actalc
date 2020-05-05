@@ -1,28 +1,25 @@
 package com.antm.fdsm.caas.actalc;
 
-import org.pmw.tinylog.Logger;
-import com.antm.fdsm.orcl.odc.services.HYPUSR;
-import com.antm.fdsm.orcl.odc.services.OracleOptions;
-import com.antm.fdsm.orcl.odc.services.OracleService;
-import com.antm.fdsm.orcl.oac.services.ESSACT;
-import com.antm.fdsm.orcl.oac.services.EssbaseAnalyticsOptions;
-import com.antm.fdsm.orcl.oac.services.EssbaseAnalyticsService;
-import com.antm.fdsm.orcl.utils.GlobalOptions;
+import org.tinylog.Logger;
+import com.antm.fdsm.orcl.oac.services.EssbaseOptions;
+import com.antm.fdsm.orcl.oac.services.EssbaseService;
+import com.antm.fdsm.orcl.odc.services.OracleRelationalOptions;
+import com.antm.fdsm.orcl.odc.services.OracleRelationalService;
 
 import io.vertx.core.AbstractVerticle;
 
 public class Start extends AbstractVerticle {
 
-	private final static EssbaseAnalyticsService essbase = ESSACT.configure(new EssbaseAnalyticsOptions().setName(Def.PROJECT_NAME).setHome(GlobalOptions.HOME).setSlack(Def.SLACK_WEBHOOK_APP).setLinks(Def.LINKS));
-	private final static OracleService hypusr = HYPUSR.configure(new OracleOptions().setName(Def.PROJECT_NAME).setHome(GlobalOptions.HOME));
+	private final static EssbaseService essbase = new EssbaseService(new EssbaseOptions("actadm2").setName(EssbaseService.Name.ESSACT).setLinks(Def.LINKS));
+	private final static OracleRelationalService hypfinusrp = new OracleRelationalService(new OracleRelationalOptions("actadm2").setName(OracleRelationalService.Name.HYPFINUSRP).setUser(OracleRelationalService.User.JSWH));
 
 	
 	public static void main(String[] args) {
 		try {
 			if( args[0].equals("1")) {
-				ServiceFacade.base(essbase,hypusr);
+				ServiceFacade.base(essbase,hypfinusrp);
 			}
-				ServiceFacade.incremental(essbase,hypusr);{
+				ServiceFacade.incremental(essbase,hypfinusrp);{
 			}
 			System.exit(0);
 		}

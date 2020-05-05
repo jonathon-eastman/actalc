@@ -5,27 +5,25 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
-
-import com.antm.fdsm.orcl.oac.AnalyticExportFile;
+import com.antm.fdsm.orcl.oac.ExportFile;
 import com.antm.fdsm.orcl.oac.EssbaseApplication;
 import com.antm.fdsm.orcl.oac.EssbaseCube;
 import com.antm.fdsm.orcl.oac.EssbaseServer;
-import com.antm.fdsm.orcl.oac.services.EssbaseAnalyticsService;
+import com.antm.fdsm.orcl.oac.services.EssbaseService;
 import com.antm.fdsm.orcl.utils.GlobalOptions;
 import com.antm.fdsm.orcl.utils.Helpers;
 
-
 public class EssbaseReportingService {
 
-	private EssbaseAnalyticsService service;
+	private EssbaseService essbase;
 	private EssbaseServer server;
 	private EssbaseApplication rptgApp;
 	private EssbaseCube rptgCube;
 
-	public EssbaseReportingService(EssbaseAnalyticsService oacServiceSingleton) {
-		service = oacServiceSingleton;
-		server = new EssbaseServer(service);
-		rptgApp = server.getApplication(service, Def.RPTG_NAME);
+	public EssbaseReportingService(EssbaseService essbaseService) {
+		essbase = essbaseService;
+		server = new EssbaseServer(essbase);
+		rptgApp = server.getApplication(essbase, Def.RPTG_NAME);
 		rptgCube = rptgApp.getCube(Def.RPTG_NAME);
 	}
 
@@ -245,11 +243,11 @@ public class EssbaseReportingService {
 
 		rptgApp.rename(Def.CUBE_NAME).get();
 
-		EssbaseCube cube = server.getApplication(service, Def.CUBE_NAME).getCube(Def.RPTG_NAME);
+		EssbaseCube cube = server.getApplication(essbase, Def.CUBE_NAME).getCube(Def.RPTG_NAME);
 
 		cube.rename(Def.CUBE_NAME).get();
 
-		EssbaseCubeService cubeService = new EssbaseCubeService(service);
+		EssbaseCubeService cubeService = new EssbaseCubeService(essbase);
 		return cubeService;
 	}
 
@@ -259,7 +257,7 @@ public class EssbaseReportingService {
 	
 	public EssbaseReportingService exportActallc4Regalc() throws Exception {
 		String fix = "FIX ( Jan:Dec, @RELATIVE(\"Company\",0),@REMOVE(@RELATIVE(\"Accounts\", 0), \"Admin Exp Alloc\" ))";
-		AnalyticExportFile export = rptgCube.export(f -> f
+		ExportFile export = rptgCube.export(f -> f
 				.fileName(Def.PROJECT_NAME + ".txt")
 				.addFixStatement(fix))
 				.get();

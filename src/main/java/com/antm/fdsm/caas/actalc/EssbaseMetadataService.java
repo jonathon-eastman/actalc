@@ -11,26 +11,26 @@ import com.antm.fdsm.orcl.oac.otl.DimensionStorage;
 import com.antm.fdsm.orcl.oac.otl.EssbaseOutline;
 import com.antm.fdsm.orcl.oac.otl.MemberCategory;
 import com.antm.fdsm.orcl.oac.otl.RestructureOption;
-import com.antm.fdsm.orcl.oac.services.EssbaseAnalyticsService;
+import com.antm.fdsm.orcl.oac.services.EssbaseService;
 
 public class EssbaseMetadataService {
 
-	private EssbaseAnalyticsService service;
+	private EssbaseService essbase;
 	private EssbaseServer server;
 	private EssbaseCube metaBsoCube;
 	private EssbaseCube metaAsoCube;
 
-	public EssbaseMetadataService(EssbaseAnalyticsService oacServiceSingleton) {
-		service = oacServiceSingleton;
-		server = new EssbaseServer(service);
-		metaBsoCube = server.getApplication(service, Def.META_NAME_BSO).getCube(Def.META_NAME_BSO);
-		metaAsoCube = server.getApplication(service, Def.META_NAME_ASO).getCube(Def.META_NAME_ASO);
+	public EssbaseMetadataService(EssbaseService essbaseService) {
+		essbase = essbaseService;
+		server = new EssbaseServer(essbase);
+		metaBsoCube = server.getApplication(essbase, Def.META_NAME_BSO).getCube(Def.META_NAME_BSO);
+		metaAsoCube = server.getApplication(essbase, Def.META_NAME_ASO).getCube(Def.META_NAME_ASO);
 	}
 
 	public CompletableFuture<Void> createCalculatingCube() {
 		CompletableFuture<Void> cf = CompletableFuture.supplyAsync(() -> {
 			try {
-				EssbaseApplication calcBsoApp = server.getApplication(service, Def.CALC_NAME);
+				EssbaseApplication calcBsoApp = server.getApplication(essbase, Def.CALC_NAME);
 				if (calcBsoApp.exists()) {
 					calcBsoApp.delete().get();
 				}
@@ -207,7 +207,7 @@ public class EssbaseMetadataService {
 
 	public CompletableFuture<Void> createReportingCube() {
 		CompletableFuture<Void> cf = CompletableFuture.supplyAsync(() -> {
-			EssbaseApplication rptgApp = server.getApplication(service, Def.RPTG_NAME);
+			EssbaseApplication rptgApp = server.getApplication(essbase, Def.RPTG_NAME);
 			try {
 				if (rptgApp.exists()) {
 					rptgApp.delete().get();

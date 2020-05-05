@@ -1,35 +1,35 @@
 package com.antm.fdsm.caas.actalc;
 
 import java.util.concurrent.ExecutionException;
-import org.pmw.tinylog.Logger;
+import org.tinylog.Logger;
 import com.antm.fdsm.orcl.oac.EssbaseApplication;
 import com.antm.fdsm.orcl.oac.EssbaseCube;
 import com.antm.fdsm.orcl.oac.EssbaseServer;
 import com.antm.fdsm.orcl.odc.DatabaseService;
 import com.antm.fdsm.orcl.utils.Helpers;
-import com.antm.fdsm.orcl.oac.services.EssbaseAnalyticsService;
-import com.antm.fdsm.orcl.odc.services.OracleService;
+import com.antm.fdsm.orcl.oac.services.EssbaseService;
+import com.antm.fdsm.orcl.odc.services.OracleRelationalService;
 import io.vertx.core.json.JsonObject;
 import com.antm.fdsm.orcl.utils.GlobalCom;
 
 public class EssbaseCubeService {
 
-	private EssbaseAnalyticsService service;
+	private EssbaseService essbase;
 	private EssbaseServer server;
 	private EssbaseApplication app;
 	private EssbaseCube cube;
 
-	public EssbaseCubeService(EssbaseAnalyticsService oacServiceSingleton) {
-		service = oacServiceSingleton;
-		server = new EssbaseServer(service);
-		app = server.getApplication(service, Def.CUBE_NAME);
+	public EssbaseCubeService(EssbaseService essbaseService) {
+		essbase = essbaseService;
+		server = new EssbaseServer(essbase);
+		app = server.getApplication(essbase, Def.CUBE_NAME);
 		cube = app.getCube(Def.CUBE_NAME);
 	}
 
-	public EssbaseCubeService associate(OracleService dbService) throws InterruptedException, ExecutionException {
-		DatabaseService hypusr = new DatabaseService(dbService);
-		app.associateApplicationPermissions(hypusr);
-		cube.associateFilterPermissions(hypusr).get();
+	public EssbaseCubeService associate(OracleRelationalService relational) throws InterruptedException, ExecutionException {
+		DatabaseService oracle = new DatabaseService(relational);
+		app.associateApplicationPermissions(oracle);
+		cube.associateFilterPermissions(oracle).get();
 		return this;
 	}
 
@@ -42,7 +42,7 @@ public class EssbaseCubeService {
 		Logger.info("Got essbase results as json [{}].", essbaseResults);
 		double allocatedAdmin = Helpers.ifNumberGetDoubleElseZero(essbaseResults.getJsonObject("slice").getJsonObject("data").getJsonArray("ranges").getJsonObject(0).getJsonArray("values").getString(25));
 		double unallocatedAdmin = Helpers.ifNumberGetDoubleElseZero(essbaseResults.getJsonObject("slice").getJsonObject("data").getJsonArray("ranges").getJsonObject(0).getJsonArray("values").getString(26));
-		final Actadm2CubeService actadm2 = new Actadm2CubeService(service);
+		final Actadm2CubeService actadm2 = new Actadm2CubeService(essbase);
 		double actadm2Admin = actadm2.getTotalUnallocatedAdmin();
 		//variances
 		double varActalc  = allocatedAdmin - unallocatedAdmin;

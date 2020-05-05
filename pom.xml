@@ -15,6 +15,7 @@
     <maven.compiler.source>${java.version}</maven.compiler.source>
     <shade.main.class>com.antm.fdsm.caas.actalc.Start</shade.main.class>
     <java.version>1.8</java.version>
+    <fdsm.orcl.version>1.0.42</fdsm.orcl.version>
   </properties>
 
   <dependencies>
@@ -27,17 +28,17 @@
     <dependency>
     	<groupId>com.antm.fdsm.orcl</groupId>
     	<artifactId>odc</artifactId>
-    	<version>1.0.30</version>
+    	<version>${fdsm.orcl.version}</version>
     </dependency>
     <dependency>
     	<groupId>com.antm.fdsm.orcl</groupId>
     	<artifactId>oac</artifactId>
-    	<version>1.0.2</version>
+    	<version>${fdsm.orcl.version}</version>
     </dependency>
     <dependency>
     	<groupId>com.antm.fdsm.orcl</groupId>
     	<artifactId>utils</artifactId>
-    	<version>1.0.30</version>
+    	<version>${fdsm.orcl.version}</version>
     </dependency>
   </dependencies>
   <parent>
@@ -46,5 +47,5 @@
   	<version>0.0.5</version>
   	<relativePath>../</relativePath>
   </parent>
-  <version>1.0.6</version>
+  <version>1.0.7</version>
 </project>

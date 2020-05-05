@@ -5,16 +5,15 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
-import org.pmw.tinylog.Logger;
-
-import com.antm.fdsm.orcl.oac.AnalyticExportFile;
+import org.tinylog.Logger;
+import com.antm.fdsm.orcl.oac.ExportFile;
 import com.antm.fdsm.orcl.oac.EssbaseCube;
 import com.antm.fdsm.orcl.oac.EssbaseServer;
 import com.antm.fdsm.orcl.oac.LoadRule;
 import com.antm.fdsm.orcl.utils.GlobalOptions;
 import com.antm.fdsm.orcl.utils.GlobalPaths;
 import com.antm.fdsm.orcl.utils.Helpers;
-import com.antm.fdsm.orcl.oac.services.EssbaseAnalyticsService;
+import com.antm.fdsm.orcl.oac.services.EssbaseService;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 
@@ -22,14 +21,14 @@ import io.vertx.core.json.JsonObject;
 public class EssbaseCalculationService {
 
 		
-	private EssbaseAnalyticsService service;
+	private EssbaseService essbase;
 	private EssbaseServer server;
 	private EssbaseCube calcCube;
 
-	public EssbaseCalculationService(EssbaseAnalyticsService oacServiceSingleton) {
-		service = oacServiceSingleton;
-		server = new EssbaseServer(service);
-		calcCube = server.getApplication(service, Def.CALC_NAME).getCube(Def.CALC_NAME);
+	public EssbaseCalculationService(EssbaseService essbaseService) {
+		essbase = essbaseService;
+		server = new EssbaseServer(essbase);
+		calcCube = server.getApplication(essbase, Def.CALC_NAME).getCube(Def.CALC_NAME);
 	}
 	
 	public EssbaseCalculationService allocate() throws Exception {
@@ -61,14 +60,14 @@ public class EssbaseCalculationService {
 	
 	public EssbaseCalculationService exportCube() throws Exception {
 		List<String> alternateStructures = Arrays.asList("Alloc_0", "Alloc_1", "Alloc_2", "Alloc_3", "Alloc_4", "Alloc_5");
-		List<CompletableFuture<AnalyticExportFile>> cfList = alternateStructures.stream().parallel().map(str -> exportWithFixStatement(calcCube, GlobalOptions.HOME, str)).collect(Collectors.toList());
-		cfList.parallelStream().forEach(cf -> formatExport(service, cf));
+		List<CompletableFuture<ExportFile>> cfList = alternateStructures.stream().parallel().map(str -> exportWithFixStatement(calcCube, GlobalOptions.HOME, str)).collect(Collectors.toList());
+		cfList.parallelStream().forEach(cf -> formatExport(essbase, cf));
 		return this;
 	}
 	
-	private static CompletableFuture<AnalyticExportFile> exportWithFixStatement(EssbaseCube cube,String strHome, String str ) {
+	private static CompletableFuture<ExportFile> exportWithFixStatement(EssbaseCube cube,String strHome, String str ) {
 		String fix = "FIX (@RELATIVE(\"Company\", 0), @RELATIVE(\"Funding Type Total\", 0),@RELATIVE(\"Fixed Pool Total\", 0),@RELATIVE(\"" + str +"\", 0),@RELATIVE(\"Product Total\", 0),@RELATIVE(\"" + str + "\", 0), \"Admin Exp Alloc\", \"" + str + "\", " + Helpers.translateMonthNumber(Def.CP) + ")"; 
-		CompletableFuture<AnalyticExportFile> export = null;
+		CompletableFuture<ExportFile> export = null;
 		try {
 			export = cube.export(f -> f
 				.fileName(Def.PROJECT_NAME + "_" + str.toLowerCase() + ".txt")
@@ -82,7 +81,7 @@ public class EssbaseCalculationService {
 		return export;
 	}
 	
-	private static void formatExport(EssbaseAnalyticsService service, CompletableFuture<AnalyticExportFile> cf) {
+	private static void formatExport(EssbaseService service, CompletableFuture<ExportFile> cf) {
 		try {
 			List<String> ccs = Arrays.asList(  "4801900000", "4810000100", "4810001100", "4810001800", "4810002300", "4810010600", "4810010800",
 					          "4810015100", "4810020100", "4810025100", "4810100000", "4810110000", "4810120000", "4810410000",
@@ -112,7 +111,7 @@ public class EssbaseCalculationService {
 					          "6331501000", "6331502500", "6331504200", "6331600300", "6331600400", "6331600700", "6331601000",
 					          "6331601500", "6331601600", "6331601800", "6331602200", "6331602300", "6331602700", "6331603400",
 					          "6331603800" );
-			AnalyticExportFile export = cf.get();
+			ExportFile export = cf.get();
 			export.bringLocally(
 				Def.ESSBASE_PREVIOUS + "/" + export.fileName,
 				Def.EXPORT + "/required/" + export.fileName)
@@ -130,15 +129,15 @@ public class EssbaseCalculationService {
 	
 	public EssbaseCalculationService exportCubeDBG() throws Exception {
 		List<String> alternateStructures = Arrays.asList("Alloc_DBG");
-		List<CompletableFuture<AnalyticExportFile>> cfList = alternateStructures.stream().parallel().map(str -> exportDBGWithFixStatement(calcCube, GlobalOptions.HOME, str)).collect(Collectors.toList());
-		cfList.parallelStream().forEach(cf -> formatDBGExport(service, cf));
+		List<CompletableFuture<ExportFile>> cfList = alternateStructures.stream().parallel().map(str -> exportDBGWithFixStatement(calcCube, GlobalOptions.HOME, str)).collect(Collectors.toList());
+		cfList.parallelStream().forEach(cf -> formatDBGExport(essbase, cf));
 		return this;
 	}
 	
-	private static CompletableFuture<AnalyticExportFile> exportDBGWithFixStatement(EssbaseCube cube,String strHome, String str ) {
+	private static CompletableFuture<ExportFile> exportDBGWithFixStatement(EssbaseCube cube,String strHome, String str ) {
 		/*String fix = "FIX (@RELATIVE(\"WellPoint, Inc. (Cons)\", 0), @RELATIVE(\"Funding Type Total\", 0),@RELATIVE(\"Fixed Pool Total\", 0),@RELATIVE(\"" + str +"\", 0),@RELATIVE(\"Product Total\", 0),@RELATIVE(\"" + str +"\", 0),@RELATIVE(\"Diversified Business Group\", 0),@RELATIVE(\"" + str + "\", 0), \"Admin Exp Alloc\", \"" + str + "\", " + Helpers.translateMonthNumber(Def.CP) + ")"; */
 		String fix = "FIX (@RELATIVE(\"WellPoint, Inc. (Cons)\", 0), @RELATIVE(\"Funding Type Total\", 0),@RELATIVE(\"Fixed Pool Total\", 0), @RELATIVE(\"Product Total\", 0),@RELATIVE(\"Diversified Business Group\", 0),\"Admin Exp Alloc\", " + Helpers.translateMonthNumber(Def.CP) + ")";
-		CompletableFuture<AnalyticExportFile> exportdbg = null;
+		CompletableFuture<ExportFile> exportdbg = null;
 		try {
 			exportdbg = cube.export(f -> f
 				.fileName(Def.PROJECT_NAME + "_" + str.toLowerCase() + ".txt")
@@ -152,10 +151,10 @@ public class EssbaseCalculationService {
 		return exportdbg;
 	}
 	
-	private static void formatDBGExport(EssbaseAnalyticsService service, CompletableFuture<AnalyticExportFile> cf) {
+	private static void formatDBGExport(EssbaseService service, CompletableFuture<ExportFile> cf) {
 		try {
 
-			AnalyticExportFile exportdbg = cf.get();
+			ExportFile exportdbg = cf.get();
 			exportdbg.bringLocally(Def.EXPORT + "/required/" + exportdbg.fileName);
 			System.out.println(exportdbg.localRepresentation); 
 			exportdbg.pipeify()
@@ -242,8 +241,7 @@ public class EssbaseCalculationService {
 	public EssbaseCalculationService moveNewExport2Previous() { 
 		Helpers.moveLocalFile(
 			Def.EXPORT + "/new/" + Def.PROJECT_NAME + ".txt",
-			Def.ESSBASE_PREVIOUS + "/" + Def.PROJECT_NAME + ".txt",
-			GlobalOptions.VERTX_FS
+			Def.ESSBASE_PREVIOUS + "/" + Def.PROJECT_NAME + ".txt"
 		);
 		return this;
 	}

@@ -2,24 +2,24 @@ package com.antm.fdsm.caas.actalc;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
-import org.pmw.tinylog.Logger;
+import org.tinylog.Logger;
 import com.antm.fdsm.orcl.oac.EssbaseCube;
 import com.antm.fdsm.orcl.oac.EssbaseServer;
 import com.antm.fdsm.orcl.oac.MdxOutputFile;
 import com.antm.fdsm.orcl.utils.Helpers;
-import com.antm.fdsm.orcl.oac.services.EssbaseAnalyticsService;
+import com.antm.fdsm.orcl.oac.services.EssbaseService;
 import io.vertx.core.json.JsonObject;
 
 public class Actadm2CubeService {
 	
-	private EssbaseAnalyticsService service;
+	private EssbaseService essbase;
 	private EssbaseServer server;
 	private EssbaseCube actadm2;
 
-	public Actadm2CubeService(EssbaseAnalyticsService oacServiceSingleton) {
-		service = oacServiceSingleton;
-		server = new EssbaseServer(service);
-		actadm2 = server.getApplication(service, "ACTADM2").getCube("ACTADM2");
+	public Actadm2CubeService(EssbaseService essbaseService) {
+		essbase = essbaseService;
+		server = new EssbaseServer(essbase);
+		actadm2 = server.getApplication(essbase, "ACTADM2").getCube("ACTADM2");
 	}
 	
 	public CompletableFuture<Void> extractUnallocated()  {

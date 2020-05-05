@@ -1,23 +1,23 @@
 package com.antm.fdsm.caas.actalc;
 
 import java.util.concurrent.CompletableFuture;
-import com.antm.fdsm.orcl.odc.services.OracleService;
-import com.antm.fdsm.orcl.oac.services.EssbaseAnalyticsService;
+import com.antm.fdsm.orcl.odc.services.OracleRelationalService;
+import com.antm.fdsm.orcl.oac.services.EssbaseService;
 import com.antm.fdsm.orcl.utils.GlobalCom;
 
 
 public class ServiceFacade {
 
-	public static void archive(EssbaseAnalyticsService oacService, OracleService dbService) {
+	public static void archive(EssbaseService essbase, OracleRelationalService oracle) {
 		//EssbaseCubeService svc = new EssbaseCubeService(oacService).associate(dbService);
 	}
 
-	public static void base(EssbaseAnalyticsService oacService, OracleService dbService) throws Exception {
+	public static void base(EssbaseService essbase, OracleRelationalService oracle) throws Exception {
 //		GlobalCom.slackInfo(Def.SLACK_WEBHOOK_APP, ":rocket: starting " + Def.CUBE_NAME + " update[base].");
 
-		final EssbaseMetadataService metaService = new EssbaseMetadataService(oacService);
+		final EssbaseMetadataService metaService = new EssbaseMetadataService(essbase);
 
-		final Actadm2CubeService actadm2 = new Actadm2CubeService(oacService);
+		final Actadm2CubeService actadm2 = new Actadm2CubeService(essbase);
 		CompletableFuture<Void> extract = actadm2.extractUnallocated();
 		CompletableFuture<Void> createRptg =  metaService.createReportingCube();
 		CompletableFuture<Void> createCalc =  metaService.createCalculatingCube();
@@ -25,7 +25,7 @@ public class ServiceFacade {
 		createCalc.get();
 		createRptg.get();
 		extract.get();
-		EssbaseCalculationService calcService = new EssbaseCalculationService(oacService);
+		EssbaseCalculationService calcService = new EssbaseCalculationService(essbase);
 		calcService.clearAllData();
 		CompletableFuture<Void> unallocatedLoad = calcService.loadUnallocated();
 		CompletableFuture<Void> detailRates = calcService.loadCostCenterRatesDetail();
@@ -41,7 +41,7 @@ public class ServiceFacade {
 //	calcService.exportCubeDBG();
 //this export works, but doesn't produce correct data
 		
-		EssbaseReportingService rptgService = new EssbaseReportingService(oacService);
+		EssbaseReportingService rptgService = new EssbaseReportingService(essbase);
 		rptgService
 			.clearAllData()
 			.loadAlloc()
@@ -58,7 +58,7 @@ public class ServiceFacade {
 //		GlobalCom.slackInfo(Def.SLACK_WEBHOOK_APP, ":checkered_flag: finished " + Def.CUBE_NAME + " update[base].");
 	}
 
-	public static void incremental(EssbaseAnalyticsService oacService, OracleService dbService) throws Exception {
+	public static void incremental(EssbaseService oacService, OracleRelationalService oracle) throws Exception {
 		GlobalCom.slackInfo(Def.SLACK_WEBHOOK_APP, ":rocket: starting " + Def.CUBE_NAME + " update[incremental].");
 
 		/*RelationalDatabaseService relationalService = new RelationalDatabaseService(dbService);
