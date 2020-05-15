@@ -9,7 +9,7 @@
   <groupId>com.antm.fdsm.caas</groupId>
   <artifactId>actalc</artifactId>
   <name>cost allocations</name>
-  <version>1.0.0</version>
+  <version>1.0.9</version>
   <url>http://maven.apache.org</url>
   <dependencies>
     <dependency>
@@ -21,6 +21,7 @@
   </dependencies>
   <properties>
     <java.version>1.8</java.version>
+    <fdsm.orcl.version>1.0.44</fdsm.orcl.version>
     <shade.main.class>com.antm.fdsm.caas.actalc.Start</shade.main.class>
     <maven.compiler.source>${java.version}</maven.compiler.source>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
