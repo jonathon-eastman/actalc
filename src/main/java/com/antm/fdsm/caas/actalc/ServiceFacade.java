@@ -55,11 +55,9 @@ public class ServiceFacade {
 			.balance()
 		;
 		
-//		GlobalCom.slackInfo(Def.SLACK_WEBHOOK_APP, ":checkered_flag: finished " + Def.CUBE_NAME + " update[base].");
 	}
 
 	public static void incremental(EssbaseService oacService, OracleRelationalService oracle) throws Exception {
-		GlobalCom.slackInfo(Def.SLACK_WEBHOOK_APP, ":rocket: starting " + Def.CUBE_NAME + " update[incremental].");
 
 		/*RelationalDatabaseService relationalService = new RelationalDatabaseService(dbService);
 		relationalService.extractPSGLCurrentMonth();
@@ -76,7 +74,6 @@ public class ServiceFacade {
 		cubeService.loadIncrementalSlice().balance();
 
 		//update time here.*/
-		GlobalCom.slackInfo(Def.SLACK_WEBHOOK_APP, ":checkered_flag: finished " + Def.CUBE_NAME + " update[incremental].");
 	}
 
 	public void transitionPlan() {
