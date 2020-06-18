@@ -15,7 +15,7 @@
     <maven.compiler.source>${java.version}</maven.compiler.source>
     <shade.main.class>com.antm.fdsm.caas.actalc.Start</shade.main.class>
     <java.version>1.8</java.version>
-    <fdsm.orcl.version>1.0.44</fdsm.orcl.version>
+    <fdsm.orcl.version>1.0.45</fdsm.orcl.version>
   </properties>
 
   <dependencies>
@@ -47,5 +47,5 @@
   	<version>0.0.5</version>
   	<relativePath>../</relativePath>
   </parent>
-  <version>1.0.9</version>
+  <version>1.0.10</version>
 </project>
