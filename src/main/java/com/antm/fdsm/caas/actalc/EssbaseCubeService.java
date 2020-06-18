@@ -60,11 +60,9 @@ public class EssbaseCubeService {
 		Logger.info("\nactalc unallocated admin[{"+ nfUnalloc +"}]\ngl actadm2 unallocated admin[{" + nfActadm2 +"}]\n------------------------------------------------------\nvariance[{" + nfVarActadm2Unallocated + "}]\n", unallocatedAdmin, actadm2Admin, varActadm2Unallocated);
 		if ( (Math.abs(varActalc) + Math.abs(varActadm2) + Math.abs(varActadm2Unallocated) > Def.VARIANCE_TOLERANCE) ){
 			Logger.info("an imbalance between " + Def.CUBE_NAME + " and the PeopleSoft gl ACTUALS ledger exists.");
-			GlobalCom.slackErrorDev(Def.SLACK_WEBHOOK_APP, ":sob: an imbalance between " + Def.CUBE_NAME + " and the PeopleSoft gl ACTUALS ledger exists.");
 		}
 		else {
 			Logger.info(Def.CUBE_NAME + " balances to the PeopleSoft gl ACTUALS ledger");
-			GlobalCom.slackBalance(Def.SLACK_WEBHOOK_APP, ":stuck_out_tongue_winking_eye: " + Def.CUBE_NAME + " balances to the PeopleSoft gl ACTUALS ledger");
 		}
 
 		return this;
